@@ -39,7 +39,7 @@ export default function HomeClient() {
             <div className="font-semibold">Ping Heatmap</div>
             <a href="/heatmap" className="ml-auto text-xs text-purple-300 hover:text-purple-200">Open full view</a>
           </div>
-          <PingHeatmap />
+          <PingHeatmap height={420} />
         </div>
       </section>
       <aside className="order-3 space-y-4">

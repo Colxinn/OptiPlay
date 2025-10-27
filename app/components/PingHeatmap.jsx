@@ -28,7 +28,7 @@ function colorFor(ms) {
   return "#ef4444"; // red
 }
 
-export default function PingHeatmap() {
+export default function PingHeatmap({ height = 300 }) {
   const [game, setGame] = useState("Roblox");
   const [games, setGames] = useState(["Roblox"]);
   const [data, setData] = useState([]);
@@ -58,7 +58,7 @@ export default function PingHeatmap() {
       </div>
       <div className="mt-3 grid grid-cols-1 lg:grid-cols-[1fr,300px] gap-4">
         <div className="rounded-lg bg-neutral-950 border border-white/10 overflow-hidden">
-          <svg viewBox={`0 0 ${view.w} ${view.h}`} className="w-full h-[300px]">
+          <svg viewBox={`0 0 ${view.w} ${view.h}`} className="w-full" style={{ height }}>
             <rect width={view.w} height={view.h} className="fill-[#0a0a0f]" />
             {/* Minimal world silhouette (hand-tuned rough paths for continents) */}
             <g className="fill-neutral-800">
@@ -74,9 +74,22 @@ export default function PingHeatmap() {
               const d = byKey[r.key];
               const fill = colorFor(d?.avg_ping);
               return (
-                <g key={r.key} onMouseEnter={()=>setActive(r.key)} onMouseLeave={()=>setActive(null)} onClick={()=>setActive(r.key)}>
-                  <circle cx={p.x} cy={p.y} r={9} fill={fill} stroke="#111827" strokeWidth="2" />
-                  <text x={p.x + 12} y={p.y + 4} className="fill-gray-300 text-[10px]">{r.key}</text>
+                <g
+                  key={r.key}
+                  className="cursor-pointer transition-transform hover:scale-110"
+                  onMouseEnter={()=>setActive(r.key)}
+                  onMouseLeave={()=>setActive(null)}
+                  onClick={()=>setActive(r.key)}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`Region ${r.key}`}
+                  onKeyDown={(e)=>{ if(e.key==='Enter' || e.key===' '){ setActive(r.key); } }}
+                >
+                  {/* Larger invisible hit area for easier hover/click */}
+                  <circle cx={p.x} cy={p.y} r={22} fill="transparent" />
+                  {/* Visible marker */}
+                  <circle cx={p.x} cy={p.y} r={16} fill={fill} stroke="#111827" strokeWidth="2" />
+                  <text x={p.x + 18} y={p.y + 6} className="fill-gray-300 text-[13px]">{r.key}</text>
                 </g>
               );
             })}
