@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------- NEXT-AUTH (v5) tables ---------- 
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  isOwner       Boolean   @default(false)
+
+  accounts Account[]
+  sessions Session[]
+
+  posts     Post[]
+  comments  Comment[]
+  votes     Vote[]
+  pollVotes PollVote[]
+
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ---------- Forum / Poll basics ---------- 
+model Post {
+  id        String    @id @default(cuid())
+  title     String
+  content   String
+  isRemoved Boolean   @default(false)
+  authorId  String?
+  author    User?     @relation(fields: [authorId], references: [id])
+  comments  Comment[]
+  votes     Vote[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  isRemoved Boolean  @default(false)
+  authorId  String?
+  author    User?    @relation(fields: [authorId], references: [id])
+  postId    String?
+  post      Post?    @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  value     Int
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Poll {
+  id        String       @id @default(cuid())
+  slug      String       @unique
+  question  String
+  game      String?
+  startsAt  DateTime
+  endsAt    DateTime
+  options   PollOption[]
+  votes     PollVote[]
+  createdAt DateTime     @default(now())
+}
+
+model PollOption {
+  id     String     @id @default(cuid())
+  text   String
+  pollId String
+  poll   Poll       @relation(fields: [pollId], references: [id])
+  votes  PollVote[]
+}
+
+model PollVote {
+  id        String     @id @default(cuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+  pollId    String
+  poll      Poll       @relation(fields: [pollId], references: [id])
+  optionId  String
+  option    PollOption @relation(fields: [optionId], references: [id])
+  createdAt DateTime   @default(now())
+
+  @@unique([userId, pollId]) // one vote per user per poll
+}
+
+// ---------- Mice and Sensors (for DPI calculator) ----------
+model Sensor {
+  id      String  @id @default(cuid())
+  key     String  @unique // e.g., "pixart-3395"
+  name    String
+  minDpi  Int
+  maxDpi  Int
+  step    Int      // DPI step granularity
+  native  Int[]    // common native steps
+
+  models  MouseModel[]
+}
+
+model MouseModel {
+  id       String  @id @default(cuid())
+  brand    String
+  model    String
+  sensorId String
+  sensor   Sensor  @relation(fields: [sensorId], references: [id])
+
+  @@index([brand, model])
+}

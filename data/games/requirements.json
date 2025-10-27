@@ -1,0 +1,45 @@
+[
+  {
+    "slug": "roblox",
+    "title": "Roblox",
+    "min": {"cpu": "Dual-core", "gpu": "Intel HD 4000", "ram_gb": 4},
+    "rec": {"cpu": "Quad-core", "gpu": "GTX 1050 / RX 560", "ram_gb": 8},
+    "presets": {
+      "low": "720p, Low graphics, 60 FPS cap",
+      "mid": "1080p, Medium graphics, 120 FPS cap",
+      "high": "1080p, High graphics, 144 FPS cap"
+    }
+  },
+  {
+    "slug": "cs2",
+    "title": "Counter-Strike 2",
+    "min": {"cpu": "4-core", "gpu": "GTX 1650 / RX 570", "ram_gb": 8},
+    "rec": {"cpu": "6-core", "gpu": "RTX 2060 / RX 5600 XT", "ram_gb": 16},
+    "presets": {"low": "1080p Low, VSync Off", "mid": "1080p Medium", "high": "1440p Low/Med"}
+  },
+  {
+    "slug": "valorant",
+    "title": "Valorant",
+    "min": {"cpu": "Dual-core", "gpu": "Intel HD 4000", "ram_gb": 4},
+    "rec": {"cpu": "4-core", "gpu": "GTX 1050 Ti / RX 560", "ram_gb": 8},
+    "presets": {"low": "1080p Low", "mid": "1080p Medium", "high": "1440p Low"}
+  },
+  {
+    "slug": "fortnite",
+    "title": "Fortnite",
+    "min": {"cpu": "4-core", "gpu": "GTX 960 / RX 460", "ram_gb": 8},
+    "rec": {"cpu": "6-core", "gpu": "RTX 2060 / RX 5700", "ram_gb": 16},
+    "presets": {"low": "Performance Mode", "mid": "1080p Medium DX12", "high": "1080p High DLSS"}
+  },
+  {"slug":"minecraft-java","title":"Minecraft (Java)","min":{"cpu":"Dual-core","gpu":"Intel HD 4000","ram_gb":4},"rec":{"cpu":"4-core","gpu":"GTX 1060","ram_gb":8},"presets":{"low":"Fabric+Sodium Low","mid":"Sodium Med","high":"Iris Shaders Low"}},
+  {"slug":"apex","title":"Apex Legends","min":{"cpu":"4-core","gpu":"GTX 970 / RX 470","ram_gb":8},"rec":{"cpu":"6-core","gpu":"RTX 2060","ram_gb":16},"presets":{"low":"1080p Low","mid":"1080p Medium","high":"1440p Low"}},
+  {"slug":"rust","title":"Rust","min":{"cpu":"4-core","gpu":"GTX 980 / RX 480","ram_gb":10},"rec":{"cpu":"8-core","gpu":"RTX 3060","ram_gb":16},"presets":{"low":"1080p Low","mid":"1080p Medium","high":"1440p Low"}},
+  {"slug":"siegex","title":"Rainbow Six Siege","min":{"cpu":"4-core","gpu":"GTX 960 / RX 460","ram_gb":8},"rec":{"cpu":"6-core","gpu":"GTX 1660 / RX 5600 XT","ram_gb":16},"presets":{"low":"1080p Low T-AA","mid":"1080p Medium","high":"1440p Low"}},
+  {"slug":"gtav","title":"GTA V (Singleplayer)","min":{"cpu":"4-core","gpu":"GTX 660","ram_gb":8},"rec":{"cpu":"6-core","gpu":"GTX 1660","ram_gb":16},"presets":{"low":"1080p Normal","mid":"1080p High","high":"1440p Normal"}},
+  {"slug":"cyberpunk-2077","title":"Cyberpunk 2077","min":{"cpu":"6-core","gpu":"GTX 1060 6GB / RX 580","ram_gb":12},"rec":{"cpu":"8-core","gpu":"RTX 3060 / RX 6700XT","ram_gb":16},"presets":{"low":"1080p Low FSR","mid":"1080p Med FSR","high":"1440p Low DLSS"}}
+  ,
+  {"slug":"league-of-legends","title":"League of Legends","min":{"cpu":"Dual-core","gpu":"Intel HD 4000","ram_gb":4},"rec":{"cpu":"4-core","gpu":"GTX 750 Ti / RX 460","ram_gb":8},"presets":{"low":"1080p Low","mid":"1080p Medium","high":"1440p Low"}},
+  {"slug":"dota2","title":"Dota 2","min":{"cpu":"Dual-core","gpu":"Intel HD 4000 / GT 730","ram_gb":4},"rec":{"cpu":"4-core","gpu":"GTX 1050 Ti / RX 560","ram_gb":8},"presets":{"low":"1080p Low","mid":"1080p Medium","high":"1440p Low"}},
+  {"slug":"overwatch-2","title":"Overwatch 2","min":{"cpu":"4-core","gpu":"GTX 600 series / HD 7000","ram_gb":8},"rec":{"cpu":"6-core","gpu":"GTX 1660 / RX 5600 XT","ram_gb":16},"presets":{"low":"1080p Low","mid":"1080p Medium","high":"1440p Low"}},
+  {"slug":"rocket-league","title":"Rocket League","min":{"cpu":"Dual-core","gpu":"GTX 260 / HD 4850","ram_gb":4},"rec":{"cpu":"4-core","gpu":"GTX 1060 / RX 570","ram_gb":8},"presets":{"low":"1080p Performance","mid":"1080p High Quality","high":"1440p Performance"}}
+]

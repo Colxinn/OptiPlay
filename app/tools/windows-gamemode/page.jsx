@@ -1,0 +1,1 @@
+export default function Page(){return (<div className='max-w-2xl mx-auto px-4 py-8'><h1 className='text-2xl font-bold mb-4'>Windows Game Mode</h1><p className='text-slate-300'>Drop your guide/logic for <b>Windows Game Mode</b> here.</p></div>)}

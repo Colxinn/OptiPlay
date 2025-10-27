@@ -1,0 +1,5 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html,body{background:#0f0b18;color:white}
+a{color:#a855f7}a:hover{color:#c084fc}

@@ -1,0 +1,16 @@
+[
+  { "game": "Roblox",   "gpu": "Intel UHD 620", "avg_fps": 55,  "avg_ping": 35 },
+  { "game": "Roblox",   "gpu": "GTX 1650",      "avg_fps": 120, "avg_ping": 32 },
+  { "game": "Roblox",   "gpu": "RTX 3060",      "avg_fps": 165, "avg_ping": 28 },
+
+  { "game": "CS2",      "gpu": "GTX 1650",      "avg_fps": 140, "avg_ping": 35 },
+  { "game": "CS2",      "gpu": "RTX 3060",      "avg_fps": 250, "avg_ping": 30 },
+  { "game": "CS2",      "gpu": "RTX 3080",      "avg_fps": 380, "avg_ping": 28 },
+
+  { "game": "Valorant", "gpu": "GTX 1050 Ti",   "avg_fps": 180, "avg_ping": 32 },
+  { "game": "Valorant", "gpu": "RTX 3060",      "avg_fps": 300, "avg_ping": 28 },
+
+  { "game": "Fortnite", "gpu": "GTX 1650",      "avg_fps": 100, "avg_ping": 40 },
+  { "game": "Fortnite", "gpu": "RTX 3060",      "avg_fps": 160, "avg_ping": 36 }
+]
+
