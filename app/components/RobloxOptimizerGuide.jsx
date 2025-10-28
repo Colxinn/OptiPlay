@@ -297,13 +297,13 @@ export default function RobloxOptimizerGuide() {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4 py-8 animate-fade-in">
       <h1 className="text-2xl md:text-3xl font-bold">Roblox Performance Optimizer</h1>
       <p className="text-gray-400 mt-2">
         Follow these focused steps to reduce stutter, lower input latency, and increase FPS in Roblox.
       </p>
 
-      <div className="mt-6 overflow-hidden rounded-xl border border-white/10 bg-neutral-900">
+      <div className="mt-6 overflow-hidden rounded-xl border border-white/10 bg-neutral-900 animate-pop">
         <div className="px-4 py-3 border-b border-white/10 font-semibold">Before / After FPS (sample)</div>
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
@@ -334,9 +334,11 @@ export default function RobloxOptimizerGuide() {
 
       <div className="mt-8 space-y-3">
         {steps.map((s, idx) => (
-          <Step key={idx} index={idx + 1} title={s.title} icon={s.icon}>
+          <div className="animate-slide-up" key={idx}>
+          <Step index={idx + 1} title={s.title} icon={s.icon}>
             {s.content}
           </Step>
+          </div>
         ))}
       </div>
 

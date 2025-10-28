@@ -30,7 +30,7 @@ export default function Page() {
   const refreshDeepLink = `ms-settings:display-advanced`;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4 py-8 animate-fade-in">
       <h1 className="text-2xl md:text-3xl font-bold">Input Lag Reducer + Display Optimizer</h1>
       <p className="text-gray-400 mt-2">
         Safe one‑click-ish steps to cut input latency and dial in your display for gaming. Nothing invasive; everything is reversible.

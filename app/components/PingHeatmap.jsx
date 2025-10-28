@@ -58,7 +58,7 @@ export default function PingHeatmap({ height = 300 }) {
       </div>
       <div className="mt-3 grid grid-cols-1 lg:grid-cols-[1fr,300px] gap-4">
         <div className="rounded-lg bg-neutral-950 border border-white/10 overflow-hidden">
-          <svg viewBox={`0 0 ${view.w} ${view.h}`} className="w-full" style={{ height }}>
+          <svg viewBox={`0 0 ${view.w} ${view.h}`} className="w-full animate-fade-in" style={{ height }}>
             <rect width={view.w} height={view.h} className="fill-[#0a0a0f]" />
             {/* Minimal world silhouette (hand-tuned rough paths for continents) */}
             <g className="fill-neutral-800">
@@ -76,7 +76,7 @@ export default function PingHeatmap({ height = 300 }) {
               return (
                 <g
                   key={r.key}
-                  className="cursor-pointer transition-transform hover:scale-110"
+                  className="cursor-pointer transition-transform duration-200 hover:scale-110"
                   onMouseEnter={()=>setActive(r.key)}
                   onMouseLeave={()=>setActive(null)}
                   onClick={()=>setActive(r.key)}
