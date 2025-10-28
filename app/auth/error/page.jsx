@@ -11,16 +11,12 @@ export default function AuthErrorPage() {
       <h1 className="text-2xl font-bold">Sign-in Error</h1>
       <p className="text-sm text-gray-300">Reason: <span className="font-mono">{error}</span></p>
       <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
-        <li>Ensure OAuth callback URLs are added in the provider console:</li>
+        <li>Ensure the OAuth redirect URI is added in Google Cloud:</li>
         <li>
-          Google: <code>https://optiplay-gamma.vercel.app/api/auth/callback/google</code>
-        </li>
-        <li>
-          Discord: <code>https://optiplay-gamma.vercel.app/api/auth/callback/discord</code>
+          <code>https://optiplay-gamma-gamma.vercel.app/api/auth/callback/google</code>
         </li>
         <li>Try again or return to the <Link href="/" className="underline">home page</Link>.</li>
       </ul>
     </div>
   );
 }
-
