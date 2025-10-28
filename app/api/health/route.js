@@ -4,8 +4,8 @@ export async function GET() {
   const env = {
     NEXTAUTH_URL: !!process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: !!process.env.NEXTAUTH_SECRET,
-    AUTH_GOOGLE_ID: !!process.env.AUTH_GOOGLE_ID,
-    AUTH_GOOGLE_SECRET: !!process.env.AUTH_GOOGLE_SECRET,
+    MAILERSEND_API_TOKEN: !!process.env.MAILERSEND_API_TOKEN,
+    AUTH_EMAIL_FROM: !!process.env.AUTH_EMAIL_FROM,
     AUTH_TRUST_HOST: process.env.AUTH_TRUST_HOST === 'true' || process.env.AUTH_TRUST_HOST === '1',
     DATABASE_URL: !!process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
@@ -21,4 +21,3 @@ export async function GET() {
     { status: 200, headers: { 'content-type': 'application/json' } }
   );
 }
-

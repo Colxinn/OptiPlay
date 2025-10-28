@@ -1,5 +1,6 @@
 'use client';
 import { signIn, signOut } from "next-auth/react";
+import Link from "next/link";
 
 export default function AuthButtons({ session }) {
   if (session?.user) {
@@ -15,6 +16,7 @@ export default function AuthButtons({ session }) {
         >
           Sign out
         </button>
+        <Link href="/profile" className="px-3 py-1 rounded-lg bg-neutral-800 hover:bg-neutral-700 border border-white/10">Profile</Link>
       </div>
     );
   }
@@ -22,10 +24,10 @@ export default function AuthButtons({ session }) {
   return (
     <div className="flex items-center gap-2">
       <button
-        onClick={() => signIn('google')}
-        className="px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:opacity-90"
+        onClick={() => signIn('email')}
+        className="px-3 py-1 rounded-lg bg-neutral-800 hover:bg-neutral-700 border border-white/10"
       >
-        Google
+        Sign in with Email
       </button>
     </div>
   );
