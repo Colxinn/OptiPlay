@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy || (echo No migrations, using db push && prisma db push) && next build",
+    "build": "node scripts/prisma-prepare.cjs && next build",
     "start": "next start",
     "prisma": "prisma",
     "postinstall": "prisma generate"
