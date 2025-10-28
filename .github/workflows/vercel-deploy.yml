@@ -1,10 +1,24 @@
-name: Vercel Deploy
+name: Vercel Deploy (gamma-gamma)
 
 on:
   push:
-    branches: [ main, gamma-gamma ]
+    branches: [ gamma-gamma ]
   pull_request:
-    branches: [ main ]
+    branches: [ gamma-gamma ]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Git branch to deploy (default gamma-gamma)"
+        required: true
+        default: "gamma-gamma"
+      environment:
+        description: "Target environment"
+        required: true
+        default: "preview"
+        type: choice
+        options:
+          - preview
+          - production
 
 concurrency:
   group: vercel-${{ github.ref }}
@@ -12,11 +26,14 @@ concurrency:
 
 jobs:
   deploy-preview:
-    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref != 'refs/heads/main')
+    # Previews for PRs into gamma-gamma or manual preview runs
+    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'preview')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -52,11 +69,14 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
   deploy-production:
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/gamma-gamma')
+    # Production deploys only from gamma-gamma (or manual run)
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/gamma-gamma') || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
