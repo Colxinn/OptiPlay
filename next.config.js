@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-module.exports = { experimental: { optimizePackageImports: [] } };
-=======
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   reactStrictMode: true,
-}
-
-module.exports = nextConfig
->>>>>>> origin/main
+  experimental: { optimizePackageImports: [] },
+};
