@@ -27,12 +27,6 @@ export default function AuthButtons({ session }) {
       >
         Google
       </button>
-      <button
-        onClick={() => signIn('discord')}
-        className="px-3 py-1 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 hover:opacity-90"
-      >
-        Discord
-      </button>
     </div>
   );
 }
