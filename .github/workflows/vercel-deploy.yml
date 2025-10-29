@@ -4,64 +4,54 @@ on:
   push:
     branches: [ gamma-gamma ]
   workflow_dispatch:
-    inputs:
-      branch:
-        description: "Git branch to deploy (default gamma-gamma)"
-        required: false
-        default: "gamma-gamma"
-      vercel_org_id:
-        description: "(Optional) Override VERCEL_ORG_ID"
-        required: false
-      vercel_project_id:
-        description: "(Optional) Override VERCEL_PROJECT_ID"
-        required: false
-      vercel_token:
-        description: "(Optional) Override VERCEL_TOKEN"
-        required: false
 
 concurrency:
   group: vercel-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy-production:
-    # Production deploys only from gamma-gamma or manual run
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+  deploy:
+    name: Deploy to Vercel (prod)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
     env:
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID || github.event.inputs.vercel_org_id }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID || vars.VERCEL_PROJECT_ID || github.event.inputs.vercel_project_id }}
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN || vars.VERCEL_TOKEN || github.event.inputs.vercel_token }}
+      # Map GitHub Secrets to the env names the Vercel CLI expects
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      # Optional: increase memory for Next.js builds
+      NODE_OPTIONS: --max_old_space_size=4096
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.branch || github.ref }}
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 18
+          cache: 'npm'
 
-      - name: Install deps
-        run: npm install
-
-      - name: Generate Prisma client
-        run: npx prisma generate
+      - name: Install dependencies
+        run: npm ci
 
       - name: Install Vercel CLI
         run: npm i -g vercel@latest
 
       - name: Pull Vercel env (production)
-        run: |
-          test -n "$VERCEL_TOKEN" || (echo "Missing VERCEL_TOKEN" && exit 1)
-          test -n "$VERCEL_ORG_ID" || (echo "Missing VERCEL_ORG_ID" && exit 1)
-          test -n "$VERCEL_PROJECT_ID" || (echo "Missing VERCEL_PROJECT_ID" && exit 1)
-          vercel pull --yes --environment=production
+        run: vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
 
-      - name: Build (production)
-        run: vercel build --prod
+      - name: Build (prebuilt)
+        run: vercel build --prod --token "$VERCEL_TOKEN"
 
-      - name: Deploy (production)
-        run: vercel deploy --prebuilt --prod
+      - name: Deploy to Vercel (prod)
+        run: vercel deploy --prebuilt --prod --token "$VERCEL_TOKEN"
+
+      # Notes:
+      # - Set GitHub Secrets at: Settings → Secrets and variables → Actions
+      #   - VERCEL_TOKEN: Personal token from Vercel (Account Settings → Tokens)
+      #   - ORG_ID: Vercel organization ID
+      #   - PROJECT_ID: Vercel project ID
+      # - Ensure your Vercel project is linked to this repo and the
+      #   production branch is set to `gamma-gamma` in Vercel Project Settings.
