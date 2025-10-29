@@ -7,7 +7,7 @@
     "build": "node scripts/prisma-prepare.cjs && next build",
     "start": "next start",
     "prisma": "prisma",
-   "postinstall": "prisma generate --schema=prisma/schema.prisma --binary-targets native,rhel-openssl-3.0.x"
+   "postinstall": "prisma generate --schema=prisma/schema.prisma"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.3",

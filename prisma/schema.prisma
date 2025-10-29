@@ -1,5 +1,7 @@
 generator client {
   provider = "prisma-client-js"
+  // Include Linux target used on Vercel runners (OpenSSL 3)
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -154,4 +156,3 @@ model MouseModel {
 
   @@index([brand, model])
 }
-
