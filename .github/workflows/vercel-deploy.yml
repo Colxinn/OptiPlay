@@ -3,73 +3,21 @@ name: Vercel Deploy (gamma-gamma)
 on:
   push:
     branches: [ gamma-gamma ]
-  pull_request:
-    branches: [ gamma-gamma ]
   workflow_dispatch:
     inputs:
       branch:
         description: "Git branch to deploy (default gamma-gamma)"
-        required: true
+        required: false
         default: "gamma-gamma"
-      environment:
-        description: "Target environment"
-        required: true
-        default: "preview"
-        type: choice
-        options:
-          - preview
-          - production
 
 concurrency:
   group: vercel-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy-preview:
-    # Previews for PRs into gamma-gamma or manual preview runs
-    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'preview')
-    runs-on: ubuntu-latest
-    env:
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.branch || github.ref }}
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install deps
-        run: npm install
-
-      - name: Generate Prisma client
-        run: npx prisma generate
-
-      - name: Install Vercel CLI
-        run: npm i -g vercel@latest
-
-      - name: Pull Vercel env (preview)
-        run: |
-          test -n "$VERCEL_TOKEN" || (echo "Missing VERCEL_TOKEN" && exit 1)
-          test -n "$VERCEL_ORG_ID" || (echo "Missing VERCEL_ORG_ID" && exit 1)
-          test -n "$VERCEL_PROJECT_ID" || (echo "Missing VERCEL_PROJECT_ID" && exit 1)
-          vercel pull --yes --environment=preview
-
-      - name: Build
-        run: vercel build
-
-      - name: Deploy (preview)
-        run: vercel deploy --prebuilt
-
   deploy-production:
-    # Production deploys only from gamma-gamma (or manual run)
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/gamma-gamma') || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
+    # Production deploys only from gamma-gamma or manual run
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
