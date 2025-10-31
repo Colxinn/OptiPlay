@@ -156,3 +156,75 @@ model MouseModel {
   @@index([brand, model])
 }
 
+// ---------- Benchmarks ----------
+enum BenchmarkResolution {
+  R1080P
+  R1440P
+  R4K
+}
+
+model GPU {
+  id            String           @id @default(cuid())
+  name          String
+  slug          String           @unique
+  family        String?
+  architecture  String?
+  releaseYear   Int?
+  avgScore      Float?
+  powerDraw     Int?
+  priceUsd      Float?
+  benchmarks    GameBenchmark[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model CPU {
+  id            String           @id @default(cuid())
+  name          String
+  slug          String           @unique
+  family        String?
+  architecture  String?
+  releaseYear   Int?
+  benchmarkScore Float
+  cores         Int?
+  threads       Int?
+  tdpWatts      Int?
+  priceUsd      Float?
+  benchmarks    GameBenchmark[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model Game {
+  id          String           @id @default(cuid())
+  name        String
+  slug        String           @unique
+  genre       String?
+  releaseYear Int?
+  benchmarks  GameBenchmark[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model GameBenchmark {
+  id                 String               @id @default(cuid())
+  gameId             String
+  gpuId              String
+  cpuId              String
+  resolution         BenchmarkResolution
+  avgFps             Float
+  source             String?
+  notes              String?
+  estimatedPowerDraw Int?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  gpu  GPU  @relation(fields: [gpuId], references: [id], onDelete: Cascade)
+  cpu  CPU  @relation(fields: [cpuId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, gpuId, cpuId, resolution])
+  @@index([gameId, resolution])
+  @@index([gpuId])
+  @@index([cpuId])
+}
