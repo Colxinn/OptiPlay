@@ -39,6 +39,10 @@ export async function GET(req){
         x.sensor.name.toLowerCase().includes(q)
       )
     : data;
+  filtered.sort((a, b) => {
+    const left = `${a.brand} ${a.model}`.toLowerCase();
+    const right = `${b.brand} ${b.model}`.toLowerCase();
+    return left.localeCompare(right);
+  });
   return new Response(JSON.stringify({ mice: filtered }), { headers:{ 'content-type':'application/json' } });
 }
-

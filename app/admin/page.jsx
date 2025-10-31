@@ -3,6 +3,9 @@ import prisma from "@/lib/prisma";
 import AdminPollCreator from "./poll-creator.jsx";
 import AdminModeration from "./moderation.jsx";
 import AdminNewsRefresh from "./news-refresh.jsx";
+import AdminUserDirectory from "./user-directory.jsx";
+import AdminSponsorApplications from "./sponsors.jsx";
+import AdminPollLog from "./poll-log.jsx";
 
 export default async function AdminPage() {
   const session = await auth();
@@ -16,12 +19,29 @@ export default async function AdminPage() {
     take: 10,
     include: { post: { select: { id: true, title: true } } },
   });
+  const sponsorApplications = await prisma.sponsorApplication.findMany({
+    orderBy: { createdAt: 'desc' },
+    take: 20,
+    include: {
+      user: { select: { id: true, name: true, email: true } },
+    },
+  });
+  const pollHistory = await prisma.poll.findMany({
+    orderBy: { startsAt: 'desc' },
+    take: 10,
+    include: {
+      options: true,
+      createdBy: { select: { id: true, name: true, email: true } },
+    },
+  });
   return (
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold">Owner Panel</h1>
         <p className="text-sm text-gray-400">Welcome, {session?.user?.name || 'Owner'}.</p>
       </div>
+
+      <AdminUserDirectory />
 
       <section className="grid md:grid-cols-2 gap-6">
         <div className="rounded-xl bg-[#0b0b10] border border-white/10 p-4">
@@ -39,6 +59,8 @@ export default async function AdminPage() {
           <AdminNewsRefresh />
         </div>
       </section>
+      <AdminPollLog polls={pollHistory} />
+      <AdminSponsorApplications applications={sponsorApplications} />
     </div>
   );
 }

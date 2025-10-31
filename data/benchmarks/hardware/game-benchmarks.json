@@ -1,0 +1,573 @@
+[
+  {
+    "gameSlug": "overwatch-2",
+    "gpuSlug": "nvidia-rtx-4060",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1080p",
+    "avgFps": 240,
+    "estimatedPowerDraw": 305,
+    "source": "OptiPlay Labs 2025.10",
+    "notes": "Dynamic render scale disabled"
+  },
+  {
+    "gameSlug": "overwatch-2",
+    "gpuSlug": "amd-rx-7800-xt",
+    "cpuSlug": "amd-ryzen-7-7800x3d",
+    "resolution": "1440p",
+    "avgFps": 268,
+    "estimatedPowerDraw": 315,
+    "source": "OptiPlay Labs 2025.10"
+  },
+  {
+    "gameSlug": "overwatch-2",
+    "gpuSlug": "nvidia-rtx-4080",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "4k",
+    "avgFps": 312,
+    "estimatedPowerDraw": 520,
+    "source": "OptiPlay Labs 2025.10"
+  },
+  {
+    "gameSlug": "cs2",
+    "gpuSlug": "nvidia-rtx-4060",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1080p",
+    "avgFps": 298,
+    "estimatedPowerDraw": 285,
+    "source": "OptiPlay Scrim Pack 2025.10",
+    "notes": "Low latency preset, 360 Hz cap"
+  },
+  {
+    "gameSlug": "cs2",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "1440p",
+    "avgFps": 268,
+    "estimatedPowerDraw": 340,
+    "source": "OptiPlay Scrim Pack 2025.10"
+  },
+  {
+    "gameSlug": "cs2",
+    "gpuSlug": "nvidia-rtx-4080",
+    "cpuSlug": "intel-core-i9-13900k",
+    "resolution": "4k",
+    "avgFps": 212,
+    "estimatedPowerDraw": 515,
+    "source": "OptiPlay Scrim Pack 2025.10"
+  },
+  {
+    "gameSlug": "cs2",
+    "gpuSlug": "nvidia-rtx-4060-ti",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1080p",
+    "avgFps": 324,
+    "estimatedPowerDraw": 305,
+    "source": "OptiPlay Scrim Pack 2025.10"
+  },
+  {
+    "gameSlug": "cs2",
+    "gpuSlug": "nvidia-rtx-4070-ti",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "1440p",
+    "avgFps": 298,
+    "estimatedPowerDraw": 360,
+    "source": "OptiPlay Scrim Pack 2025.10"
+  },
+  {
+    "gameSlug": "cs2",
+    "gpuSlug": "nvidia-rtx-4070-ti-super",
+    "cpuSlug": "intel-core-i9-14900k",
+    "resolution": "4k",
+    "avgFps": 238,
+    "estimatedPowerDraw": 540,
+    "source": "OptiPlay Scrim Pack 2025.10"
+  },
+  {
+    "gameSlug": "valorant",
+    "gpuSlug": "amd-rx-7600",
+    "cpuSlug": "amd-ryzen-5-7600",
+    "resolution": "1080p",
+    "avgFps": 320,
+    "estimatedPowerDraw": 210,
+    "source": "Challenger Hub 2025.09"
+  },
+  {
+    "gameSlug": "valorant",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1440p",
+    "avgFps": 286,
+    "estimatedPowerDraw": 320,
+    "source": "Challenger Hub 2025.09"
+  },
+  {
+    "gameSlug": "valorant",
+    "gpuSlug": "nvidia-rtx-3060-ti",
+    "cpuSlug": "intel-core-i5-12600k",
+    "resolution": "1080p",
+    "avgFps": 308,
+    "estimatedPowerDraw": 280,
+    "source": "Challenger Hub 2025.09"
+  },
+  {
+    "gameSlug": "valorant",
+    "gpuSlug": "nvidia-rtx-3070-ti",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "1440p",
+    "avgFps": 294,
+    "estimatedPowerDraw": 345,
+    "source": "Challenger Hub 2025.09"
+  },
+  {
+    "gameSlug": "valorant",
+    "gpuSlug": "nvidia-rtx-3080-ti",
+    "cpuSlug": "intel-core-i9-13900k",
+    "resolution": "4k",
+    "avgFps": 252,
+    "estimatedPowerDraw": 575,
+    "source": "Challenger Hub 2025.09"
+  },
+  {
+    "gameSlug": "valorant",
+    "gpuSlug": "nvidia-rtx-4080",
+    "cpuSlug": "intel-core-i9-14900k",
+    "resolution": "4k",
+    "avgFps": 244,
+    "estimatedPowerDraw": 505,
+    "source": "Challenger Hub 2025.09"
+  },
+  {
+    "gameSlug": "siegex",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1080p",
+    "avgFps": 274,
+    "estimatedPowerDraw": 335,
+    "source": "SiegeX Pro Beta Logs"
+  },
+  {
+    "gameSlug": "siegex",
+    "gpuSlug": "amd-rx-7800-xt",
+    "cpuSlug": "amd-ryzen-7-7800x3d",
+    "resolution": "1440p",
+    "avgFps": 242,
+    "estimatedPowerDraw": 360,
+    "source": "SiegeX Pro Beta Logs"
+  },
+  {
+    "gameSlug": "siegex",
+    "gpuSlug": "nvidia-rtx-4080",
+    "cpuSlug": "intel-core-i9-14900k",
+    "resolution": "4k",
+    "avgFps": 206,
+    "estimatedPowerDraw": 525,
+    "source": "SiegeX Pro Beta Logs"
+  },
+  {
+    "gameSlug": "rainbow-six-siege",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i5-12600k",
+    "resolution": "1080p",
+    "avgFps": 356,
+    "estimatedPowerDraw": 360,
+    "source": "Pro League 2025 profiles"
+  },
+  {
+    "gameSlug": "rainbow-six-siege",
+    "gpuSlug": "amd-rx-7900-xt",
+    "cpuSlug": "amd-ryzen-9-7950x3d",
+    "resolution": "1440p",
+    "avgFps": 402,
+    "estimatedPowerDraw": 470,
+    "source": "Pro League 2025 profiles"
+  },
+  {
+    "gameSlug": "rainbow-six-siege",
+    "gpuSlug": "nvidia-rtx-4090",
+    "cpuSlug": "intel-core-i9-14900k",
+    "resolution": "4k",
+    "avgFps": 438,
+    "estimatedPowerDraw": 690,
+    "source": "Pro League 2025 profiles"
+  },
+  {
+    "gameSlug": "rocket-league",
+    "gpuSlug": "nvidia-rtx-3060",
+    "cpuSlug": "amd-ryzen-5-7600",
+    "resolution": "1080p",
+    "avgFps": 260,
+    "estimatedPowerDraw": 255,
+    "source": "OptiPlay community submission 10/2025"
+  },
+  {
+    "gameSlug": "rocket-league",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1440p",
+    "avgFps": 288,
+    "estimatedPowerDraw": 325,
+    "source": "OptiPlay community submission 10/2025"
+  },
+  {
+    "gameSlug": "rocket-league",
+    "gpuSlug": "amd-rx-7900-xtx",
+    "cpuSlug": "amd-ryzen-7-7800x3d",
+    "resolution": "4k",
+    "avgFps": 314,
+    "estimatedPowerDraw": 475,
+    "source": "OptiPlay community submission 10/2025"
+  },
+  {
+    "gameSlug": "league-of-legends",
+    "gpuSlug": "amd-rx-7600",
+    "cpuSlug": "amd-ryzen-5-7600",
+    "resolution": "1080p",
+    "avgFps": 310,
+    "estimatedPowerDraw": 205,
+    "source": "Challenger scrim logs"
+  },
+  {
+    "gameSlug": "league-of-legends",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "1440p",
+    "avgFps": 342,
+    "estimatedPowerDraw": 360,
+    "source": "Challenger scrim logs"
+  },
+  {
+    "gameSlug": "league-of-legends",
+    "gpuSlug": "nvidia-rtx-4080",
+    "cpuSlug": "intel-core-i9-13900k",
+    "resolution": "4k",
+    "avgFps": 368,
+    "estimatedPowerDraw": 555,
+    "source": "Challenger scrim logs"
+  },
+  {
+    "gameSlug": "roblox",
+    "gpuSlug": "nvidia-rtx-4060",
+    "cpuSlug": "intel-core-i5-12600k",
+    "resolution": "1080p",
+    "avgFps": 210,
+    "estimatedPowerDraw": 250,
+    "source": "OptiPlay Roblox Labs 2025.09",
+    "notes": "Graphics quality 8, dynamic FPS unlocked"
+  },
+  {
+    "gameSlug": "roblox",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1440p",
+    "avgFps": 186,
+    "estimatedPowerDraw": 300,
+    "source": "OptiPlay Roblox Labs 2025.09"
+  },
+  {
+    "gameSlug": "roblox",
+    "gpuSlug": "amd-rx-7800-xt",
+    "cpuSlug": "amd-ryzen-7-7800x3d",
+    "resolution": "4k",
+    "avgFps": 162,
+    "estimatedPowerDraw": 345,
+    "source": "OptiPlay Roblox Labs 2025.09"
+  },
+  {
+    "gameSlug": "roblox",
+    "gpuSlug": "nvidia-gtx-1050-ti",
+    "cpuSlug": "intel-core-i5-12600k",
+    "resolution": "1080p",
+    "avgFps": 78,
+    "estimatedPowerDraw": 140,
+    "source": "OptiPlay Roblox Labs 2025.09"
+  },
+  {
+    "gameSlug": "roblox",
+    "gpuSlug": "nvidia-rtx-2070-super",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1440p",
+    "avgFps": 198,
+    "estimatedPowerDraw": 330,
+    "source": "OptiPlay Roblox Labs 2025.09"
+  },
+  {
+    "gameSlug": "minecraft",
+    "gpuSlug": "nvidia-rtx-3060",
+    "cpuSlug": "amd-ryzen-5-7600",
+    "resolution": "1080p",
+    "avgFps": 188,
+    "estimatedPowerDraw": 235,
+    "source": "OptiPlay Craft Bench 2025.08",
+    "notes": "Vanilla 1.21, fancy graphics on"
+  },
+  {
+    "gameSlug": "minecraft",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1440p",
+    "avgFps": 164,
+    "estimatedPowerDraw": 290,
+    "source": "OptiPlay Craft Bench 2025.08"
+  },
+  {
+    "gameSlug": "minecraft",
+    "gpuSlug": "amd-rx-7900-xtx",
+    "cpuSlug": "amd-ryzen-9-7950x3d",
+    "resolution": "4k",
+    "avgFps": 132,
+    "estimatedPowerDraw": 410,
+    "source": "OptiPlay Craft Bench 2025.08"
+  },
+  {
+    "gameSlug": "minecraft",
+    "gpuSlug": "nvidia-rtx-3060-ti",
+    "cpuSlug": "amd-ryzen-5-7600",
+    "resolution": "1080p",
+    "avgFps": 176,
+    "estimatedPowerDraw": 245,
+    "source": "OptiPlay Craft Bench 2025.08"
+  },
+  {
+    "gameSlug": "minecraft",
+    "gpuSlug": "nvidia-rtx-3080-ti",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "1440p",
+    "avgFps": 196,
+    "estimatedPowerDraw": 395,
+    "source": "OptiPlay Craft Bench 2025.08"
+  },
+  {
+    "gameSlug": "destiny-2",
+    "gpuSlug": "nvidia-rtx-3070",
+    "cpuSlug": "intel-core-i5-12600k",
+    "resolution": "1080p",
+    "avgFps": 138,
+    "estimatedPowerDraw": 325,
+    "source": "Nightfall raid capture"
+  },
+  {
+    "gameSlug": "destiny-2",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "1440p",
+    "avgFps": 174,
+    "estimatedPowerDraw": 390,
+    "source": "Nightfall raid capture"
+  },
+  {
+    "gameSlug": "destiny-2",
+    "gpuSlug": "amd-rx-7900-xt",
+    "cpuSlug": "amd-ryzen-9-7950x3d",
+    "resolution": "4k",
+    "avgFps": 198,
+    "estimatedPowerDraw": 505,
+    "source": "Nightfall raid capture"
+  },
+  {
+    "gameSlug": "rust",
+    "gpuSlug": "nvidia-rtx-3060",
+    "cpuSlug": "intel-core-i5-12600k",
+    "resolution": "1080p",
+    "avgFps": 108,
+    "estimatedPowerDraw": 300,
+    "source": "OptiPlay Survival Suite 2025.09"
+  },
+  {
+    "gameSlug": "rust",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "1440p",
+    "avgFps": 94,
+    "estimatedPowerDraw": 360,
+    "source": "OptiPlay Survival Suite 2025.09"
+  },
+  {
+    "gameSlug": "rust",
+    "gpuSlug": "amd-rx-7900-xt",
+    "cpuSlug": "amd-ryzen-7-7800x3d",
+    "resolution": "4k",
+    "avgFps": 80,
+    "estimatedPowerDraw": 420,
+    "source": "OptiPlay Survival Suite 2025.09"
+  },
+  {
+    "gameSlug": "rust",
+    "gpuSlug": "nvidia-rtx-3080-ti",
+    "cpuSlug": "intel-core-i9-13900k",
+    "resolution": "1440p",
+    "avgFps": 112,
+    "estimatedPowerDraw": 420,
+    "source": "OptiPlay Survival Suite 2025.09"
+  },
+  {
+    "gameSlug": "rust",
+    "gpuSlug": "nvidia-rtx-3090-ti",
+    "cpuSlug": "intel-core-i9-14900k",
+    "resolution": "4k",
+    "avgFps": 98,
+    "estimatedPowerDraw": 690,
+    "source": "OptiPlay Survival Suite 2025.09"
+  },
+  {
+    "gameSlug": "starfield",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "1080p",
+    "avgFps": 96,
+    "estimatedPowerDraw": 395,
+    "source": "OptiPlay Labs 2025.10"
+  },
+  {
+    "gameSlug": "starfield",
+    "gpuSlug": "nvidia-rtx-4080",
+    "cpuSlug": "intel-core-i9-14900k",
+    "resolution": "1440p",
+    "avgFps": 112,
+    "estimatedPowerDraw": 560,
+    "source": "OptiPlay Labs 2025.10"
+  },
+  {
+    "gameSlug": "starfield",
+    "gpuSlug": "amd-rx-7900-xtx",
+    "cpuSlug": "amd-ryzen-9-7950x3d",
+    "resolution": "4k",
+    "avgFps": 118,
+    "estimatedPowerDraw": 610,
+    "source": "OptiPlay Labs 2025.10"
+  },
+  {
+    "gameSlug": "cyberpunk-2077",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1080p",
+    "avgFps": 118,
+    "estimatedPowerDraw": 420,
+    "source": "RT Overdrive benchmark pass"
+  },
+  {
+    "gameSlug": "cyberpunk-2077",
+    "gpuSlug": "nvidia-rtx-4080",
+    "cpuSlug": "intel-core-i9-13900k",
+    "resolution": "1440p",
+    "avgFps": 142,
+    "estimatedPowerDraw": 540,
+    "source": "RT Overdrive benchmark pass"
+  },
+  {
+    "gameSlug": "cyberpunk-2077",
+    "gpuSlug": "nvidia-rtx-4090",
+    "cpuSlug": "intel-core-i9-14900k",
+    "resolution": "4k",
+    "avgFps": 168,
+    "estimatedPowerDraw": 705,
+    "source": "RT Overdrive benchmark pass"
+  },
+  {
+    "gameSlug": "forza-horizon-5",
+    "gpuSlug": "nvidia-rtx-3060",
+    "cpuSlug": "intel-core-i5-12600k",
+    "resolution": "1080p",
+    "avgFps": 122,
+    "estimatedPowerDraw": 305,
+    "source": "Hot Wheels stress loop"
+  },
+  {
+    "gameSlug": "forza-horizon-5",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "1440p",
+    "avgFps": 156,
+    "estimatedPowerDraw": 380,
+    "source": "Hot Wheels stress loop"
+  },
+  {
+    "gameSlug": "forza-horizon-5",
+    "gpuSlug": "amd-rx-7900-xt",
+    "cpuSlug": "amd-ryzen-7-7800x3d",
+    "resolution": "4k",
+    "avgFps": 172,
+    "estimatedPowerDraw": 450,
+    "source": "Hot Wheels stress loop"
+  },
+  {
+    "gameSlug": "fortnite",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1080p",
+    "avgFps": 266,
+    "estimatedPowerDraw": 360,
+    "source": "UEFN competitive build"
+  },
+  {
+    "gameSlug": "fortnite",
+    "gpuSlug": "amd-rx-7800-xt",
+    "cpuSlug": "amd-ryzen-7-7800x3d",
+    "resolution": "1440p",
+    "avgFps": 238,
+    "estimatedPowerDraw": 340,
+    "source": "UEFN competitive build"
+  },
+  {
+    "gameSlug": "fortnite",
+    "gpuSlug": "nvidia-rtx-4080",
+    "cpuSlug": "intel-core-i9-13900k",
+    "resolution": "4k",
+    "avgFps": 208,
+    "estimatedPowerDraw": 515,
+    "source": "UEFN competitive build"
+  },
+  {
+    "gameSlug": "apex-legends",
+    "gpuSlug": "nvidia-rtx-4060",
+    "cpuSlug": "intel-core-i5-12600k",
+    "resolution": "1080p",
+    "avgFps": 202,
+    "estimatedPowerDraw": 285,
+    "source": "OptiPlay BR Suite 2025.10"
+  },
+  {
+    "gameSlug": "apex-legends",
+    "gpuSlug": "nvidia-rtx-4070",
+    "cpuSlug": "intel-core-i5-13600k",
+    "resolution": "1440p",
+    "avgFps": 182,
+    "estimatedPowerDraw": 340,
+    "source": "OptiPlay BR Suite 2025.10"
+  },
+  {
+    "gameSlug": "apex-legends",
+    "gpuSlug": "amd-rx-7900-xt",
+    "cpuSlug": "amd-ryzen-7-7800x3d",
+    "resolution": "4k",
+    "avgFps": 154,
+    "estimatedPowerDraw": 430,
+    "source": "OptiPlay BR Suite 2025.10"
+  },
+  {
+    "gameSlug": "apex-legends",
+    "gpuSlug": "nvidia-rtx-2070-super",
+    "cpuSlug": "intel-core-i5-12600k",
+    "resolution": "1080p",
+    "avgFps": 182,
+    "estimatedPowerDraw": 305,
+    "source": "OptiPlay BR Suite 2025.10"
+  },
+  {
+    "gameSlug": "apex-legends",
+    "gpuSlug": "nvidia-rtx-3070-ti",
+    "cpuSlug": "intel-core-i7-13700k",
+    "resolution": "1440p",
+    "avgFps": 198,
+    "estimatedPowerDraw": 360,
+    "source": "OptiPlay BR Suite 2025.10"
+  },
+  {
+    "gameSlug": "apex-legends",
+    "gpuSlug": "nvidia-rtx-3090-ti",
+    "cpuSlug": "intel-core-i9-14900k",
+    "resolution": "4k",
+    "avgFps": 176,
+    "estimatedPowerDraw": 700,
+    "source": "OptiPlay BR Suite 2025.10"
+  }
+]

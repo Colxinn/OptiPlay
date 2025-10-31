@@ -29,15 +29,101 @@ function pickBestHour(samples) {
   return best; // UTC hour
 }
 
+function loadDatasets(root) {
+  const datasets = [];
+  const sourcesDir = path.join(root, "sources");
+  if (fs.existsSync(sourcesDir)) {
+    const files = fs
+      .readdirSync(sourcesDir)
+      .filter((f) => f.endsWith(".json"))
+      .sort();
+    for (const file of files) {
+      try {
+        const json = JSON.parse(
+          fs.readFileSync(path.join(sourcesDir, file), "utf8")
+        );
+        datasets.push(json);
+      } catch {}
+    }
+  }
+
+  const legacyPath = path.join(root, "ping_data.json");
+  if (fs.existsSync(legacyPath)) {
+    try {
+      datasets.push(JSON.parse(fs.readFileSync(legacyPath, "utf8")));
+    } catch {}
+  }
+
+  return datasets;
+}
+
+function mergeDatasets(datasets) {
+  const merged = {};
+  for (const dataset of datasets) {
+    for (const [game, regions] of Object.entries(dataset)) {
+      merged[game] ??= {};
+      for (const [region, entry] of Object.entries(regions)) {
+        if (!entry) continue;
+        const weight = Math.max(entry.samples ?? 0, 1);
+        const bucket = (merged[game][region] ??= {
+          pingWeighted: 0,
+          hourWeighted: 0,
+          samples: 0,
+        });
+        bucket.pingWeighted += (entry.avg_ping ?? 0) * weight;
+        bucket.hourWeighted += (entry.best_hour_local ?? 21) * weight;
+        bucket.samples += entry.samples ?? 0;
+        bucket.weights = (bucket.weights ?? 0) + weight;
+      }
+    }
+  }
+
+  const byGame = {};
+  for (const [game, regions] of Object.entries(merged)) {
+    byGame[game] = {};
+    for (const [region, bucket] of Object.entries(regions)) {
+      const divisor = bucket.weights || 1;
+      const avgPing =
+        bucket.pingWeighted === 0 && divisor === 0
+          ? null
+          : Math.round(bucket.pingWeighted / divisor);
+      const bestHour =
+        bucket.hourWeighted === 0 && divisor === 0
+          ? 21
+          : Math.round(bucket.hourWeighted / divisor) % 24;
+      byGame[game][region] = {
+        avg_ping: avgPing,
+        best_hour_local: bestHour,
+        samples: bucket.samples,
+      };
+    }
+  }
+  return byGame;
+}
+
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const game = searchParams.get("game") || "Roblox";
   const regionFilter = searchParams.get("region");
 
-  const p = path.join(process.cwd(), "data", "ping", "ping_data.json");
-  const json = JSON.parse(fs.readFileSync(p, "utf8"));
-  const games = Object.keys(json);
-  const byRegion = json[game] || {};
+  const root = path.join(process.cwd(), "data", "ping");
+  const datasets = loadDatasets(root);
+  if (!datasets.length) {
+    return new Response(
+      JSON.stringify({
+        ok: false,
+        data: [],
+        games: [],
+        regions: REGIONS.map((r) => r.key),
+        reason: "No ping datasets available",
+      }),
+      { status: 200 }
+    );
+  }
+
+  const merged = mergeDatasets(datasets);
+  const games = Object.keys(merged).sort();
+  const byRegion = merged[game] || {};
 
   const data = REGIONS
     .filter((r) => !regionFilter || r.key === regionFilter)
@@ -51,3 +137,5 @@ export async function GET(req) {
 
   return new Response(JSON.stringify({ ok: true, data, games, regions: REGIONS.map(r=>r.key) }), { status: 200 });
 }
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";

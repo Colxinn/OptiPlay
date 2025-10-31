@@ -1,0 +1,19 @@
+{
+  "Roblox": {
+    "NA-East": { "avg_ping": 31, "best_hour_local": 21, "samples": 45 },
+    "NA-West": { "avg_ping": 37, "best_hour_local": 22, "samples": 40 },
+    "EU-West": { "avg_ping": 29, "best_hour_local": 20, "samples": 55 },
+    "EU-East": { "avg_ping": 32, "best_hour_local": 21, "samples": 48 },
+    "Asia-NE": { "avg_ping": 41, "best_hour_local": 21, "samples": 38 },
+    "Asia-SE": { "avg_ping": 47, "best_hour_local": 23, "samples": 36 }
+  },
+  "CS2": {
+    "NA-East": { "avg_ping": 27, "best_hour_local": 20, "samples": 140 },
+    "NA-West": { "avg_ping": 32, "best_hour_local": 21, "samples": 120 },
+    "EU-West": { "avg_ping": 25, "best_hour_local": 19, "samples": 160 }
+  },
+  "Overwatch 2": {
+    "NA-West": { "avg_ping": 35, "best_hour_local": 21, "samples": 130 },
+    "EU-West": { "avg_ping": 29, "best_hour_local": 20, "samples": 110 }
+  }
+}

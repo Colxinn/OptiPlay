@@ -16,9 +16,31 @@ export default function DpiCalculator(){
     return ()=>ctrl.abort();
   },[q]);
 
-  useEffect(()=>{ if(mice.length && !selected) setSelected(mice[0]); },[mice,selected]);
+  useEffect(() => {
+    if (mice.length) {
+      if (!selected) setSelected(mice[0]);
+    } else if (selected) {
+      setSelected(null);
+    }
+  }, [mice, selected]);
 
   const sugg = useMemo(()=> selected ? suggestionsFor(desired, selected.sensor) : [], [selected, desired]);
+  const searchSuggestions = useMemo(() => {
+    const seen = new Set();
+    const list = [];
+    mice.forEach((m) => {
+      const full = `${m.brand} ${m.model}`;
+      if (!seen.has(full)) {
+        seen.add(full);
+        list.push(full);
+      }
+      if (m.sensor?.name && !seen.has(m.sensor.name)) {
+        seen.add(m.sensor.name);
+        list.push(m.sensor.name);
+      }
+    });
+    return list.slice(0, 50);
+  }, [mice]);
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
@@ -27,13 +49,30 @@ export default function DpiCalculator(){
 
       <div className="grid gap-4">
         <label className="text-sm">Search Mouse
-          <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Brand, model or sensor" className="w-full mt-1 bg-[#0b0b10] p-2 rounded border border-white/10" />
+          <input
+            list="mouse-search-options"
+            value={q}
+            onChange={e=>setQ(e.target.value)}
+            placeholder="Brand, model or sensor"
+            className="w-full mt-1 bg-[#0b0b10] p-2 rounded border border-white/10"
+          />
+          <datalist id="mouse-search-options">
+            {searchSuggestions.map((value) => (
+              <option key={value} value={value} />
+            ))}
+          </datalist>
         </label>
 
         <label className="text-sm">Select Model
-          <select className="w-full mt-1 bg-[#0b0b10] p-2 rounded border border-white/10" value={selected? `${selected.brand} ${selected.model}`:''} onChange={e=>{
-            const v=e.target.value; const hit = mice.find(m=>`${m.brand} ${m.model}`===v); setSelected(hit||null);
-          }}>
+          <select
+            className="w-full mt-1 bg-[#0b0b10] p-2 rounded border border-white/10"
+            value={selected? `${selected.brand} ${selected.model}`:''}
+            onChange={e=>{
+              const v=e.target.value; const hit = mice.find(m=>`${m.brand} ${m.model}`===v); setSelected(hit||null);
+            }}
+            disabled={!mice.length}
+          >
+            {mice.length === 0 ? <option value="">No matches</option> : null}
             {mice.map(m=> <option key={`${m.brand}-${m.model}`}>{`${m.brand} ${m.model}`}</option>)}
           </select>
         </label>
@@ -80,3 +119,4 @@ export default function DpiCalculator(){
     </div>
   );
 }
+

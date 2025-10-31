@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import DailyTip from './DailyTip.jsx';
 import DailyPoll from './DailyPoll.jsx';
+import SponsorApplicationCard from './SponsorApplicationCard.jsx';
 
 export default function LeftSidebar(){
   return (
@@ -16,6 +17,7 @@ export default function LeftSidebar(){
       </div>
       <DailyPoll />
       <DailyTip />
+      <SponsorApplicationCard />
     </div>
   );
 }

@@ -1,0 +1,452 @@
+[
+  {
+    "game": "Overwatch 2",
+    "gpu": "RTX 4060",
+    "avg_ping": 23,
+    "avg_fps": 242
+  },
+  {
+    "game": "Overwatch 2",
+    "gpu": "RTX 4070",
+    "avg_ping": 22,
+    "avg_fps": 278
+  },
+  {
+    "game": "Overwatch 2",
+    "gpu": "RTX 4080",
+    "avg_ping": 22,
+    "avg_fps": 322
+  },
+  {
+    "game": "Overwatch 2",
+    "gpu": "RX 7800 XT",
+    "avg_ping": 24,
+    "avg_fps": 268
+  },
+  {
+    "game": "Overwatch 2",
+    "gpu": "RX 7900 XTX",
+    "avg_ping": 24,
+    "avg_fps": 334
+  },
+  {
+    "game": "Rainbow Six Siege",
+    "gpu": "RTX 4060",
+    "avg_ping": 21,
+    "avg_fps": 305
+  },
+  {
+    "game": "Rainbow Six Siege",
+    "gpu": "RTX 4070",
+    "avg_ping": 21,
+    "avg_fps": 352
+  },
+  {
+    "game": "Rainbow Six Siege",
+    "gpu": "RTX 4080",
+    "avg_ping": 20,
+    "avg_fps": 398
+  },
+  {
+    "game": "Rainbow Six Siege",
+    "gpu": "RX 7700 XT",
+    "avg_ping": 22,
+    "avg_fps": 288
+  },
+  {
+    "game": "Rainbow Six Siege",
+    "gpu": "RX 7900 XT",
+    "avg_ping": 21,
+    "avg_fps": 362
+  },
+  {
+    "game": "Rocket League",
+    "gpu": "GTX 1650",
+    "avg_ping": 26,
+    "avg_fps": 168
+  },
+  {
+    "game": "Rocket League",
+    "gpu": "RTX 2060",
+    "avg_ping": 25,
+    "avg_fps": 212
+  },
+  {
+    "game": "Rocket League",
+    "gpu": "RTX 3060",
+    "avg_ping": 24,
+    "avg_fps": 244
+  },
+  {
+    "game": "Rocket League",
+    "gpu": "RTX 4060",
+    "avg_ping": 24,
+    "avg_fps": 272
+  },
+  {
+    "game": "Rocket League",
+    "gpu": "RX 7600",
+    "avg_ping": 24,
+    "avg_fps": 238
+  },
+  {
+    "game": "League of Legends",
+    "gpu": "GTX 960",
+    "avg_ping": 19,
+    "avg_fps": 182
+  },
+  {
+    "game": "League of Legends",
+    "gpu": "GTX 1650",
+    "avg_ping": 19,
+    "avg_fps": 224
+  },
+  {
+    "game": "League of Legends",
+    "gpu": "RTX 3050",
+    "avg_ping": 18,
+    "avg_fps": 255
+  },
+  {
+    "game": "League of Legends",
+    "gpu": "RTX 4070",
+    "avg_ping": 18,
+    "avg_fps": 332
+  },
+  {
+    "game": "League of Legends",
+    "gpu": "RX 7800 XT",
+    "avg_ping": 18,
+    "avg_fps": 318
+  },
+  {
+    "game": "Dota 2",
+    "gpu": "GTX 1050 Ti",
+    "avg_ping": 27,
+    "avg_fps": 118
+  },
+  {
+    "game": "Dota 2",
+    "gpu": "GTX 1660 Super",
+    "avg_ping": 26,
+    "avg_fps": 156
+  },
+  {
+    "game": "Dota 2",
+    "gpu": "RTX 3060",
+    "avg_ping": 25,
+    "avg_fps": 191
+  },
+  {
+    "game": "Dota 2",
+    "gpu": "RTX 4080",
+    "avg_ping": 24,
+    "avg_fps": 248
+  },
+  {
+    "game": "Dota 2",
+    "gpu": "RX 7900 XT",
+    "avg_ping": 25,
+    "avg_fps": 238
+  },
+  {
+    "game": "Destiny 2",
+    "gpu": "RTX 2060",
+    "avg_ping": 31,
+    "avg_fps": 112
+  },
+  {
+    "game": "Destiny 2",
+    "gpu": "RTX 3060 Ti",
+    "avg_ping": 30,
+    "avg_fps": 142
+  },
+  {
+    "game": "Destiny 2",
+    "gpu": "RTX 4070",
+    "avg_ping": 30,
+    "avg_fps": 188
+  },
+  {
+    "game": "Destiny 2",
+    "gpu": "RX 7900 XT",
+    "avg_ping": 29,
+    "avg_fps": 204
+  },
+  {
+    "game": "Destiny 2",
+    "gpu": "RTX 4090",
+    "avg_ping": 29,
+    "avg_fps": 226
+  },
+  {
+    "game": "PUBG: Battlegrounds",
+    "gpu": "GTX 1060",
+    "avg_ping": 34,
+    "avg_fps": 88
+  },
+  {
+    "game": "PUBG: Battlegrounds",
+    "gpu": "GTX 1660 Ti",
+    "avg_ping": 33,
+    "avg_fps": 112
+  },
+  {
+    "game": "PUBG: Battlegrounds",
+    "gpu": "RTX 3060",
+    "avg_ping": 32,
+    "avg_fps": 136
+  },
+  {
+    "game": "PUBG: Battlegrounds",
+    "gpu": "RTX 4070 Ti",
+    "avg_ping": 31,
+    "avg_fps": 168
+  },
+  {
+    "game": "PUBG: Battlegrounds",
+    "gpu": "RX 7900 XTX",
+    "avg_ping": 30,
+    "avg_fps": 182
+  },
+  {
+    "game": "Halo Infinite",
+    "gpu": "RTX 3070",
+    "avg_ping": 28,
+    "avg_fps": 116
+  },
+  {
+    "game": "Halo Infinite",
+    "gpu": "RTX 3080",
+    "avg_ping": 28,
+    "avg_fps": 134
+  },
+  {
+    "game": "Halo Infinite",
+    "gpu": "RTX 4070 Ti",
+    "avg_ping": 27,
+    "avg_fps": 156
+  },
+  {
+    "game": "Halo Infinite",
+    "gpu": "RTX 4090",
+    "avg_ping": 27,
+    "avg_fps": 192
+  },
+  {
+    "game": "Halo Infinite",
+    "gpu": "RX 7800 XT",
+    "avg_ping": 27,
+    "avg_fps": 144
+  },
+  {
+    "game": "Valorant",
+    "gpu": "GTX 1050 Ti",
+    "avg_ping": 20,
+    "avg_fps": 228
+  },
+  {
+    "game": "Valorant",
+    "gpu": "GTX 1650",
+    "avg_ping": 20,
+    "avg_fps": 268
+  },
+  {
+    "game": "Valorant",
+    "gpu": "RTX 3050",
+    "avg_ping": 19,
+    "avg_fps": 312
+  },
+  {
+    "game": "Valorant",
+    "gpu": "RTX 4060",
+    "avg_ping": 19,
+    "avg_fps": 356
+  },
+  {
+    "game": "Valorant",
+    "gpu": "RX 7600",
+    "avg_ping": 19,
+    "avg_fps": 332
+  },
+  {
+    "game": "Street Fighter 6",
+    "gpu": "GTX 1660 Super",
+    "avg_ping": 32,
+    "avg_fps": 114
+  },
+  {
+    "game": "Street Fighter 6",
+    "gpu": "RTX 2060",
+    "avg_ping": 31,
+    "avg_fps": 132
+  },
+  {
+    "game": "Street Fighter 6",
+    "gpu": "RTX 3060 Ti",
+    "avg_ping": 30,
+    "avg_fps": 158
+  },
+  {
+    "game": "Street Fighter 6",
+    "gpu": "RTX 4070",
+    "avg_ping": 30,
+    "avg_fps": 184
+  },
+  {
+    "game": "Street Fighter 6",
+    "gpu": "RX 7800 XT",
+    "avg_ping": 30,
+    "avg_fps": 176
+  },
+  {
+    "game": "Forza Horizon 5",
+    "gpu": "GTX 1660 Ti",
+    "avg_ping": 35,
+    "avg_fps": 92
+  },
+  {
+    "game": "Forza Horizon 5",
+    "gpu": "RTX 3060",
+    "avg_ping": 34,
+    "avg_fps": 118
+  },
+  {
+    "game": "Forza Horizon 5",
+    "gpu": "RTX 4070",
+    "avg_ping": 33,
+    "avg_fps": 148
+  },
+  {
+    "game": "Forza Horizon 5",
+    "gpu": "RTX 4080",
+    "avg_ping": 33,
+    "avg_fps": 174
+  },
+  {
+    "game": "Forza Horizon 5",
+    "gpu": "RX 7900 XT",
+    "avg_ping": 32,
+    "avg_fps": 168
+  },
+  {
+    "game": "Cyberpunk 2077 (2.0)",
+    "gpu": "RTX 3060",
+    "avg_ping": 37,
+    "avg_fps": 78
+  },
+  {
+    "game": "Cyberpunk 2077 (2.0)",
+    "gpu": "RTX 4070",
+    "avg_ping": 36,
+    "avg_fps": 112
+  },
+  {
+    "game": "Cyberpunk 2077 (2.0)",
+    "gpu": "RTX 4080",
+    "avg_ping": 36,
+    "avg_fps": 138
+  },
+  {
+    "game": "Cyberpunk 2077 (2.0)",
+    "gpu": "RTX 4090 (DLSS 3)",
+    "avg_ping": 36,
+    "avg_fps": 168
+  },
+  {
+    "game": "Cyberpunk 2077 (2.0)",
+    "gpu": "RX 7900 XTX",
+    "avg_ping": 37,
+    "avg_fps": 132
+  },
+  {
+    "game": "Starfield",
+    "gpu": "RTX 4070",
+    "avg_ping": 39,
+    "avg_fps": 82
+  },
+  {
+    "game": "Starfield",
+    "gpu": "RTX 4080",
+    "avg_ping": 38,
+    "avg_fps": 96
+  },
+  {
+    "game": "Starfield",
+    "gpu": "RTX 4090",
+    "avg_ping": 38,
+    "avg_fps": 118
+  },
+  {
+    "game": "Starfield",
+    "gpu": "RX 7800 XT",
+    "avg_ping": 39,
+    "avg_fps": 88
+  },
+  {
+    "game": "Starfield",
+    "gpu": "RX 7900 XT",
+    "avg_ping": 38,
+    "avg_fps": 104
+  },
+  {
+    "game": "Elden Ring",
+    "gpu": "GTX 1660 Super",
+    "avg_ping": 35,
+    "avg_fps": 70
+  },
+  {
+    "game": "Elden Ring",
+    "gpu": "RTX 3060",
+    "avg_ping": 34,
+    "avg_fps": 88
+  },
+  {
+    "game": "Elden Ring",
+    "gpu": "RTX 3080",
+    "avg_ping": 33,
+    "avg_fps": 108
+  },
+  {
+    "game": "Elden Ring",
+    "gpu": "RTX 4080",
+    "avg_ping": 33,
+    "avg_fps": 124
+  },
+  {
+    "game": "Elden Ring",
+    "gpu": "RX 7900 XT",
+    "avg_ping": 34,
+    "avg_fps": 118
+  },
+  {
+    "game": "Minecraft (Shaders)",
+    "gpu": "GTX 1660 Ti",
+    "avg_ping": 18,
+    "avg_fps": 74
+  },
+  {
+    "game": "Minecraft (Shaders)",
+    "gpu": "RTX 3060",
+    "avg_ping": 18,
+    "avg_fps": 96
+  },
+  {
+    "game": "Minecraft (Shaders)",
+    "gpu": "RTX 4070",
+    "avg_ping": 18,
+    "avg_fps": 124
+  },
+  {
+    "game": "Minecraft (Shaders)",
+    "gpu": "RTX 4080",
+    "avg_ping": 18,
+    "avg_fps": 146
+  },
+  {
+    "game": "Minecraft (Shaders)",
+    "gpu": "RX 7900 XTX",
+    "avg_ping": 18,
+    "avg_fps": 138
+  }
+]

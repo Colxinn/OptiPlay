@@ -1,3 +1,4 @@
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 export async function GET(_req, { params }) {
@@ -5,10 +6,30 @@ export async function GET(_req, { params }) {
   const post = await prisma.post.findUnique({
     where: { id },
     include: {
-      author: { select: { id: true, name: true, image: true } },
+      author: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+          isOwner: true,
+          isMuted: true,
+          muteExpiresAt: true,
+        },
+      },
       comments: {
         orderBy: { createdAt: "asc" },
-        include: { author: { select: { id: true, name: true, image: true } } },
+        include: {
+          author: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+              isOwner: true,
+              isMuted: true,
+              muteExpiresAt: true,
+            },
+          },
+        },
       },
       votes: true,
     },
@@ -18,3 +39,30 @@ export async function GET(_req, { params }) {
   return new Response(JSON.stringify({ post: { ...post, score } }), { status: 200 });
 }
 
+export async function DELETE(_req, { params }) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+  }
+
+  const post = await prisma.post.findUnique({
+    where: { id: params.id },
+    select: { id: true, authorId: true },
+  });
+  if (!post) {
+    return new Response(JSON.stringify({ error: "Post not found" }), { status: 404 });
+  }
+
+  const isOwner = session.user.isOwner;
+  const isAuthor = session.user.id === post.authorId;
+  if (!isOwner && !isAuthor) {
+    return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 });
+  }
+
+  await prisma.post.update({
+    where: { id: params.id },
+    data: { isRemoved: true, isPinned: false },
+  });
+
+  return new Response(JSON.stringify({ ok: true }), { status: 200 });
+}

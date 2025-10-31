@@ -1,0 +1,21 @@
+{
+  "Roblox": {
+    "NA-East": { "avg_ping": 34, "best_hour_local": 20, "samples": 60 },
+    "NA-West": { "avg_ping": 39, "best_hour_local": 21, "samples": 55 },
+    "EU-West": { "avg_ping": 27, "best_hour_local": 19, "samples": 70 },
+    "EU-East": { "avg_ping": 30, "best_hour_local": 20, "samples": 65 },
+    "SA": { "avg_ping": 57, "best_hour_local": 23, "samples": 22 },
+    "Asia-NE": { "avg_ping": 44, "best_hour_local": 22, "samples": 30 },
+    "Asia-SE": { "avg_ping": 49, "best_hour_local": 22, "samples": 32 },
+    "Oceania": { "avg_ping": 54, "best_hour_local": 22, "samples": 20 }
+  },
+  "League of Legends": {
+    "NA-East": { "avg_ping": 27, "best_hour_local": 19, "samples": 150 },
+    "EU-West": { "avg_ping": 23, "best_hour_local": 19, "samples": 200 },
+    "Asia-NE": { "avg_ping": 24, "best_hour_local": 21, "samples": 210 }
+  },
+  "Valorant": {
+    "NA-East": { "avg_ping": 25, "best_hour_local": 19, "samples": 100 },
+    "EU-West": { "avg_ping": 21, "best_hour_local": 20, "samples": 120 }
+  }
+}

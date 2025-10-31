@@ -34,13 +34,7 @@ export default function HomeClient() {
         </div>
 
         {/* Heatmap on homepage */}
-        <div className="rounded-xl bg-[#0b0b10] border border-white/10 p-2">
-          <div className="px-2 pt-2 pb-1 flex items-center">
-            <div className="font-semibold">Ping Heatmap</div>
-            <a href="/heatmap" className="ml-auto text-xs text-purple-300 hover:text-purple-200">Open full view</a>
-          </div>
-          <PingHeatmap height={420} />
-        </div>
+        <PingHeatmap height={360} compact />
       </section>
       <aside className="order-3 space-y-4">
         <FeaturedCard />

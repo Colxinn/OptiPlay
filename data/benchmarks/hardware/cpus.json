@@ -1,0 +1,98 @@
+[
+  {
+    "slug": "intel-core-i5-13600k",
+    "name": "Intel Core i5-13600K",
+    "family": "Intel 13th Gen",
+    "architecture": "Raptor Lake",
+    "releaseYear": 2022,
+    "benchmarkScore": 255,
+    "cores": 14,
+    "threads": 20,
+    "tdpWatts": 181,
+    "priceUsd": 319
+  },
+  {
+    "slug": "intel-core-i7-13700k",
+    "name": "Intel Core i7-13700K",
+    "family": "Intel 13th Gen",
+    "architecture": "Raptor Lake",
+    "releaseYear": 2022,
+    "benchmarkScore": 298,
+    "cores": 16,
+    "threads": 24,
+    "tdpWatts": 253,
+    "priceUsd": 429
+  },
+  {
+    "slug": "intel-core-i9-13900k",
+    "name": "Intel Core i9-13900K",
+    "family": "Intel 13th Gen",
+    "architecture": "Raptor Lake",
+    "releaseYear": 2022,
+    "benchmarkScore": 335,
+    "cores": 24,
+    "threads": 32,
+    "tdpWatts": 253,
+    "priceUsd": 589
+  },
+  {
+    "slug": "amd-ryzen-7-7800x3d",
+    "name": "AMD Ryzen 7 7800X3D",
+    "family": "AMD Ryzen 7000",
+    "architecture": "Zen 4",
+    "releaseYear": 2023,
+    "benchmarkScore": 310,
+    "cores": 8,
+    "threads": 16,
+    "tdpWatts": 120,
+    "priceUsd": 449
+  },
+  {
+    "slug": "amd-ryzen-9-7950x3d",
+    "name": "AMD Ryzen 9 7950X3D",
+    "family": "AMD Ryzen 7000",
+    "architecture": "Zen 4",
+    "releaseYear": 2023,
+    "benchmarkScore": 338,
+    "cores": 16,
+    "threads": 32,
+    "tdpWatts": 162,
+    "priceUsd": 699
+  },
+  {
+    "slug": "intel-core-i5-12600k",
+    "name": "Intel Core i5-12600K",
+    "family": "Intel 12th Gen",
+    "architecture": "Alder Lake",
+    "releaseYear": 2021,
+    "benchmarkScore": 228,
+    "cores": 10,
+    "threads": 16,
+    "tdpWatts": 150,
+    "priceUsd": 249
+  },
+  {
+    "slug": "amd-ryzen-5-7600",
+    "name": "AMD Ryzen 5 7600",
+    "family": "AMD Ryzen 7000",
+    "architecture": "Zen 4",
+    "releaseYear": 2023,
+    "benchmarkScore": 210,
+    "cores": 6,
+    "threads": 12,
+    "tdpWatts": 65,
+    "priceUsd": 229
+  },
+  {
+    "slug": "intel-core-i9-14900k",
+    "name": "Intel Core i9-14900K",
+    "family": "Intel 14th Gen",
+    "architecture": "Raptor Lake Refresh",
+    "releaseYear": 2023,
+    "benchmarkScore": 348,
+    "cores": 24,
+    "threads": 32,
+    "tdpWatts": 253,
+    "priceUsd": 599
+  }
+]

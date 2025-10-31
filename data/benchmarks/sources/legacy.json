@@ -1,0 +1,290 @@
+[
+  {
+    "game": "Apex Legends",
+    "gpu": "GTX 960",
+    "avg_ping": 36,
+    "avg_fps": 72
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "GTX 970",
+    "avg_ping": 35,
+    "avg_fps": 84
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "GTX 980",
+    "avg_ping": 34,
+    "avg_fps": 96
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "GTX 980 Ti",
+    "avg_ping": 33,
+    "avg_fps": 110
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "GTX 1060 6GB",
+    "avg_ping": 33,
+    "avg_fps": 118
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "GTX 1070",
+    "avg_ping": 32,
+    "avg_fps": 128
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "GTX 1080",
+    "avg_ping": 31,
+    "avg_fps": 142
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "GTX 1080 Ti",
+    "avg_ping": 30,
+    "avg_fps": 158
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "R9 390",
+    "avg_ping": 35,
+    "avg_fps": 82
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "RX 480",
+    "avg_ping": 34,
+    "avg_fps": 94
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "RX 580",
+    "avg_ping": 33,
+    "avg_fps": 102
+  },
+  {
+    "game": "Apex Legends",
+    "gpu": "Vega 56",
+    "avg_ping": 32,
+    "avg_fps": 118
+  },
+  {
+    "game": "CS2",
+    "gpu": "GTX 960",
+    "avg_ping": 35,
+    "avg_fps": 180
+  },
+  {
+    "game": "CS2",
+    "gpu": "GTX 970",
+    "avg_ping": 34,
+    "avg_fps": 210
+  },
+  {
+    "game": "CS2",
+    "gpu": "GTX 980",
+    "avg_ping": 33,
+    "avg_fps": 235
+  },
+  {
+    "game": "CS2",
+    "gpu": "GTX 980 Ti",
+    "avg_ping": 32,
+    "avg_fps": 260
+  },
+  {
+    "game": "CS2",
+    "gpu": "GTX 1060 6GB",
+    "avg_ping": 31,
+    "avg_fps": 280
+  },
+  {
+    "game": "CS2",
+    "gpu": "GTX 1070",
+    "avg_ping": 30,
+    "avg_fps": 305
+  },
+  {
+    "game": "CS2",
+    "gpu": "GTX 1080",
+    "avg_ping": 29,
+    "avg_fps": 330
+  },
+  {
+    "game": "CS2",
+    "gpu": "GTX 1080 Ti",
+    "avg_ping": 29,
+    "avg_fps": 360
+  },
+  {
+    "game": "CS2",
+    "gpu": "R9 390",
+    "avg_ping": 34,
+    "avg_fps": 215
+  },
+  {
+    "game": "CS2",
+    "gpu": "RX 480",
+    "avg_ping": 33,
+    "avg_fps": 240
+  },
+  {
+    "game": "CS2",
+    "gpu": "RX 580",
+    "avg_ping": 32,
+    "avg_fps": 255
+  },
+  {
+    "game": "CS2",
+    "gpu": "Vega 56",
+    "avg_ping": 31,
+    "avg_fps": 280
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "GTX 960",
+    "avg_ping": 39,
+    "avg_fps": 88
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "GTX 970",
+    "avg_ping": 38,
+    "avg_fps": 104
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "GTX 980",
+    "avg_ping": 37,
+    "avg_fps": 116
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "GTX 980 Ti",
+    "avg_ping": 36,
+    "avg_fps": 132
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "GTX 1060 6GB",
+    "avg_ping": 35,
+    "avg_fps": 144
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "GTX 1070",
+    "avg_ping": 34,
+    "avg_fps": 158
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "GTX 1080",
+    "avg_ping": 33,
+    "avg_fps": 172
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "GTX 1080 Ti",
+    "avg_ping": 33,
+    "avg_fps": 188
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "R9 390",
+    "avg_ping": 37,
+    "avg_fps": 112
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "RX 480",
+    "avg_ping": 36,
+    "avg_fps": 126
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "RX 580",
+    "avg_ping": 35,
+    "avg_fps": 138
+  },
+  {
+    "game": "Fortnite",
+    "gpu": "Vega 56",
+    "avg_ping": 34,
+    "avg_fps": 152
+  },
+  {
+    "game": "Valorant",
+    "gpu": "GTX 960",
+    "avg_ping": 33,
+    "avg_fps": 190
+  },
+  {
+    "game": "Valorant",
+    "gpu": "GTX 970",
+    "avg_ping": 32,
+    "avg_fps": 220
+  },
+  {
+    "game": "Valorant",
+    "gpu": "GTX 980",
+    "avg_ping": 31,
+    "avg_fps": 240
+  },
+  {
+    "game": "Valorant",
+    "gpu": "GTX 980 Ti",
+    "avg_ping": 30,
+    "avg_fps": 268
+  },
+  {
+    "game": "Valorant",
+    "gpu": "GTX 1060 6GB",
+    "avg_ping": 29,
+    "avg_fps": 284
+  },
+  {
+    "game": "Valorant",
+    "gpu": "GTX 1070",
+    "avg_ping": 28,
+    "avg_fps": 310
+  },
+  {
+    "game": "Valorant",
+    "gpu": "GTX 1080",
+    "avg_ping": 27,
+    "avg_fps": 334
+  },
+  {
+    "game": "Valorant",
+    "gpu": "GTX 1080 Ti",
+    "avg_ping": 27,
+    "avg_fps": 356
+  },
+  {
+    "game": "Valorant",
+    "gpu": "R9 390",
+    "avg_ping": 32,
+    "avg_fps": 212
+  },
+  {
+    "game": "Valorant",
+    "gpu": "RX 480",
+    "avg_ping": 31,
+    "avg_fps": 236
+  },
+  {
+    "game": "Valorant",
+    "gpu": "RX 580",
+    "avg_ping": 30,
+    "avg_fps": 252
+  },
+  {
+    "game": "Valorant",
+    "gpu": "Vega 56",
+    "avg_ping": 29,
+    "avg_fps": 276
+  }
+]

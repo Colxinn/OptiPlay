@@ -29,9 +29,9 @@ export default function AdminPollCreator() {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({ question, game, options: clean, startsAt, endsAt })
       });
-      const j = await res.json();
-      if(!res.ok) throw new Error(j.error||'Failed creating poll');
-      setMsg('Poll created ✔');
+      const payload = await res.json().catch(() => null);
+      if(!res.ok) throw new Error(payload?.error||'Failed creating poll');
+      setMsg('Poll created successfully!');
     }catch(e){ setMsg(e.message); }
     finally{ setLoading(false); }
   }
@@ -62,4 +62,5 @@ export default function AdminPollCreator() {
     </div>
   );
 }
+
 

@@ -178,7 +178,7 @@ export default function RobloxOptimizerGuide() {
         <ul className="list-disc pl-5 space-y-1">
           <li>Update Roblox via Microsoft Store or the Roblox launcher.</li>
           <li>Install the latest GPU drivers: NVIDIA GeForce Experience, AMD Adrenalin, or Intel Arc Control.</li>
-          <li>Perform a clean install if you’ve had issues; reboot after install.</li>
+          <li>Perform a clean install if you've had issues; reboot after install.</li>
         </ul>
       ),
     },
@@ -271,29 +271,29 @@ export default function RobloxOptimizerGuide() {
       icon: icons.network,
       content: (
         <ul className="list-disc pl-5 space-y-1">
-          <li>Prefer wired Ethernet over Wi‑Fi for lower latency.</li>
+          <li>Prefer wired Ethernet over Wi-Fi for lower latency.</li>
           <li>Close downloads/streams on your network; enable QoS if available.</li>
           <li>Use nearest servers when selectable; avoid VPNs unless required.</li>
         </ul>
       ),
     },
     {
-      title: "In‑game graphics: shadows off, textures low, short view distance",
+      title: "In-game graphics: shadows off, textures low, short view distance",
       icon: icons.ingame,
       content: (
         <ul className="list-disc pl-5 space-y-1">
           <li>Shadows: Off; Ambient Occlusion: Off when possible.</li>
           <li>Textures: Low or Medium; disable motion blur.</li>
-          <li>View distance: Short/Medium; turn down post‑processing.</li>
+          <li>View distance: Short/Medium; turn down post-processing.</li>
         </ul>
       ),
     },
   ];
 
   const fpsRows = [
-    { rig: "Low‑end (iGPU)", before: 35, after: 75 },
-    { rig: "Mid‑range (GTX/RTX entry)", before: 60, after: 120 },
-    { rig: "High‑end (RTX)", before: 90, after: 165 },
+    { rig: "Low-end (iGPU)", before: 35, after: 75 },
+    { rig: "Mid-range (GTX/RTX entry)", before: 60, after: 120 },
+    { rig: "High-end (RTX)", before: 90, after: 165 },
   ];
 
   return (
@@ -351,7 +351,7 @@ export default function RobloxOptimizerGuide() {
           <h2 className="text-xl font-semibold">Mod / Script Browser</h2>
         </div>
         <p className="text-sm text-gray-400 mt-1">
-          Curated utilities. Use at your own risk and follow Roblox/servers’ rules. Prefer open-source where possible.
+          Curated utilities. Use at your own risk and follow Roblox/servers' rules. Prefer open-source where possible.
         </p>
 
         {(() => {
@@ -362,54 +362,54 @@ export default function RobloxOptimizerGuide() {
 
           const mods = [
             {
-              name: "RBX FPS Unlocker",
-              desc: "Unlock Roblox’s framerate cap for high‑refresh displays.",
+              name: "Bloxstrap Launcher",
+              desc: "Modern Roblox bootstrapper with a built-in FPS unlocker and graphics tweaks.",
               trust: "Verified",
-              href: "https://github.com/axstin/rbxfpsunlocker",
-              action: "link",
-            },
-            {
-              name: "Simple Auto Clicker (desktop)",
-              desc: "Toggleable auto clicker with adjustable CPS. Do not use to gain unfair advantage.",
-              trust: "Caution",
-              href: "https://sourceforge.net/projects/orphamielautoclicker/",
-              action: "link",
-            },
-            {
-              name: "AutoHotkey Click Toggle Script",
-              desc: "Lightweight script to toggle rapid LMB. Requires AutoHotkey.",
-              trust: "Caution",
-              action: "script",
-              script: `; AutoHotkey v1 simple toggle autoclicker\n; Toggle with F6; hold LMB to click\nF6::Toggle := !Toggle\n$LButton::\nWhile GetKeyState(\"LButton\", \"P\") && Toggle\n{\n  Click\n  Sleep 20 ; ~50 CPS\n}\nreturn`,
+              href: "https://github.com/pizzaboxer/bloxstrap/releases",
+              infoHref: "/tools/roblox-optimizer/bloxstrap",
             },
           ];
 
-          const copy = async (txt) => {
-            try { await navigator.clipboard.writeText(txt); } catch {}
-          };
-
           return (
-            <div className="grid sm:grid-cols-2 gap-3 mt-4">
-              {mods.map((m, i) => (
-                <div key={i} className="p-4 rounded-xl bg-neutral-900 border border-white/10">
-                  <div className="flex items-center gap-2">
-                    <div className={`text-[11px] px-2 py-0.5 rounded border ${trustColor(m.trust)}`}>{m.trust}</div>
-                    <div className="text-[11px] text-gray-500 ml-auto">Utility</div>
+            <div className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-3 mt-4">
+                {mods.map((m, i) => (
+                  <div key={i} className="p-4 rounded-xl bg-neutral-900 border border-white/10">
+                    <div className="flex items-center gap-2">
+                      <div className={`text-[11px] px-2 py-0.5 rounded border ${trustColor(m.trust)}`}>{m.trust}</div>
+                      <div className="text-[11px] text-gray-500 ml-auto">Utility</div>
+                    </div>
+                    <div className="mt-1 font-semibold">{m.name}</div>
+                    <p className="text-sm text-gray-400 mt-1">{m.desc}</p>
+                    <div className="mt-3 flex gap-2">
+                      <a
+                        href={m.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-3 py-1 rounded bg-purple-700 hover:bg-purple-600 text-sm"
+                      >
+                        Install
+                      </a>
+                      <a
+                        href={m.infoHref ?? m.href}
+                        target={m.infoHref ? "_self" : "_blank"}
+                        rel={m.infoHref ? undefined : "noreferrer"}
+                        className="px-3 py-1 rounded bg-neutral-900 border border-white/10 text-sm hover:bg-neutral-800"
+                      >
+                        Info
+                      </a>
+                    </div>
                   </div>
-                  <div className="mt-1 font-semibold">{m.name}</div>
-                  <p className="text-sm text-gray-400 mt-1">{m.desc}</p>
-                  <div className="mt-3 flex gap-2">
-                    {m.action === "link" ? (
-                      <a href={m.href} target="_blank" rel="noreferrer" className="px-3 py-1 rounded bg-purple-700 hover:bg-purple-600 text-sm">Install</a>
-                    ) : (
-                      <button onClick={() => copy(m.script)} className="px-3 py-1 rounded bg-purple-700 hover:bg-purple-600 text-sm">Copy Script</button>
-                    )}
-                    {m.action === "link" && (
-                      <a href={m.href} target="_blank" rel="noreferrer" className="px-3 py-1 rounded bg-neutral-900 border border-white/10 text-sm hover:bg-neutral-800">Info</a>
-                    )}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div>
+                <a
+                  href="/mods"
+                  className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-neutral-900 px-3 py-2 text-sm text-purple-200 hover:bg-neutral-800 transition-colors"
+                >
+                  Need Roblox mods? Browse the catalog
+                </a>
+              </div>
             </div>
           );
         })()}
@@ -417,3 +417,8 @@ export default function RobloxOptimizerGuide() {
     </div>
   );
 }
+
+
+
+
+

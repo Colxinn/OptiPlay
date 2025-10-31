@@ -1,19 +1,52 @@
 import prisma from "@/lib/prisma";
-import Link from "next/link";
+import { auth } from "@/lib/auth";
 import ForumComposer from "../components/ForumComposer.jsx";
+import ForumList from "./ForumList.jsx";
 
 export const dynamic = "force-dynamic";
 
 export default async function ForumPage() {
+  const session = await auth();
+
   const posts = await prisma.post.findMany({
     where: { isRemoved: false },
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ isPinned: "desc" }, { createdAt: "desc" }],
     include: {
-      author: { select: { name: true, image: true } },
+      author: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+          isOwner: true,
+          isMuted: true,
+          muteExpiresAt: true,
+        },
+      },
       _count: { select: { comments: true } },
       votes: { select: { value: true } },
     },
   });
+
+  const normalized = posts.map((post) => ({
+    id: post.id,
+    title: post.title,
+    content: post.content,
+    createdAt: post.createdAt.toISOString(),
+    isPinned: post.isPinned,
+    commentCount: post._count.comments,
+    score: post.votes.reduce((sum, v) => sum + (v.value || 0), 0),
+    author: {
+      id: post.author?.id ?? null,
+      name: post.author?.name ?? "Anon",
+      image: post.author?.image ?? null,
+      isOwner: post.author?.isOwner ?? false,
+      isMuted: post.author?.isMuted ?? false,
+      muteExpiresAt: post.author?.muteExpiresAt
+        ? post.author.muteExpiresAt.toISOString()
+        : null,
+    },
+    image: post.image || null,
+  }));
 
   return (
     <div className="space-y-6">
@@ -21,23 +54,7 @@ export default async function ForumPage() {
         <h1 className="text-2xl font-bold">Community Forum</h1>
       </div>
       <ForumComposer />
-      <ul className="space-y-3">
-        {posts.map((p) => {
-          const score = p.votes.reduce((s, v) => s + (v.value || 0), 0);
-          return (
-            <li key={p.id} className="p-4 rounded-xl bg-neutral-900 border border-white/10">
-              <Link href={`/forum/${p.id}`} className="text-lg font-semibold hover:underline">
-                {p.title}
-              </Link>
-              <div className="text-xs text-gray-400 mt-1">
-                by {p.author?.name || "Anon"}  {p._count.comments} comments  score {score}
-              </div>
-              <p className="text-sm text-gray-300 mt-2 line-clamp-2">{p.content}</p>
-            </li>
-          );
-        })}
-      </ul>
+      <ForumList posts={normalized} viewer={session?.user || null} />
     </div>
   );
 }
-

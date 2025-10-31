@@ -44,6 +44,33 @@ const catalog = [
     ],
   },
   {
+    game: "Roblox",
+    slug: "roblox",
+    mods: [
+      {
+        name: "Bloxstrap Launcher",
+        desc: "Community-supported Roblox bootstrapper with built-in FPS unlocker. Steps: open Bloxstrap Settings > raise the FPS cap (120-240) > enable the FPS Unlocker toggle. Afterwards tweak Roblox graphics: lower quality, disable shadows/effects, reduce resolution, and switch to DirectX 11 for smoother gameplay.",
+        trust: "Verified",
+        action: "link",
+        href: "https://github.com/pizzaboxer/bloxstrap/releases",
+      },
+      {
+        name: "Simple Auto Clicker",
+        desc: "Desktop auto clicker with configurable CPS. Use responsibly and follow game/experience rules.",
+        trust: "Caution",
+        action: "link",
+        href: "https://sourceforge.net/projects/orphamielautoclicker/",
+      },
+      {
+        name: "AutoHotkey Click Toggle Script",
+        desc: "Toggleable AutoHotkey script that rapidly clicks while you hold LMB. Requires AutoHotkey installed.",
+        trust: "Caution",
+        action: "script",
+        script: `; AutoHotkey v1 simple toggle autoclicker\n; Toggle with F6; hold LMB to click\nF6::Toggle := !Toggle\n$LButton::\nWhile GetKeyState("LButton", "P") && Toggle\n{\n  Click\n  Sleep 20 ; ~50 CPS\n}\nreturn`,
+      },
+    ],
+  },
+  {
     game: "CS 1.6",
     slug: "cs16",
     mods: [
@@ -208,7 +235,7 @@ export default function ModsPage() {
         </section>
       ))}
 
-      <div className="text-[11px] text-gray-500 pt-2">Build: Mods v2025-10-27-2</div>
+      <div className="text-[11px] text-gray-500 pt-2">Build: Mods v2025-10-30-1</div>
     </div>
   );
 }

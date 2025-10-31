@@ -1,5 +1,6 @@
 
-import { auth } from '../../../../lib/auth'; import prisma from '../../../../lib/prisma';
+import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 export async function POST(req){ const session=await auth(); if(!session?.user?.email) return new Response(JSON.stringify({error:'Auth required'}),{status:401});
   const { pollId, optionId } = await req.json();
   const user = await prisma.user.upsert({ where:{ email: session.user.email }, update:{}, create:{ email: session.user.email, name: session.user.name||null, image: session.user.image||null } });

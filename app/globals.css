@@ -3,3 +3,16 @@
 @tailwind utilities;
 html,body{background:#0f0b18;color:white}
 a{color:#a855f7}a:hover{color:#c084fc}
+@keyframes owner-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.owner-text {
+  background: linear-gradient(90deg, #a855f7, #f97316, #22d3ee, #a855f7);
+  background-size: 300% 300%;
+  animation: owner-gradient 8s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

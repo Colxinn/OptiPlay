@@ -1,0 +1,402 @@
+[
+  {
+    "slug": "nvidia-rtx-4060",
+    "name": "NVIDIA GeForce RTX 4060",
+    "family": "GeForce RTX 40",
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2023,
+    "avgScore": 185.0,
+    "powerDraw": 115,
+    "priceUsd": 299
+  },
+  {
+    "slug": "nvidia-rtx-4070",
+    "name": "NVIDIA GeForce RTX 4070",
+    "family": "GeForce RTX 40",
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2023,
+    "avgScore": 228.0,
+    "powerDraw": 200,
+    "priceUsd": 549
+  },
+  {
+    "slug": "nvidia-rtx-4080",
+    "name": "NVIDIA GeForce RTX 4080",
+    "family": "GeForce RTX 40",
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2022,
+    "avgScore": 272.0,
+    "powerDraw": 320,
+    "priceUsd": 1199
+  },
+  {
+    "slug": "nvidia-rtx-4090",
+    "name": "NVIDIA GeForce RTX 4090",
+    "family": "GeForce RTX 40",
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2022,
+    "avgScore": 310.0,
+    "powerDraw": 450,
+    "priceUsd": 1599
+  },
+  {
+    "slug": "amd-rx-7800-xt",
+    "name": "AMD Radeon RX 7800 XT",
+    "family": "Radeon RX 7000",
+    "architecture": "RDNA 3",
+    "releaseYear": 2023,
+    "avgScore": 218.0,
+    "powerDraw": 263,
+    "priceUsd": 499
+  },
+  {
+    "slug": "amd-rx-7900-xt",
+    "name": "AMD Radeon RX 7900 XT",
+    "family": "Radeon RX 7000",
+    "architecture": "RDNA 3",
+    "releaseYear": 2022,
+    "avgScore": 255.0,
+    "powerDraw": 300,
+    "priceUsd": 899
+  },
+  {
+    "slug": "amd-rx-7900-xtx",
+    "name": "AMD Radeon RX 7900 XTX",
+    "family": "Radeon RX 7000",
+    "architecture": "RDNA 3",
+    "releaseYear": 2022,
+    "avgScore": 282.0,
+    "powerDraw": 355,
+    "priceUsd": 999
+  },
+  {
+    "slug": "nvidia-rtx-3060",
+    "name": "NVIDIA GeForce RTX 3060",
+    "family": "GeForce RTX 30",
+    "architecture": "Ampere",
+    "releaseYear": 2021,
+    "avgScore": 150.0,
+    "powerDraw": 170,
+    "priceUsd": 329
+  },
+  {
+    "slug": "nvidia-rtx-3070",
+    "name": "NVIDIA GeForce RTX 3070",
+    "family": "GeForce RTX 30",
+    "architecture": "Ampere",
+    "releaseYear": 2020,
+    "avgScore": 192.0,
+    "powerDraw": 220,
+    "priceUsd": 469
+  },
+  {
+    "slug": "amd-rx-7600",
+    "name": "AMD Radeon RX 7600",
+    "family": "Radeon RX 7000",
+    "architecture": "RDNA 3",
+    "releaseYear": 2023,
+    "avgScore": 162.0,
+    "powerDraw": 165,
+    "priceUsd": 269
+  },
+  {
+    "slug": "nvidia-rtx-4060-ti",
+    "name": "NVIDIA GeForce RTX 4060 Ti",
+    "family": "GeForce RTX 40",
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2023,
+    "avgScore": 205.0,
+    "powerDraw": 165,
+    "priceUsd": 399
+  },
+  {
+    "slug": "nvidia-rtx-4070-ti",
+    "name": "NVIDIA GeForce RTX 4070 Ti",
+    "family": "GeForce RTX 40",
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2023,
+    "avgScore": 238.0,
+    "powerDraw": 285,
+    "priceUsd": 799
+  },
+  {
+    "slug": "nvidia-rtx-4070-ti-super",
+    "name": "NVIDIA GeForce RTX 4070 Ti SUPER",
+    "family": "GeForce RTX 40",
+    "architecture": "Ada Lovelace",
+    "releaseYear": 2024,
+    "avgScore": 246.0,
+    "powerDraw": 295,
+    "priceUsd": 799
+  },
+  {
+    "slug": "nvidia-rtx-2060",
+    "name": "NVIDIA GeForce RTX 2060",
+    "family": "GeForce RTX 20",
+    "architecture": "Turing",
+    "releaseYear": 2019,
+    "avgScore": 135.0,
+    "powerDraw": 160,
+    "priceUsd": 299
+  },
+  {
+    "slug": "nvidia-rtx-2060-super",
+    "name": "NVIDIA GeForce RTX 2060 SUPER",
+    "family": "GeForce RTX 20",
+    "architecture": "Turing",
+    "releaseYear": 2019,
+    "avgScore": 148.0,
+    "powerDraw": 175,
+    "priceUsd": 399
+  },
+  {
+    "slug": "nvidia-rtx-2070",
+    "name": "NVIDIA GeForce RTX 2070",
+    "family": "GeForce RTX 20",
+    "architecture": "Turing",
+    "releaseYear": 2018,
+    "avgScore": 162.0,
+    "powerDraw": 185,
+    "priceUsd": 399
+  },
+  {
+    "slug": "nvidia-rtx-2070-super",
+    "name": "NVIDIA GeForce RTX 2070 SUPER",
+    "family": "GeForce RTX 20",
+    "architecture": "Turing",
+    "releaseYear": 2019,
+    "avgScore": 176.0,
+    "powerDraw": 215,
+    "priceUsd": 499
+  },
+  {
+    "slug": "nvidia-rtx-2080",
+    "name": "NVIDIA GeForce RTX 2080",
+    "family": "GeForce RTX 20",
+    "architecture": "Turing",
+    "releaseYear": 2018,
+    "avgScore": 188.0,
+    "powerDraw": 215,
+    "priceUsd": 699
+  },
+  {
+    "slug": "nvidia-rtx-2080-ti",
+    "name": "NVIDIA GeForce RTX 2080 Ti",
+    "family": "GeForce RTX 20",
+    "architecture": "Turing",
+    "releaseYear": 2018,
+    "avgScore": 214.0,
+    "powerDraw": 250,
+    "priceUsd": 999
+  },
+  {
+    "slug": "nvidia-rtx-3060-ti",
+    "name": "NVIDIA GeForce RTX 3060 Ti",
+    "family": "GeForce RTX 30",
+    "architecture": "Ampere",
+    "releaseYear": 2020,
+    "avgScore": 182.0,
+    "powerDraw": 200,
+    "priceUsd": 399
+  },
+  {
+    "slug": "nvidia-rtx-3070-ti",
+    "name": "NVIDIA GeForce RTX 3070 Ti",
+    "family": "GeForce RTX 30",
+    "architecture": "Ampere",
+    "releaseYear": 2021,
+    "avgScore": 206.0,
+    "powerDraw": 290,
+    "priceUsd": 599
+  },
+  {
+    "slug": "nvidia-rtx-3080-ti",
+    "name": "NVIDIA GeForce RTX 3080 Ti",
+    "family": "GeForce RTX 30",
+    "architecture": "Ampere",
+    "releaseYear": 2021,
+    "avgScore": 232.0,
+    "powerDraw": 350,
+    "priceUsd": 1199
+  },
+  {
+    "slug": "nvidia-rtx-3090-ti",
+    "name": "NVIDIA GeForce RTX 3090 Ti",
+    "family": "GeForce RTX 30",
+    "architecture": "Ampere",
+    "releaseYear": 2022,
+    "avgScore": 258.0,
+    "powerDraw": 450,
+    "priceUsd": 1999
+  },
+  {
+    "slug": "nvidia-gtx-1050",
+    "name": "NVIDIA GeForce GTX 1050",
+    "family": "GeForce GTX 10",
+    "architecture": "Pascal",
+    "releaseYear": 2016,
+    "avgScore": 72.0,
+    "powerDraw": 75,
+    "priceUsd": 139
+  },
+  {
+    "slug": "nvidia-gtx-1050-ti",
+    "name": "NVIDIA GeForce GTX 1050 Ti",
+    "family": "GeForce GTX 10",
+    "architecture": "Pascal",
+    "releaseYear": 2016,
+    "avgScore": 84.0,
+    "powerDraw": 75,
+    "priceUsd": 179
+  },
+  {
+    "slug": "nvidia-gtx-1060",
+    "name": "NVIDIA GeForce GTX 1060 6GB",
+    "family": "GeForce GTX 10",
+    "architecture": "Pascal",
+    "releaseYear": 2016,
+    "avgScore": 102.0,
+    "powerDraw": 120,
+    "priceUsd": 249
+  },
+  {
+    "slug": "nvidia-gtx-1070",
+    "name": "NVIDIA GeForce GTX 1070",
+    "family": "GeForce GTX 10",
+    "architecture": "Pascal",
+    "releaseYear": 2016,
+    "avgScore": 128.0,
+    "powerDraw": 150,
+    "priceUsd": 379
+  },
+  {
+    "slug": "nvidia-gtx-1080",
+    "name": "NVIDIA GeForce GTX 1080",
+    "family": "GeForce GTX 10",
+    "architecture": "Pascal",
+    "releaseYear": 2016,
+    "avgScore": 148.0,
+    "powerDraw": 180,
+    "priceUsd": 499
+  },
+  {
+    "slug": "nvidia-gtx-1080-ti",
+    "name": "NVIDIA GeForce GTX 1080 Ti",
+    "family": "GeForce GTX 10",
+    "architecture": "Pascal",
+    "releaseYear": 2017,
+    "avgScore": 170.0,
+    "powerDraw": 250,
+    "priceUsd": 699
+  },
+  {
+    "slug": "amd-rx-5500-xt",
+    "name": "AMD Radeon RX 5500 XT",
+    "family": "Radeon RX 5000",
+    "architecture": "RDNA",
+    "releaseYear": 2019,
+    "avgScore": 118.0,
+    "powerDraw": 130,
+    "priceUsd": 199
+  },
+  {
+    "slug": "amd-rx-5600-xt",
+    "name": "AMD Radeon RX 5600 XT",
+    "family": "Radeon RX 5000",
+    "architecture": "RDNA",
+    "releaseYear": 2020,
+    "avgScore": 144.0,
+    "powerDraw": 160,
+    "priceUsd": 279
+  },
+  {
+    "slug": "amd-rx-5700-xt",
+    "name": "AMD Radeon RX 5700 XT",
+    "family": "Radeon RX 5000",
+    "architecture": "RDNA",
+    "releaseYear": 2019,
+    "avgScore": 170.0,
+    "powerDraw": 225,
+    "priceUsd": 399
+  },
+  {
+    "slug": "amd-rx-480",
+    "name": "AMD Radeon RX 480",
+    "family": "Radeon RX 400",
+    "architecture": "GCN 4.0",
+    "releaseYear": 2016,
+    "avgScore": 96.0,
+    "powerDraw": 150,
+    "priceUsd": 239
+  },
+  {
+    "slug": "amd-rx-470",
+    "name": "AMD Radeon RX 470",
+    "family": "Radeon RX 400",
+    "architecture": "GCN 4.0",
+    "releaseYear": 2016,
+    "avgScore": 88.0,
+    "powerDraw": 120,
+    "priceUsd": 199
+  },
+  {
+    "slug": "amd-rx-580",
+    "name": "AMD Radeon RX 580",
+    "family": "Radeon RX 500",
+    "architecture": "GCN 4.0",
+    "releaseYear": 2017,
+    "avgScore": 104.0,
+    "powerDraw": 185,
+    "priceUsd": 229
+  },
+  {
+    "slug": "amd-rx-590",
+    "name": "AMD Radeon RX 590",
+    "family": "Radeon RX 500",
+    "architecture": "GCN 4.0",
+    "releaseYear": 2018,
+    "avgScore": 112.0,
+    "powerDraw": 225,
+    "priceUsd": 279
+  },
+  {
+    "slug": "amd-rx-6600",
+    "name": "AMD Radeon RX 6600",
+    "family": "Radeon RX 6000",
+    "architecture": "RDNA 2",
+    "releaseYear": 2021,
+    "avgScore": 140.0,
+    "powerDraw": 132,
+    "priceUsd": 329
+  },
+  {
+    "slug": "amd-rx-6700-xt",
+    "name": "AMD Radeon RX 6700 XT",
+    "family": "Radeon RX 6000",
+    "architecture": "RDNA 2",
+    "releaseYear": 2021,
+    "avgScore": 178.0,
+    "powerDraw": 230,
+    "priceUsd": 479
+  },
+  {
+    "slug": "amd-rx-6800-xt",
+    "name": "AMD Radeon RX 6800 XT",
+    "family": "Radeon RX 6000",
+    "architecture": "RDNA 2",
+    "releaseYear": 2020,
+    "avgScore": 210.0,
+    "powerDraw": 300,
+    "priceUsd": 649
+  },
+  {
+    "slug": "amd-rx-6900-xt",
+    "name": "AMD Radeon RX 6900 XT",
+    "family": "Radeon RX 6000",
+    "architecture": "RDNA 2",
+    "releaseYear": 2020,
+    "avgScore": 225.0,
+    "powerDraw": 300,
+    "priceUsd": 999
+  }
+]
