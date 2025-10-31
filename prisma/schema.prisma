@@ -11,11 +11,17 @@ datasource db {
 // ---------- NEXT-AUTH (v5) tables ---------- 
 model User {
   id            String    @id @default(cuid())
-  name          String?
+  name          String?   @unique(map: "User_name_key")
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  bio           String    @default("")
   isOwner       Boolean   @default(false)
+  isMuted       Boolean   @default(false)
+  mutedAt       DateTime?
+  mutedReason   String?
+  mutedByEmail  String?
+  muteExpiresAt DateTime?
   passwordHash  String?
 
   accounts Account[]
@@ -25,6 +31,13 @@ model User {
   comments  Comment[]
   votes     Vote[]
   pollVotes PollVote[]
+
+  profileCommentsAuthored ProfileComment[] @relation("ProfileCommentAuthor")
+  profileCommentsReceived ProfileComment[] @relation("ProfileCommentTarget")
+  accessLogs              UserAccessLog[]
+  muteAudits              UserMuteAudit[]
+  sponsorApplications     SponsorApplication[]
+  pollsCreated            Poll[]            @relation("PollCreator")
 
   createdAt DateTime @default(now())
 }
@@ -71,8 +84,10 @@ model Post {
   title     String
   content   String
   isRemoved Boolean   @default(false)
+  isPinned  Boolean   @default(false)
   authorId  String?
   author    User?     @relation(fields: [authorId], references: [id])
+  image     String?
   comments  Comment[]
   votes     Vote[]
   createdAt DateTime  @default(now())
@@ -109,6 +124,8 @@ model Poll {
   endsAt    DateTime
   options   PollOption[]
   votes     PollVote[]
+  createdById String?
+  createdBy   User?        @relation("PollCreator", fields: [createdById], references: [id], onDelete: SetNull)
   createdAt DateTime     @default(now())
 }
 
@@ -131,6 +148,73 @@ model PollVote {
   createdAt DateTime   @default(now())
 
   @@unique([userId, pollId]) // one vote per user per poll
+}
+
+// ---------- Profile & moderation ----------
+model ProfileComment {
+  id        String   @id @default(cuid())
+  authorId  String
+  targetId  String
+  content   String
+  createdAt DateTime @default(now())
+
+  author User @relation("ProfileCommentAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  target User @relation("ProfileCommentTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@index([targetId, createdAt], map: "ProfileComment_targetId_createdAt_idx")
+}
+
+model UserAccessLog {
+  id        String   @id @default(cuid())
+  userId    String
+  ipAddress String
+  city      String?
+  region    String?
+  country   String?
+  latitude  Float?
+  longitude Float?
+  createdAt DateTime @default(now())
+  lastSeen  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, ipAddress], map: "UserAccessLog_userId_ipAddress_key")
+  @@index([ipAddress], map: "UserAccessLog_ipAddress_idx")
+}
+
+model UserMuteAudit {
+  id             String   @id @default(cuid())
+  userId         String
+  action         String
+  reason         String?
+  moderatorEmail String?
+  expiresAt      DateTime?
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt], map: "UserMuteAudit_userId_createdAt_idx")
+}
+
+model SponsorApplication {
+  id               String   @id @default(cuid())
+  userId           String?
+  ipAddress        String?
+  platformStatus   String   @default("yes")
+  platformDetails  String?
+  postsLongVideos  Boolean
+  contentRelevant  Boolean
+  sponsorshipType  String
+  contactEmail     String
+  proof            String
+  termsAgreed      Boolean  @default(false)
+  status           String   @default("pending")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([ipAddress, createdAt], map: "SponsorApplication_ipAddress_createdAt_idx")
 }
 
 // ---------- Mice and Sensors (for DPI calculator) ----------
