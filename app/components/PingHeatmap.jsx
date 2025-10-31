@@ -1,17 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-
-const REGION_COORDS = [
-  { key: "NA-West", lon: -120, lat: 40 },
-  { key: "NA-East", lon: -75, lat: 40 },
-  { key: "SA", lon: -60, lat: -15 },
-  { key: "EU-West", lon: -5, lat: 50 },
-  { key: "EU-East", lon: 25, lat: 50 },
-  { key: "Asia-NE", lon: 135, lat: 35 },
-  { key: "Asia-SE", lon: 105, lat: 1 },
-  { key: "Oceania", lon: 150, lat: -25 },
-];
+import { PING_REGIONS, PING_REGION_KEYS } from "@/lib/pingRegions";
 
 function project(lon, lat, w, h) {
   const x = ((lon + 180) * (w / 360));
@@ -33,12 +23,17 @@ export default function PingHeatmap({ height = 320, compact = false }) {
   const [games, setGames] = useState(["Roblox"]);
   const [data, setData] = useState([]);
   const [active, setActive] = useState(null);
+  const [probes, setProbes] = useState([]);
   const view = { w: 960, h: 480 };
 
   async function load(g) {
     try {
       const res = await fetch(`/api/ping?game=${encodeURIComponent(g || game)}`);
       const json = await res.json();
+      if (json.game && json.game !== (g || game)) {
+        setGame(json.game);
+        return;
+      }
       setData(json.data || []);
       if (json.games) setGames(json.games);
     } catch {}
@@ -47,6 +42,98 @@ export default function PingHeatmap({ height = 320, compact = false }) {
   useEffect(() => {
     load(game);
   }, [game]);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadProbes() {
+      try {
+        const res = await fetch("/api/ping/probes", { cache: "no-store" });
+        if (!res.ok) return;
+        const json = await res.json();
+        if (isMounted && Array.isArray(json.probes)) {
+          const normalized = json.probes.filter(
+            (probe) =>
+              probe &&
+              typeof probe.url === "string" &&
+              PING_REGION_KEYS.includes(probe.region)
+          );
+          setProbes(normalized);
+        }
+      } catch {
+        /* ignore probe-loading errors */
+      }
+    }
+    loadProbes();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!probes.length) return;
+
+    const storageKey = `optiplay-ping-sample-${game}`;
+    const lastSent = Number(window.localStorage.getItem(storageKey) || 0);
+    const THIRTY_MIN = 1000 * 60 * 30;
+    if (Date.now() - lastSent < THIRTY_MIN) return;
+
+    let cancelled = false;
+
+    async function measureAndReport() {
+      const results = [];
+
+      for (const probe of probes) {
+        if (cancelled) break;
+        const controller = new AbortController();
+        const start = performance.now();
+        const timeout = setTimeout(() => controller.abort(), 4000);
+        try {
+          await fetch(probe.url, {
+            cache: "no-store",
+            mode: "cors",
+            credentials: "omit",
+            signal: controller.signal,
+          });
+          const latency = Math.round(performance.now() - start);
+          if (Number.isFinite(latency) && latency > 0 && latency < 5000) {
+            results.push({
+              serverRegion: probe.region,
+              latencyMs: latency,
+            });
+          }
+        } catch {
+          // ignore failed probe
+        } finally {
+          clearTimeout(timeout);
+        }
+      }
+
+      if (!results.length || cancelled) return;
+
+      try {
+        await fetch("/api/ping/report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            game,
+            tzOffsetMinutes: new Date().getTimezoneOffset(),
+            localHour: new Date().getHours(),
+            results,
+          }),
+        });
+        window.localStorage.setItem(storageKey, String(Date.now()));
+      } catch {
+        /* ignore reporting errors */
+      }
+    }
+
+    measureAndReport();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [game, probes]);
 
   const byKey = useMemo(
     () => Object.fromEntries(data.map((d) => [d.region, d])),
@@ -106,7 +193,7 @@ export default function PingHeatmap({ height = 320, compact = false }) {
               <path d="M700,240 L740,255 L760,275 L740,295 L700,300 L670,285 L675,260 Z" />
             </g>
 
-            {REGION_COORDS.map((r) => {
+            {PING_REGIONS.map((r) => {
               const p = project(r.lon, r.lat, view.w, view.h);
               const d = byKey[r.key];
               const fill = colorFor(d?.avg_ping);

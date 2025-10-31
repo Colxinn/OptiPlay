@@ -217,6 +217,26 @@ model SponsorApplication {
   @@index([ipAddress, createdAt], map: "SponsorApplication_ipAddress_createdAt_idx")
 }
 
+// ---------- Network telemetry ----------
+model PingSample {
+  id              String   @id @default(cuid())
+  game            String
+  serverRegion    String
+  latencyMs       Int
+  playerRegion    String?
+  playerCountry   String?
+  playerCity      String?
+  playerLatitude  Float?
+  playerLongitude Float?
+  playerTzOffset  Int?
+  playerLocalHour Int?
+  ipHash          String?
+  createdAt       DateTime @default(now())
+
+  @@index([game, serverRegion])
+  @@index([createdAt])
+}
+
 // ---------- Mice and Sensors (for DPI calculator) ----------
 model Sensor {
   id      String  @id @default(cuid())
