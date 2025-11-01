@@ -1,6 +1,7 @@
 
 import Link from 'next/link';
 export default function ToolsPage(){ const tools=[
+  {slug:'cs2-crosshair',name:'CS2 Crosshair Generator',desc:'Live Counter-Strike 2 preview with console command export.'},
   {slug:'crosshair-lab',name:'Crosshair Lab',desc:'Render 512px previews and export OptiPlay crosshair codes.'},
   {slug:'sense-converter',name:'Sensitivity Converter',desc:'Convert sens between CS2, Valorant, SiegeX, Fortnite, Roblox, Minecraft, Rust, Apex.'},
   {slug:'dpi-calculator',name:'DPI Calculator',desc:'Find the perfect DPI.'},
