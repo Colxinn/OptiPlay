@@ -52,7 +52,23 @@ export default function PingHeatmap({ height = 320, compact = false }) {
   const cloudflareData = CLOUD_FLARE_DATA;
 
   const { byKey, summary } = useMemo(() => {
-    const map = Object.fromEntries(cloudflareData.map((entry) => [entry.region, entry]));
+    const incoming = new Map(cloudflareData.map((entry) => [entry.region, entry]));
+    const map = {};
+
+    PING_REGIONS.forEach((region) => {
+      const metrics = incoming.get(region.key);
+      map[region.key] =
+        metrics ??
+        {
+          region: region.key,
+          label: region.key,
+          latencyAvg: null,
+          jitterAvg: null,
+          packetLoss: null,
+          source: "Cloudflare Radar (Speed)",
+        };
+    });
+
     const valid = cloudflareData
       .filter((entry) => Number.isFinite(entry.latencyAvg))
       .sort((a, b) => a.latencyAvg - b.latencyAvg);
@@ -64,20 +80,26 @@ export default function PingHeatmap({ height = 320, compact = false }) {
         topThree: valid.slice(0, 3),
         coverage: {
           withData: valid.length,
-          total: cloudflareData.length,
+          total: PING_REGIONS.length,
         },
       },
     };
   }, [cloudflareData]);
 
-  const bestRegionKey = summary.best?.region ?? null;
-  const [active, setActive] = useState(() => bestRegionKey ?? cloudflareData[0]?.region ?? null);
+  const defaultActive = useMemo(() => {
+    if (summary.best?.region) return summary.best.region;
+    if (cloudflareData[0]?.region) return cloudflareData[0].region;
+    return PING_REGIONS[0]?.key ?? null;
+  }, [summary.best, cloudflareData]);
+  const [active, setActive] = useState(defaultActive);
 
   useEffect(() => {
-    if (!active || !byKey[active]) {
-      setActive(bestRegionKey ?? cloudflareData[0]?.region ?? null);
+    if (!active && defaultActive) {
+      setActive(defaultActive);
     }
-  }, [active, bestRegionKey, byKey, cloudflareData]);
+  }, [active, defaultActive]);
+
+  const activeMetrics = active ? byKey[active] ?? null : null;
 
   const view = { w: 960, h: 480 };
 
@@ -182,7 +204,7 @@ export default function PingHeatmap({ height = 320, compact = false }) {
                   {summary.best.label ?? summary.best.region}: {formatLatency(summary.best.latencyAvg)}
                 </div>
                 <div className="mt-1 text-xs text-gray-200">
-                  Jitter {formatJitter(summary.best.jitterAvg)} · Packet loss {formatPacketLoss(summary.best.packetLoss)}
+                  Jitter {formatJitter(summary.best.jitterAvg)} - Packet loss {formatPacketLoss(summary.best.packetLoss)}
                 </div>
               </div>
             ) : (
@@ -210,30 +232,30 @@ export default function PingHeatmap({ height = 320, compact = false }) {
         ) : (
           <div className="rounded-lg border border-white/10 bg-neutral-950 p-3">
             <div className="font-semibold">Region details</div>
-            {active && byKey[active] ? (
+            {activeMetrics ? (
               <div className="mt-2 text-sm text-gray-200 space-y-2">
                 <div>
                   <div className="text-gray-400">Region</div>
                   <div className="font-semibold text-white">
-                    {byKey[active].label ?? byKey[active].region}
+                    {activeMetrics.label ?? activeMetrics.region ?? active}
                   </div>
                 </div>
                 <div>
                   <div className="text-gray-400">Average latency</div>
-                  <div className="font-semibold text-white">{formatLatency(byKey[active].latencyAvg)}</div>
+                  <div className="font-semibold text-white">{formatLatency(activeMetrics.latencyAvg)}</div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <div className="text-gray-400">Jitter</div>
-                    <div className="font-semibold text-white">{formatJitter(byKey[active].jitterAvg)}</div>
+                    <div className="font-semibold text-white">{formatJitter(activeMetrics.jitterAvg)}</div>
                   </div>
                   <div>
                     <div className="text-gray-400">Packet loss</div>
-                    <div className="font-semibold text-white">{formatPacketLoss(byKey[active].packetLoss)}</div>
+                    <div className="font-semibold text-white">{formatPacketLoss(activeMetrics.packetLoss)}</div>
                   </div>
                 </div>
                 <div className="text-xs text-gray-500">
-                  Source - {byKey[active].source ?? "Cloudflare Radar"}
+                  Source - {activeMetrics.source ?? "Cloudflare Radar"}
                 </div>
               </div>
             ) : (
