@@ -100,6 +100,11 @@ export default function PingHeatmap({ height = 320, compact = false }) {
   }, [active, defaultActive]);
 
   const activeMetrics = active ? byKey[active] ?? null : null;
+  const quickStatsMetrics = activeMetrics ?? summary.best ?? null;
+  const quickStatsTitle =
+    quickStatsMetrics && quickStatsMetrics === summary.best
+      ? "Lowest average latency"
+      : "Selected region";
 
   const view = { w: 960, h: 480 };
 
@@ -195,16 +200,18 @@ export default function PingHeatmap({ height = 320, compact = false }) {
               Quick stats
             </div>
 
-            {summary.best ? (
+            {quickStatsMetrics ? (
               <div className="rounded-lg border border-green-500/20 bg-green-500/10 p-3">
                 <div className="text-xs uppercase tracking-wide text-green-300">
-                  Lowest average latency
+                  {quickStatsTitle}
                 </div>
                 <div className="mt-1 text-lg font-semibold text-white">
-                  {summary.best.label ?? summary.best.region}: {formatLatency(summary.best.latencyAvg)}
+                  {quickStatsMetrics.label ?? quickStatsMetrics.region ?? "Unknown"}:{" "}
+                  {formatLatency(quickStatsMetrics.latencyAvg)}
                 </div>
                 <div className="mt-1 text-xs text-gray-200">
-                  Jitter {formatJitter(summary.best.jitterAvg)} - Packet loss {formatPacketLoss(summary.best.packetLoss)}
+                  Jitter {formatJitter(quickStatsMetrics.jitterAvg)} - Packet loss{" "}
+                  {formatPacketLoss(quickStatsMetrics.packetLoss)}
                 </div>
               </div>
             ) : (
