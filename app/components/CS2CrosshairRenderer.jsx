@@ -18,7 +18,8 @@ const DEFAULT_PARAMS = {
   dot: false,
   dot_size: 0,
   outline: true,
-  outline_thickness: 1
+  outline_thickness: 1,
+  t_style: false
 };
 
 function clamp(value, min, max) {
@@ -62,6 +63,9 @@ function generateConsoleString(params) {
     `cl_crosshair_drawoutline ${outlineEnabled ? 1 : 0}`,
     `cl_crosshair_outlinethickness ${outlineEnabled ? clamp(params.outline_thickness, 0, 3) : 0}`
   ];
+  if (typeof params.t_style === 'boolean') {
+    commands.push(`cl_crosshair_t ${params.t_style ? 1 : 0}`);
+  }
   return commands.join('; ');
 }
 
@@ -136,9 +140,9 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
     const bars = [
       snapRect(innerEdgePx, -halfThicknessPx, lengthPx, thicknessPx, snap, minUnit),
       snapRect(-innerEdgePx - lengthPx, -halfThicknessPx, lengthPx, thicknessPx, snap, minUnit),
-      snapRect(-halfThicknessPx, -innerEdgePx - lengthPx, thicknessPx, lengthPx, snap, minUnit),
+      !params.t_style && snapRect(-halfThicknessPx, -innerEdgePx - lengthPx, thicknessPx, lengthPx, snap, minUnit),
       snapRect(-halfThicknessPx, innerEdgePx, thicknessPx, lengthPx, snap, minUnit)
-    ];
+    ].filter(Boolean);
 
     const dotPx = params.dot
       ? Math.max((params.dot_size > 0 ? params.dot_size : params.thickness) * scale, minUnit * 2)
@@ -325,6 +329,15 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
                 onChange={event => toggleOutline(event.target.checked)}
               />
               <span>Outline</span>
+            </label>
+
+            <label className="flex items-center gap-2 text-xs uppercase tracking-wide text-slate-300">
+              <input
+                type="checkbox"
+                checked={params.t_style}
+                onChange={event => updateParam('t_style', event.target.checked)}
+              />
+              <span>T Style</span>
             </label>
 
             <label className="flex flex-col gap-1">

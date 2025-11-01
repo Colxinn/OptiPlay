@@ -8,6 +8,11 @@ const RightNews = dynamic(() => import('./components/RightNews.jsx'), { ssr: fal
 const PingHeatmap = dynamic(() => import('./components/PingHeatmap.jsx'), { ssr: false });
 
 export default function HomeClient() {
+  const labTools = [
+    { title: 'CS2 Crosshair Generator', slug: '/tools/cs2-crosshair', desc: 'Live Counter-Strike 2 preview with console command export.' },
+    { title: 'Valorant Crosshair Generator', slug: '/tools/valorant-crosshair', desc: 'Pixel-accurate Valorant preview with slider-driven tuning.' },
+    { title: 'Crosshair Lab', slug: '/tools/crosshair-lab', desc: 'Render 512px previews and export OptiPlay crosshair payloads.' },
+  ];
   const tools = [
     { title: 'FPS Booster', slug: '/tools/fps-booster', desc: 'One-click presets to squeeze more FPS.' },
     { title: 'Sensitivity Converter', slug: '/tools/sense-converter', desc: 'Convert sens between games.' },
@@ -29,6 +34,17 @@ export default function HomeClient() {
             <a href="/news" className="px-3 py-1 rounded-lg bg-neutral-900 border border-white/10 text-sm hover:bg-neutral-800">Read Guides</a>
           </div>
         </div>
+        <section className="rounded-xl border border-white/10 bg-[#0b0b10] p-6 space-y-4">
+          <div>
+            <h2 className="text-xl font-semibold">OptiPlay Lab</h2>
+            <p className="text-sm text-slate-300 mt-1">Experimental builders for precision crosshairs and visual tuning. Perfect for CS2, Valorant, and tactical shooters.</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            {labTools.map(tool => (
+              <ToolCard key={tool.slug} {...tool} />
+            ))}
+          </div>
+        </section>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           {tools.map((t) => (<ToolCard key={t.slug} {...t} />))}
         </div>
