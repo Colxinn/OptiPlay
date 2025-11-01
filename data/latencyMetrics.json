@@ -1,0 +1,312 @@
+{
+  "generatedAt": "2025-11-01T00:23:50.718Z",
+  "regions": [
+    {
+      "key": "NA-West",
+      "label": "North America West",
+      "locations": [
+        "US",
+        "CA"
+      ]
+    },
+    {
+      "key": "NA-East",
+      "label": "North America East",
+      "locations": [
+        "US",
+        "MX"
+      ]
+    },
+    {
+      "key": "SA",
+      "label": "South America",
+      "locations": [
+        "BR",
+        "AR",
+        "CL"
+      ]
+    },
+    {
+      "key": "EU-West",
+      "label": "Europe West",
+      "locations": [
+        "GB",
+        "IE",
+        "FR",
+        "ES",
+        "PT",
+        "BE",
+        "NL"
+      ]
+    },
+    {
+      "key": "EU-East",
+      "label": "Europe East",
+      "locations": [
+        "DE",
+        "PL",
+        "CZ",
+        "HU",
+        "SE",
+        "FI",
+        "NO",
+        "TR"
+      ]
+    },
+    {
+      "key": "Asia-NE",
+      "label": "Asia North-East",
+      "locations": [
+        "JP",
+        "KR",
+        "TW"
+      ]
+    },
+    {
+      "key": "Asia-SE",
+      "label": "Asia South-East",
+      "locations": [
+        "SG",
+        "MY",
+        "TH",
+        "VN",
+        "ID",
+        "PH"
+      ]
+    },
+    {
+      "key": "Oceania",
+      "label": "Oceania",
+      "locations": [
+        "AU",
+        "NZ"
+      ]
+    }
+  ],
+  "sources": {
+    "cloudflare": [
+      {
+        "region": "NA-West",
+        "label": "North America West",
+        "cfRegion": "US,CA",
+        "locations": [
+          "US",
+          "CA"
+        ],
+        "continent": null,
+        "latencyAvg": 35.634535,
+        "latencyLoaded": 216.886973,
+        "jitterAvg": 8.171598,
+        "jitterLoaded": 60.095181,
+        "packetLoss": 0.098384,
+        "bandwidthDownload": 142.363769,
+        "bandwidthUpload": 53.867085,
+        "totalTests": 0,
+        "timestamp": "2025-10-31T22:59:58.000Z",
+        "error": false,
+        "source": "Cloudflare Radar (Speed)",
+        "filters": {
+          "location": "US,CA"
+        },
+        "message": null
+      },
+      {
+        "region": "NA-East",
+        "label": "North America East",
+        "cfRegion": "US,MX",
+        "locations": [
+          "US",
+          "MX"
+        ],
+        "continent": null,
+        "latencyAvg": 37.9371,
+        "latencyLoaded": 200.644415,
+        "jitterAvg": 8.869833,
+        "jitterLoaded": 56.368978,
+        "packetLoss": 0.239414,
+        "bandwidthDownload": 136.155822,
+        "bandwidthUpload": 56.784092,
+        "totalTests": 0,
+        "timestamp": "2025-10-31T22:59:58.000Z",
+        "error": false,
+        "source": "Cloudflare Radar (Speed)",
+        "filters": {
+          "location": "US,MX"
+        },
+        "message": null
+      },
+      {
+        "region": "SA",
+        "label": "South America",
+        "cfRegion": "BR,AR,CL",
+        "locations": [
+          "BR",
+          "AR",
+          "CL"
+        ],
+        "continent": null,
+        "latencyAvg": 26.705767,
+        "latencyLoaded": 118.162951,
+        "jitterAvg": 8.972613,
+        "jitterLoaded": 37.583351,
+        "packetLoss": 0.483557,
+        "bandwidthDownload": 241.701886,
+        "bandwidthUpload": 117.69948,
+        "totalTests": 0,
+        "timestamp": "2025-10-31T22:59:58.000Z",
+        "error": false,
+        "source": "Cloudflare Radar (Speed)",
+        "filters": {
+          "location": "BR,AR,CL"
+        },
+        "message": null
+      },
+      {
+        "region": "EU-West",
+        "label": "Europe West",
+        "cfRegion": "GB,IE,FR,ES,PT,BE,NL",
+        "locations": [
+          "GB",
+          "IE",
+          "FR",
+          "ES",
+          "PT",
+          "BE",
+          "NL"
+        ],
+        "continent": null,
+        "latencyAvg": 28.856041,
+        "latencyLoaded": 138.542091,
+        "jitterAvg": 8.910857,
+        "jitterLoaded": 39.55776,
+        "packetLoss": 0.046849,
+        "bandwidthDownload": 220.564679,
+        "bandwidthUpload": 111.573906,
+        "totalTests": 0,
+        "timestamp": "2025-10-31T22:59:58.000Z",
+        "error": false,
+        "source": "Cloudflare Radar (Speed)",
+        "filters": {
+          "location": "GB,IE,FR,ES,PT,BE,NL"
+        },
+        "message": null
+      },
+      {
+        "region": "EU-East",
+        "label": "Europe East",
+        "cfRegion": "DE,PL,CZ,HU,SE,FI,NO,TR",
+        "locations": [
+          "DE",
+          "PL",
+          "CZ",
+          "HU",
+          "SE",
+          "FI",
+          "NO",
+          "TR"
+        ],
+        "continent": null,
+        "latencyAvg": 34.78293,
+        "latencyLoaded": 161.293576,
+        "jitterAvg": 9.926171,
+        "jitterLoaded": 47.361045,
+        "packetLoss": 0.120953,
+        "bandwidthDownload": 141.572344,
+        "bandwidthUpload": 46.205609,
+        "totalTests": 0,
+        "timestamp": "2025-10-31T22:59:58.000Z",
+        "error": false,
+        "source": "Cloudflare Radar (Speed)",
+        "filters": {
+          "location": "DE,PL,CZ,HU,SE,FI,NO,TR"
+        },
+        "message": null
+      },
+      {
+        "region": "Asia-NE",
+        "label": "Asia North-East",
+        "cfRegion": "JP,KR,TW",
+        "locations": [
+          "JP",
+          "KR",
+          "TW"
+        ],
+        "continent": null,
+        "latencyAvg": 21.350097,
+        "latencyLoaded": 109.344167,
+        "jitterAvg": 7.469146,
+        "jitterLoaded": 32.853024,
+        "packetLoss": 0.050534,
+        "bandwidthDownload": 226.228312,
+        "bandwidthUpload": 132.617743,
+        "totalTests": 0,
+        "timestamp": "2025-10-31T22:59:58.000Z",
+        "error": false,
+        "source": "Cloudflare Radar (Speed)",
+        "filters": {
+          "location": "JP,KR,TW"
+        },
+        "message": null
+      },
+      {
+        "region": "Asia-SE",
+        "label": "Asia South-East",
+        "cfRegion": "SG,MY,TH,VN,ID,PH",
+        "locations": [
+          "SG",
+          "MY",
+          "TH",
+          "VN",
+          "ID",
+          "PH"
+        ],
+        "continent": null,
+        "latencyAvg": 37.855661,
+        "latencyLoaded": 166.311928,
+        "jitterAvg": 12.513345,
+        "jitterLoaded": 52.73607,
+        "packetLoss": 0.73332,
+        "bandwidthDownload": 124.224006,
+        "bandwidthUpload": 78.423063,
+        "totalTests": 0,
+        "timestamp": "2025-10-31T22:59:58.000Z",
+        "error": false,
+        "source": "Cloudflare Radar (Speed)",
+        "filters": {
+          "location": "SG,MY,TH,VN,ID,PH"
+        },
+        "message": null
+      },
+      {
+        "region": "Oceania",
+        "label": "Oceania",
+        "cfRegion": "AU,NZ",
+        "locations": [
+          "AU",
+          "NZ"
+        ],
+        "continent": null,
+        "latencyAvg": 23.549571,
+        "latencyLoaded": 173.094298,
+        "jitterAvg": 6.37627,
+        "jitterLoaded": 50.566513,
+        "packetLoss": 0.066206,
+        "bandwidthDownload": 144.434062,
+        "bandwidthUpload": 37.738742,
+        "totalTests": 0,
+        "timestamp": "2025-10-31T22:59:58.000Z",
+        "error": false,
+        "source": "Cloudflare Radar (Speed)",
+        "filters": {
+          "location": "AU,NZ"
+        },
+        "message": null
+      }
+    ],
+    "google": {
+      "source": "Google Public DNS",
+      "avgResolutionMs": 36,
+      "timestamp": "2025-11-01T00:23:50.718Z"
+    }
+  }
+}

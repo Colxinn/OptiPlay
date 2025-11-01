@@ -8,7 +8,9 @@ export default function Page() {
     <div className="space-y-4 animate-fade-in">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold">Ping Heatmap</h1>
-        <p className="text-sm text-gray-400 mt-1">Interactive world map with average ping and best time to play by region.</p>
+        <p className="text-sm text-gray-400 mt-1">
+          Live latency overview powered by Cloudflare Radar metrics and Google Public DNS sampling.
+        </p>
       </div>
       <PingHeatmap />
     </div>
