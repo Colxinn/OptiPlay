@@ -5,12 +5,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 const CANVAS_SIZE = 512;
 const RENDER_SCALE = 2; // draw at 2× then downsample for crisp edges
 
-// Calibrated multipliers approximating Source 2 crosshair units.
-const LENGTH_SCALE = 9.5;
-const GAP_SCALE = 9.5;
-const THICKNESS_SCALE = 3.8;
-const OUTLINE_SCALE = 2.2;
-const DOT_SCALE = THICKNESS_SCALE * 1.35;
+const BASE_GAP_UNITS = 4;
+const PREVIEW_ZOOM = CANVAS_SIZE / 128; // boosts readability while preserving ratios
 
 const DEFAULT_PARAMS = {
   color: '#00FF00',
@@ -94,30 +90,6 @@ function expandRect(rect, amount, snap, minUnit) {
   );
 }
 
-function computeBars(params, snap, minUnit) {
-  const thicknessPx = Math.max(params.thickness * THICKNESS_SCALE, minUnit);
-  const lengthPx = Math.max(params.size * LENGTH_SCALE, 0);
-  const gapPx = params.gap * GAP_SCALE;
-  const halfThickness = thicknessPx / 2;
-
-  const bars = [
-    snapRect(-(gapPx + lengthPx), -halfThickness, lengthPx, thicknessPx, snap, minUnit),
-    snapRect(gapPx, -halfThickness, lengthPx, thicknessPx, snap, minUnit),
-    snapRect(-halfThickness, -(gapPx + lengthPx), thicknessPx, lengthPx, snap, minUnit),
-    snapRect(-halfThickness, gapPx, thicknessPx, lengthPx, snap, minUnit)
-  ];
-
-  return { bars, thicknessPx };
-}
-
-function computeDot(params, thicknessPx, snap, minUnit) {
-  if (!params.dot) return null;
-  const side = params.dot_size > 0
-    ? Math.max(params.dot_size * DOT_SCALE, minUnit * 2)
-    : Math.max(thicknessPx, minUnit * 2);
-  return snapRect(-side / 2, -side / 2, side, side, snap, minUnit);
-}
-
 export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, background = '#1b1b1b' }) {
   const [params, setParams] = useState(() => ({ ...DEFAULT_PARAMS, ...initialParams }));
   const canvasRef = useRef(null);
@@ -149,11 +121,29 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
 
     ctx.translate(CANVAS_SIZE / 2, CANVAS_SIZE / 2);
 
-    const { bars, thicknessPx } = computeBars(params, snap, minUnit);
-    const dotRect = computeDot(params, thicknessPx, snap, minUnit);
-    const outlinePx = params.outline && params.outline_thickness > 0
-      ? Math.max(params.outline_thickness * OUTLINE_SCALE, minUnit)
+    const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
+    const baseScale = (viewportHeight / 1080) * 1.6;
+    const scale = baseScale * PREVIEW_ZOOM;
+
+    const thicknessPx = Math.max(params.thickness * scale, minUnit);
+    const lengthPx = Math.max(params.size * scale, 0);
+    const gapUnits = BASE_GAP_UNITS + params.gap;
+    const innerEdgePx = gapUnits * scale;
+    const outlinePx = params.outline && params.outline_thickness > 0 ? params.outline_thickness * scale : 0;
+
+    const halfThicknessPx = thicknessPx / 2;
+
+    const bars = [
+      snapRect(innerEdgePx, -halfThicknessPx, lengthPx, thicknessPx, snap, minUnit),
+      snapRect(-innerEdgePx - lengthPx, -halfThicknessPx, lengthPx, thicknessPx, snap, minUnit),
+      snapRect(-halfThicknessPx, -innerEdgePx - lengthPx, thicknessPx, lengthPx, snap, minUnit),
+      snapRect(-halfThicknessPx, innerEdgePx, thicknessPx, lengthPx, snap, minUnit)
+    ];
+
+    const dotPx = params.dot
+      ? Math.max((params.dot_size > 0 ? params.dot_size : params.thickness) * scale, minUnit * 2)
       : 0;
+    const dotRect = params.dot ? snapRect(-dotPx / 2, -dotPx / 2, dotPx, dotPx, snap, minUnit) : null;
 
     if (outlinePx > 0) {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
@@ -168,8 +158,8 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
     }
 
     ctx.fillStyle = toRgba(params.color, params.alpha);
-    ctx.shadowColor = toRgba(params.color, Math.min(params.alpha, 255) * 0.4);
-    ctx.shadowBlur = 1.5;
+    ctx.shadowColor = toRgba(params.color, Math.min(params.alpha, 255) * 0.25);
+    ctx.shadowBlur = 1.2;
     bars.forEach(bar => ctx.fillRect(bar.x, bar.y, bar.w, bar.h));
     ctx.shadowBlur = 0;
 

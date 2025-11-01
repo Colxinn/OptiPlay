@@ -3,7 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 const CANVAS_SIZE = 512;
-const UNIT_SCALE = 10; // converts Valorant slider units to pixels for 512 canvas render
+const RENDER_SCALE = 2;
+const BASE_MULTIPLIER = 2;
+const PREVIEW_ZOOM = CANVAS_SIZE / 160;
 
 const DEFAULT_PARAMS = {
   color: '#00FF88',
@@ -45,12 +47,12 @@ function rgba(hex, opacity) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-function buildBars(length, thickness, offset) {
+function buildBars(length, thickness, offset, scale, snap, minUnit) {
   if (length <= 0 || thickness <= 0) return [];
 
-  const lengthPx = Math.max(0, length) * UNIT_SCALE;
-  const thicknessPx = Math.max(1, thickness * UNIT_SCALE);
-  const offsetPx = Math.max(0, offset) * UNIT_SCALE;
+  const lengthPx = Math.max(0, length) * scale;
+  const thicknessPx = Math.max(minUnit, thickness * scale);
+  const offsetPx = Math.max(0, offset) * scale;
   const halfThickness = thicknessPx / 2;
 
   const bars = [
@@ -81,23 +83,22 @@ function buildBars(length, thickness, offset) {
   ];
 
   return bars.map(bar => ({
-    x: Math.round(bar.x),
-    y: Math.round(bar.y),
-    w: Math.max(1, Math.round(bar.w)),
-    h: Math.max(1, Math.round(bar.h))
+    x: snap(bar.x),
+    y: snap(bar.y),
+    w: Math.max(minUnit, snap(bar.x + bar.w) - snap(bar.x)),
+    h: Math.max(minUnit, snap(bar.y + bar.h) - snap(bar.y))
   }));
 }
 
-function buildDot(params) {
+function buildDot(params, scale, snap, minUnit) {
   if (!params.center_dot || params.center_dot_opacity <= 0) return null;
-  const baseSide = Math.max(1, params.center_dot_size) * UNIT_SCALE;
-  const side = Math.max(2, Math.round(baseSide));
+  const side = Math.max(minUnit * 2, params.center_dot_size * scale);
   const half = side / 2;
   return {
-    x: Math.round(-half),
-    y: Math.round(-half),
-    w: side,
-    h: side
+    x: snap(-half),
+    y: snap(-half),
+    w: Math.max(minUnit, snap(half) - snap(-half)),
+    h: Math.max(minUnit, snap(half) - snap(-half))
   };
 }
 
@@ -121,28 +122,51 @@ export default function ValorantCrosshairRenderer({ initialParams = DEFAULT_PARA
     if (!canvas) return;
 
     const dpr = window.devicePixelRatio || 1;
-    const renderSize = CANVAS_SIZE * dpr;
-    canvas.width = renderSize;
-    canvas.height = renderSize;
+    const pixelScale = dpr * RENDER_SCALE;
+    canvas.width = CANVAS_SIZE * pixelScale;
+    canvas.height = CANVAS_SIZE * pixelScale;
     canvas.style.width = `${CANVAS_SIZE}px`;
     canvas.style.height = `${CANVAS_SIZE}px`;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const snap = value => Math.round(value * pixelScale) / pixelScale;
+    const minUnit = 1 / pixelScale;
+
     ctx.save();
-    ctx.scale(dpr, dpr);
+    ctx.scale(pixelScale, pixelScale);
     ctx.imageSmoothingEnabled = true;
+
     ctx.fillStyle = background || '#1b1b1b';
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
     ctx.translate(CANVAS_SIZE / 2, CANVAS_SIZE / 2);
 
-    const innerBars = buildBars(params.inner_lines_length, params.inner_lines_thickness, params.inner_lines_offset);
-    const outerBars = buildBars(params.outer_lines_length, params.outer_lines_thickness, params.outer_lines_offset);
-    const dotRect = buildDot(params);
-    const outlineThicknessPx = params.outline ? params.outline_thickness * UNIT_SCALE * 0.6 : 0;
+    const viewport = typeof window !== 'undefined' ? window.innerHeight : 1080;
+    const scale = (viewport / 1080) * BASE_MULTIPLIER * PREVIEW_ZOOM;
+    const dotRadiusUnits = params.center_dot ? params.center_dot_size / 2 : 0;
 
+    const innerBars = buildBars(
+      params.inner_lines_length,
+      params.inner_lines_thickness,
+      params.inner_lines_offset + dotRadiusUnits,
+      scale,
+      snap,
+      minUnit
+    );
+
+    const outerBars = buildBars(
+      params.outer_lines_length,
+      params.outer_lines_thickness,
+      params.outer_lines_offset + dotRadiusUnits,
+      scale,
+      snap,
+      minUnit
+    );
+
+    const dotRect = buildDot(params, scale, snap, minUnit);
+    const outlineThicknessPx = params.outline ? Math.max(params.outline_thickness * scale, minUnit) : 0;
     const drawBars = (bars, opacity) => {
       if (!bars.length || opacity <= 0) return;
 
