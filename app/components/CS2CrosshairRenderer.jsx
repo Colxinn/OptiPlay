@@ -3,10 +3,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 const CANVAS_SIZE = 512;
-const UNIT_SCALE = 8; // scales CS2 units to pixels for 512 canvas render
+const RENDER_SCALE = 2; // draw at 2× then downsample for crisp edges
+
+// Calibrated multipliers approximating Source 2 crosshair units.
+const LENGTH_SCALE = 9.5;
+const GAP_SCALE = 9.5;
+const THICKNESS_SCALE = 3.8;
+const OUTLINE_SCALE = 2.2;
+const DOT_SCALE = THICKNESS_SCALE * 1.35;
 
 const DEFAULT_PARAMS = {
-  color: '#00ff00',
+  color: '#00FF00',
   alpha: 255,
   style: 4,
   size: 4,
@@ -38,11 +45,12 @@ function parseHexColor(hex) {
 function toRgba(color, alpha255) {
   const { r, g, b } = parseHexColor(color);
   const alpha = clamp(alpha255, 0, 255) / 255;
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  return `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(3)})`;
 }
 
 function generateConsoleString(params) {
   const { r, g, b } = parseHexColor(params.color);
+  const outlineEnabled = params.outline && params.outline_thickness > 0;
   const commands = [
     `cl_crosshairstyle ${params.style}`,
     `cl_crosshairsize ${clamp(params.size, -100, 100)}`,
@@ -55,70 +63,59 @@ function generateConsoleString(params) {
     `cl_crosshaircolor_r ${r}`,
     `cl_crosshaircolor_g ${g}`,
     `cl_crosshaircolor_b ${b}`,
-    `cl_crosshair_drawoutline ${params.outline ? 1 : 0}`,
-    `cl_crosshair_outlinethickness ${clamp(params.outline_thickness, 0, 3)}`
+    `cl_crosshair_drawoutline ${outlineEnabled ? 1 : 0}`,
+    `cl_crosshair_outlinethickness ${outlineEnabled ? clamp(params.outline_thickness, 0, 3) : 0}`
   ];
   return commands.join('; ');
 }
 
-function computeBars(params) {
-  const thicknessPx = Math.max(1, params.thickness * UNIT_SCALE);
-  const sizePx = params.size * UNIT_SCALE;
-  const gapPx = params.gap * UNIT_SCALE;
+function snapFactory(pixelScale) {
+  return value => Math.round(value * pixelScale) / pixelScale;
+}
+
+function snapRect(x, y, width, height, snap, minUnit) {
+  const x1 = snap(x);
+  const y1 = snap(y);
+  const x2 = snap(x + width);
+  const y2 = snap(y + height);
+  const rectWidth = Math.max(minUnit, x2 - x1);
+  const rectHeight = Math.max(minUnit, y2 - y1);
+  return { x: x1, y: y1, w: rectWidth, h: rectHeight };
+}
+
+function expandRect(rect, amount, snap, minUnit) {
+  return snapRect(
+    rect.x - amount,
+    rect.y - amount,
+    rect.w + amount * 2,
+    rect.h + amount * 2,
+    snap,
+    minUnit
+  );
+}
+
+function computeBars(params, snap, minUnit) {
+  const thicknessPx = Math.max(params.thickness * THICKNESS_SCALE, minUnit);
+  const lengthPx = Math.max(params.size * LENGTH_SCALE, 0);
+  const gapPx = params.gap * GAP_SCALE;
   const halfThickness = thicknessPx / 2;
 
   const bars = [
-    // left
-    {
-      x: -(gapPx + sizePx + halfThickness),
-      y: -halfThickness,
-      w: sizePx,
-      h: thicknessPx
-    },
-    // right
-    {
-      x: gapPx + halfThickness,
-      y: -halfThickness,
-      w: sizePx,
-      h: thicknessPx
-    },
-    // top
-    {
-      x: -halfThickness,
-      y: -(gapPx + sizePx + halfThickness),
-      w: thicknessPx,
-      h: sizePx
-    },
-    // bottom
-    {
-      x: -halfThickness,
-      y: gapPx + halfThickness,
-      w: thicknessPx,
-      h: sizePx
-    }
+    snapRect(-(gapPx + lengthPx), -halfThickness, lengthPx, thicknessPx, snap, minUnit),
+    snapRect(gapPx, -halfThickness, lengthPx, thicknessPx, snap, minUnit),
+    snapRect(-halfThickness, -(gapPx + lengthPx), thicknessPx, lengthPx, snap, minUnit),
+    snapRect(-halfThickness, gapPx, thicknessPx, lengthPx, snap, minUnit)
   ];
 
-  return bars.map(bar => ({
-    x: Math.round(bar.x),
-    y: Math.round(bar.y),
-    w: Math.max(1, Math.round(bar.w)),
-    h: Math.max(1, Math.round(bar.h))
-  }));
+  return { bars, thicknessPx };
 }
 
-function computeDot(params, thicknessPx) {
+function computeDot(params, thicknessPx, snap, minUnit) {
   if (!params.dot) return null;
-  const dotSide =
-    params.dot_size > 0
-      ? Math.max(1, Math.round(params.dot_size * UNIT_SCALE * 2))
-      : Math.max(2, Math.round(thicknessPx * 1.5));
-  const half = dotSide / 2;
-  return {
-    x: Math.round(-half),
-    y: Math.round(-half),
-    w: dotSide,
-    h: dotSide
-  };
+  const side = params.dot_size > 0
+    ? Math.max(params.dot_size * DOT_SCALE, minUnit * 2)
+    : Math.max(thicknessPx, minUnit * 2);
+  return snapRect(-side / 2, -side / 2, side, side, snap, minUnit);
 }
 
 export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, background = '#1b1b1b' }) {
@@ -131,17 +128,20 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
     if (!canvas) return;
 
     const dpr = window.devicePixelRatio || 1;
-    const renderSize = CANVAS_SIZE * dpr;
-    canvas.width = renderSize;
-    canvas.height = renderSize;
+    const pixelScale = dpr * RENDER_SCALE;
+    canvas.width = CANVAS_SIZE * pixelScale;
+    canvas.height = CANVAS_SIZE * pixelScale;
     canvas.style.width = `${CANVAS_SIZE}px`;
     canvas.style.height = `${CANVAS_SIZE}px`;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const snap = snapFactory(pixelScale);
+    const minUnit = 1 / pixelScale;
+
     ctx.save();
-    ctx.scale(dpr, dpr);
+    ctx.scale(pixelScale, pixelScale);
     ctx.imageSmoothingEnabled = true;
 
     ctx.fillStyle = background || '#1b1b1b';
@@ -149,36 +149,29 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
 
     ctx.translate(CANVAS_SIZE / 2, CANVAS_SIZE / 2);
 
-    const bars = computeBars(params);
-    const thicknessPx = Math.max(1, params.thickness * UNIT_SCALE);
-    const dotRect = computeDot(params, thicknessPx);
-    const accentColor = toRgba(params.color, params.alpha);
+    const { bars, thicknessPx } = computeBars(params, snap, minUnit);
+    const dotRect = computeDot(params, thicknessPx, snap, minUnit);
+    const outlinePx = params.outline && params.outline_thickness > 0
+      ? Math.max(params.outline_thickness * OUTLINE_SCALE, minUnit)
+      : 0;
 
-    if (params.outline) {
+    if (outlinePx > 0) {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
-      const outline = Math.max(0, params.outline_thickness) * UNIT_SCALE;
       bars.forEach(bar => {
-        ctx.fillRect(
-          bar.x - outline,
-          bar.y - outline,
-          bar.w + outline * 2,
-          bar.h + outline * 2
-        );
+        const expanded = expandRect(bar, outlinePx, snap, minUnit);
+        ctx.fillRect(expanded.x, expanded.y, expanded.w, expanded.h);
       });
       if (dotRect) {
-        ctx.fillRect(
-          dotRect.x - outline,
-          dotRect.y - outline,
-          dotRect.w + outline * 2,
-          dotRect.h + outline * 2
-        );
+        const expandedDot = expandRect(dotRect, outlinePx, snap, minUnit);
+        ctx.fillRect(expandedDot.x, expandedDot.y, expandedDot.w, expandedDot.h);
       }
     }
 
-    ctx.fillStyle = accentColor;
-    bars.forEach(bar => {
-      ctx.fillRect(bar.x, bar.y, bar.w, bar.h);
-    });
+    ctx.fillStyle = toRgba(params.color, params.alpha);
+    ctx.shadowColor = toRgba(params.color, Math.min(params.alpha, 255) * 0.4);
+    ctx.shadowBlur = 1.5;
+    bars.forEach(bar => ctx.fillRect(bar.x, bar.y, bar.w, bar.h));
+    ctx.shadowBlur = 0;
 
     if (dotRect) {
       ctx.fillRect(dotRect.x, dotRect.y, dotRect.w, dotRect.h);
@@ -188,9 +181,28 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
   }, [params, background]);
 
   const updateParam = (key, value) => {
+    setParams(prev => ({ ...prev, [key]: value }));
+  };
+
+  const toggleDot = enabled => {
     setParams(prev => ({
       ...prev,
-      [key]: value
+      dot: enabled,
+      dot_size:
+        enabled && prev.dot_size <= 0
+          ? Math.max(prev.thickness, DEFAULT_PARAMS.thickness)
+          : prev.dot_size
+    }));
+  };
+
+  const toggleOutline = enabled => {
+    setParams(prev => ({
+      ...prev,
+      outline: enabled,
+      outline_thickness:
+        enabled && prev.outline_thickness <= 0
+          ? DEFAULT_PARAMS.outline_thickness
+          : prev.outline_thickness
     }));
   };
 
@@ -212,13 +224,15 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
             Copy Console Command
           </button>
         </div>
+
         <div className="flex-1 space-y-4">
           <div>
             <h2 className="text-lg font-semibold">Crosshair Parameters</h2>
             <p className="text-sm text-slate-400">
-              Tweak CS2 values and preview instantly. All sliders map one-to-one with in-game settings.
+              Matches Counter-Strike 2&apos;s classic static crosshair with calibrated unit scaling.
             </p>
           </div>
+
           <div className="grid md:grid-cols-2 gap-4 text-sm">
             <label className="flex flex-col gap-2">
               <span className="text-xs uppercase tracking-wide text-slate-300">Color</span>
@@ -237,6 +251,7 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
                 />
               </div>
             </label>
+
             <label className="flex flex-col gap-1">
               <span className="text-xs uppercase tracking-wide text-slate-300">Alpha</span>
               <input
@@ -248,6 +263,7 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
               />
               <span className="text-xs text-slate-400">{params.alpha}</span>
             </label>
+
             <label className="flex flex-col gap-1">
               <span className="text-xs uppercase tracking-wide text-slate-300">Size</span>
               <input
@@ -260,6 +276,7 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
               />
               <span className="text-xs text-slate-400">{params.size.toFixed(1)}</span>
             </label>
+
             <label className="flex flex-col gap-1">
               <span className="text-xs uppercase tracking-wide text-slate-300">Gap</span>
               <input
@@ -272,6 +289,7 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
               />
               <span className="text-xs text-slate-400">{params.gap.toFixed(1)}</span>
             </label>
+
             <label className="flex flex-col gap-1">
               <span className="text-xs uppercase tracking-wide text-slate-300">Thickness</span>
               <input
@@ -284,6 +302,7 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
               />
               <span className="text-xs text-slate-400">{params.thickness.toFixed(1)}</span>
             </label>
+
             <label className="flex flex-col gap-1">
               <span className="text-xs uppercase tracking-wide text-slate-300">Dot Size</span>
               <input
@@ -293,27 +312,31 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
                 step="0.1"
                 value={params.dot_size}
                 onChange={event => updateParam('dot_size', Number(event.target.value))}
+                disabled={!params.dot}
               />
               <span className="text-xs text-slate-400">
                 {params.dot ? params.dot_size.toFixed(1) : 'Dot disabled'}
               </span>
             </label>
+
             <label className="flex items-center gap-2 text-xs uppercase tracking-wide text-slate-300">
               <input
                 type="checkbox"
                 checked={params.dot}
-                onChange={event => updateParam('dot', event.target.checked)}
+                onChange={event => toggleDot(event.target.checked)}
               />
               <span>Center Dot</span>
             </label>
+
             <label className="flex items-center gap-2 text-xs uppercase tracking-wide text-slate-300">
               <input
                 type="checkbox"
                 checked={params.outline}
-                onChange={event => updateParam('outline', event.target.checked)}
+                onChange={event => toggleOutline(event.target.checked)}
               />
               <span>Outline</span>
             </label>
+
             <label className="flex flex-col gap-1">
               <span className="text-xs uppercase tracking-wide text-slate-300">Outline Thickness</span>
               <input
@@ -330,6 +353,7 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
               </span>
             </label>
           </div>
+
           <button
             type="button"
             onClick={() => setParams(DEFAULT_PARAMS)}
@@ -337,6 +361,7 @@ export default function CS2CrosshairRenderer({ initialParams = DEFAULT_PARAMS, b
           >
             Reset to Default
           </button>
+
           <div className="bg-[#090b16] border border-white/10 rounded-lg p-4 text-xs font-mono text-green-300 leading-relaxed break-words">
             {consoleString}
           </div>
