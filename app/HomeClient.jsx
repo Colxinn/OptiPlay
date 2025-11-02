@@ -13,7 +13,6 @@ export default function HomeClient() {
     { title: 'Valorant Crosshair Generator', slug: '/tools/valorant-crosshair', desc: 'Pixel-accurate Valorant preview with slider-driven tuning.', updated: 'Oct 28' },
     { title: '🧩 Reaction Time Tester', slug: '/tools/reaction-tester', desc: 'Test your reflexes and compare your delay to esports pros.', updated: 'Nov 2' },
     { title: '🌍 Network Path Visualizer', slug: '/tools/network-path', desc: 'Trace how your packets actually travel.', updated: 'Nov 2' },
-    { title: '👁️ Perception Test', slug: '/tools/perception-test', desc: 'Measure how precisely you notice frame changes.', updated: 'Nov 2' },
     { title: '🏆 OptiScore Builder', slug: '/tools/optiscore', desc: 'Combine all test data into one score.', updated: 'Nov 2' },
   ];
   const tools = [

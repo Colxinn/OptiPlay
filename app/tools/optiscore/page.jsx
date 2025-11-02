@@ -6,8 +6,7 @@ export default function OptiScore() {
   const [scores, setScores] = useState({
     reaction: null,
     aim: null,
-    perception: null,
-    // Future: ping, frameTime, etc.
+    // Future: ping, frameTime, network, etc.
   });
 
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -17,29 +16,23 @@ export default function OptiScore() {
     let total = 0;
     let count = 0;
 
-    // Reaction score (0-300 points)
+    // Reaction score (0-400 points)
     if (scores.reaction) {
-      const reactionScore = Math.max(0, 300 - scores.reaction.avgMs);
-      total += Math.min(300, reactionScore);
+      const reactionScore = Math.max(0, 400 - scores.reaction.avgMs);
+      total += Math.min(400, reactionScore);
       count++;
     }
 
-    // Aim score (0-300 points)
+    // Aim score (0-600 points) - weighted more heavily
     if (scores.aim) {
-      const aimScore = Math.max(0, 300 - scores.aim.avgMs);
-      total += Math.min(300, aimScore);
-      count++;
-    }
-
-    // Perception score (0-400 points) - uses perception index directly
-    if (scores.perception) {
-      total += Math.min(400, scores.perception.perceptionIndex * 0.4);
+      const aimScore = Math.max(0, 600 - scores.aim.avgMs * 2);
+      total += Math.min(600, aimScore);
       count++;
     }
 
     // Average and scale to 1000
     if (count === 0) return 0;
-    return Math.round((total / count) * (1000 / 300));
+    return Math.round((total / count) * (1000 / 500));
   };
 
   const optiScore = calculateOptiScore();
@@ -72,9 +65,6 @@ export default function OptiScore() {
           } else if (data.testMode === 'aim') {
             setScores(prev => ({ ...prev, aim: data }));
           }
-        } else if (data.perceptionIndex !== undefined) {
-          // Perception test
-          setScores(prev => ({ ...prev, perception: data }));
         }
 
         setUploadedFile(file.name);
@@ -103,7 +93,7 @@ export default function OptiScore() {
   };
 
   const shareToDiscord = () => {
-    const message = `My OptiPlay Score: ${optiScore} (${rank.emoji} ${rank.name})\n\nReaction: ${scores.reaction?.avgMs || 'N/A'}ms | Aim: ${scores.aim?.avgMs || 'N/A'}ms | Perception: ${scores.perception?.perceptionIndex || 'N/A'}`;
+    const message = `My OptiPlay Score: ${optiScore} (${rank.emoji} ${rank.name})\n\nReaction: ${scores.reaction?.avgMs || 'N/A'}ms | Aim: ${scores.aim?.avgMs || 'N/A'}ms`;
     
     // Copy to clipboard
     navigator.clipboard.writeText(message);
@@ -135,7 +125,7 @@ export default function OptiScore() {
             <div className="rounded-xl bg-neutral-900/50 border border-white/10 p-6">
               <h2 className="text-xl font-semibold mb-4">Upload Test Results</h2>
               <p className="text-sm text-gray-400 mb-4">
-                Upload your exported test results from Reaction Tester, Aim Mode, and Perception Test to build your OptiScore.
+                Upload your exported test results from Reaction Tester and Aim Mode to build your OptiScore.
               </p>
 
               <label className="block w-full px-4 py-8 border-2 border-dashed border-white/20 rounded-lg hover:border-purple-500/50 cursor-pointer transition-all text-center">
@@ -205,19 +195,6 @@ export default function OptiScore() {
                   </div>
                   {scores.aim ? (
                     <div className="text-2xl font-bold text-purple-400">{scores.aim.avgMs}ms</div>
-                  ) : (
-                    <div className="text-sm text-gray-500">Not uploaded</div>
-                  )}
-                </div>
-
-                {/* Perception */}
-                <div className="p-3 rounded-lg bg-neutral-800/50">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-semibold">Perception Index</span>
-                    {scores.perception && <span className="text-green-400">✓</span>}
-                  </div>
-                  {scores.perception ? (
-                    <div className="text-2xl font-bold text-purple-400">{scores.perception.perceptionIndex}</div>
                   ) : (
                     <div className="text-sm text-gray-500">Not uploaded</div>
                   )}
