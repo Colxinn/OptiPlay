@@ -42,7 +42,6 @@ export default async function RootLayout({ children }) {
                 <Link className="transition hover:text-purple-100" href="/heatmap">Heatmap</Link>
                 <Link className="transition hover:text-purple-100" href="/benchmarks">Benchmarks</Link>
                 <Link className="transition hover:text-purple-100" href="/esports">Esports</Link>
-                <Link className="transition hover:text-purple-100 whitespace-nowrap" href="/pc-checker">PC Checker</Link>
                 <Link className="transition hover:text-purple-100" href="/forum">Forum</Link>
                 <Link className="transition hover:text-purple-100" href="/news">News</Link>
                 {session?.user?.isOwner ? (

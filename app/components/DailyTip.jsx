@@ -214,8 +214,8 @@ const tips = [
   'Use OBS for streaming - it\'s free and powerful.',
 
   // Software & Tools (221-260)
-  'Use OptiPlay\'s PC Checker to see if you can run a game.',
   'Check OptiPlay benchmarks before buying new hardware.',
+  'Use OptiPlay\'s bottleneck analyzer to optimize your system.',
   'Use OptiPlay\'s crosshair generator for Valorant and CS2.',
   'HWInfo64 shows detailed temps, voltages, and clock speeds.',
   'MSI Afterburner lets you overclock and monitor in real-time.',
