@@ -11,8 +11,8 @@ const INITIAL_META = {
   resolutions: ["1080p", "1440p", "4K"],
 };
 
-const SUGGESTION_LIMIT = 6;
-const SUGGESTION_DEBOUNCE = 200;
+const SUGGESTION_LIMIT = 8;
+const SUGGESTION_DEBOUNCE = 150; // Reduced from 200ms
 
 function LoadingScreen({ logs }) {
   return (
@@ -139,21 +139,43 @@ function buildSuggestionPool(meta) {
   return pool;
 }
 
+// Optimized filtering with early returns and better performance
 function filterSuggestions(pool, term, type) {
+  const typeFiltered = pool.filter((item) => item.type === type);
+  
   if (!term) {
-    return pool.filter((item) => item.type === type).slice(0, SUGGESTION_LIMIT);
+    return typeFiltered.slice(0, SUGGESTION_LIMIT);
   }
+  
   const lowered = term.toLowerCase();
-  return pool
-    .filter((item) => item.type === type)
-    .filter((item) => {
-      return (
-        item.label.toLowerCase().includes(lowered) ||
-        (item.slug && item.slug.toLowerCase().includes(lowered)) ||
-        (item.sub && item.sub.toLowerCase().includes(lowered))
-      );
-    })
-    .slice(0, SUGGESTION_LIMIT);
+  const results = [];
+  
+  // Early exit when we have enough results
+  for (const item of typeFiltered) {
+    if (results.length >= SUGGESTION_LIMIT) break;
+    
+    // Prioritize exact slug matches
+    if (item.slug.toLowerCase() === lowered) {
+      results.unshift(item);
+      continue;
+    }
+    
+    // Then check for starts-with matches
+    if (item.label.toLowerCase().startsWith(lowered) || 
+        item.slug.toLowerCase().startsWith(lowered)) {
+      results.push(item);
+      continue;
+    }
+    
+    // Finally, contains matches
+    if (item.label.toLowerCase().includes(lowered) ||
+        item.slug.toLowerCase().includes(lowered) ||
+        (item.sub && item.sub.toLowerCase().includes(lowered))) {
+      results.push(item);
+    }
+  }
+  
+  return results.slice(0, SUGGESTION_LIMIT);
 }
 
 function SuggestInput({ label, placeholder, value, onChange, suggestions, onSelect, id, loading }) {
@@ -282,14 +304,32 @@ export default function BenchmarkCenter() {
     setLoadingLogs(prev => [...prev, { message, loading, done }]);
   };
 
-  // Initial load with loading screen
+  // Initial load with smart loading screen (skip for returning users)
   useEffect(() => {
     const controller = new AbortController();
+    const hasVisited = typeof window !== 'undefined' && localStorage.getItem('optiplay_benchmarks_visited');
     
     const loadInitialData = async () => {
       try {
+        // Skip loading screen animations for returning users
+        if (hasVisited) {
+          const res = await fetch("/api/benchmarks/meta", { signal: controller.signal });
+          if (!res.ok) throw new Error("Failed to load metadata");
+          const payload = await res.json();
+          
+          setMeta({
+            games: payload.games ?? [],
+            gpus: payload.gpus ?? [],
+            cpus: payload.cpus ?? [],
+            resolutions: payload.resolutions ?? ["1080p", "1440p", "4K"],
+          });
+          
+          setInitializing(false);
+          return;
+        }
+        
+        // Show loading screen for first-time users
         addLog("Initializing benchmark database...", true);
-        await new Promise(resolve => setTimeout(resolve, 300));
         
         addLog("Loading hardware metadata...", true);
         const res = await fetch("/api/benchmarks/meta", { signal: controller.signal });
@@ -299,19 +339,14 @@ export default function BenchmarkCenter() {
         const payload = await res.json();
         
         addLog("Loading hardware metadata...", false, true);
-        await new Promise(resolve => setTimeout(resolve, 200));
         
         addLog(`Indexed ${payload.gpus?.length || 0} GPUs`, false, true);
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
         addLog(`Indexed ${payload.cpus?.length || 0} CPUs`, false, true);
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
         addLog(`Loaded ${payload.games?.length || 0} games`, false, true);
-        await new Promise(resolve => setTimeout(resolve, 200));
+        
+        await new Promise(resolve => setTimeout(resolve, 100));
         
         addLog("Building search index...", true);
-        await new Promise(resolve => setTimeout(resolve, 300));
         
         setMeta({
           games: payload.games ?? [],
@@ -320,17 +355,23 @@ export default function BenchmarkCenter() {
           resolutions: payload.resolutions ?? ["1080p", "1440p", "4K"],
         });
         
-        addLog("Building search index...", false, true);
-        await new Promise(resolve => setTimeout(resolve, 200));
+        await new Promise(resolve => setTimeout(resolve, 150));
         
+        addLog("Building search index...", false, true);
         addLog("Ready! 🚀", false, true);
-        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Mark as visited
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('optiplay_benchmarks_visited', 'true');
+        }
         
         setInitializing(false);
       } catch (err) {
         if (err.name !== "AbortError") {
           addLog(`Error: ${err.message}`, false, false);
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          await new Promise(resolve => setTimeout(resolve, 500));
           setInitializing(false);
         }
       }
@@ -377,39 +418,41 @@ export default function BenchmarkCenter() {
     return () => controller.abort();
   }, [filters.game, filters.gpu, filters.cpu, filters.resolution, initializing]);
 
-  const suggestionPool = useMemo(() => buildSuggestionPool(meta), [meta]);
+  // Memoize suggestion pool with useMemo for better performance
+  const suggestionPool = useMemo(() => {
+    if (meta.games.length === 0) return [];
+    return buildSuggestionPool(meta);
+  }, [meta.games.length, meta.gpus.length, meta.cpus.length]);
+  
   const [suggestions, setSuggestions] = useState({
     game: [],
     gpu: [],
     cpu: [],
   });
 
-  // Optimized suggestion filtering with debounce
+  // Optimized suggestion filtering with reduced debounce and RAF
   useEffect(() => {
+    if (suggestionPool.length === 0) return;
+    
     const timers = [];
+    
     for (const type of ["game", "gpu", "cpu"]) {
       const value = typingState[type];
       
       const timer = window.setTimeout(() => {
-        if (value && value.length >= 1) {
-          setSuggestionLoading(prev => ({ ...prev, [type]: true }));
-          
-          // Use requestAnimationFrame for smooth UI
-          requestAnimationFrame(() => {
-            const filtered = filterSuggestions(suggestionPool, value, type);
-            setSuggestions((prev) => ({ ...prev, [type]: filtered }));
-            setSuggestionLoading(prev => ({ ...prev, [type]: false }));
-          });
-        } else {
-          // Show popular items when empty
-          const popular = filterSuggestions(suggestionPool, "", type);
-          setSuggestions((prev) => ({ ...prev, [type]: popular }));
+        setSuggestionLoading(prev => ({ ...prev, [type]: true }));
+        
+        // Use microtask for immediate update
+        queueMicrotask(() => {
+          const filtered = filterSuggestions(suggestionPool, value, type);
+          setSuggestions((prev) => ({ ...prev, [type]: filtered }));
           setSuggestionLoading(prev => ({ ...prev, [type]: false }));
-        }
-      }, SUGGESTION_DEBOUNCE);
+        });
+      }, value.length === 0 ? 0 : SUGGESTION_DEBOUNCE);
       
       timers.push(timer);
     }
+    
     return () => timers.forEach((timer) => window.clearTimeout(timer));
   }, [typingState, suggestionPool]);
 
