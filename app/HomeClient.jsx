@@ -39,13 +39,13 @@ export default function HomeClient() {
             <h2 className="text-xl font-semibold">OptiPlay Lab</h2>
             <p className="text-sm text-slate-300 mt-1">Experimental builders for precision crosshairs and visual tuning. Perfect for CS2, Valorant, and tactical shooters.</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 items-start">
             {labTools.map(tool => (
               <ToolCard key={tool.slug} {...tool} />
             ))}
           </div>
         </section>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 items-start">
           {tools.map((t) => (<ToolCard key={t.slug} {...t} />))}
         </div>
 
