@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import OGBadge from "@/app/components/OGBadge.jsx";
-import OGBadge from "@/app/components/OGBadge.jsx";
 
 function relativeTime(dateString) {
   const date = new Date(dateString);
