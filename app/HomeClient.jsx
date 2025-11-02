@@ -11,7 +11,7 @@ export default function HomeClient() {
   const labTools = [
     { title: 'CS2 Crosshair Generator', slug: '/tools/cs2-crosshair', desc: 'Live Counter-Strike 2 preview with console command export.', updated: 'Oct 28' },
     { title: 'Valorant Crosshair Generator', slug: '/tools/valorant-crosshair', desc: 'Pixel-accurate Valorant preview with slider-driven tuning.', updated: 'Oct 28' },
-    { title: 'Crosshair Lab', slug: '/tools/crosshair-lab', desc: 'Render 512px previews and export OptiPlay crosshair payloads.', updated: 'Oct 22' },
+    { title: '🧩 Reaction Time Tester', slug: '/tools/reaction-tester', desc: 'Test your reflexes and compare your delay to esports pros.', updated: 'Nov 2' },
   ];
   const tools = [
     { title: 'FPS Booster', slug: '/tools/fps-booster', desc: 'One-click presets to squeeze more FPS.', updated: 'Oct 29' },

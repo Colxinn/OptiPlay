@@ -10,11 +10,11 @@ const ESSENTIAL_TOOLS = [
   { slug: '/tools/latency-tuner', title: 'Latency Tuner', desc: 'Simple network tweaks to reduce ping.', updated: 'Oct 18' }
 ];
 
-const LAB_TOOLS = [
-  { slug: '/tools/cs2-crosshair', title: 'CS2 Crosshair Generator', desc: 'Live Counter-Strike 2 preview with console command export.', updated: 'Oct 28' },
-  { slug: '/tools/valorant-crosshair', title: 'Valorant Crosshair Generator', desc: 'Pixel-accurate Valorant preview with slider-driven tuning.', updated: 'Oct 28' },
-  { slug: '/tools/crosshair-lab', title: 'Crosshair Lab', desc: 'Render 512px previews and export OptiPlay crosshair payloads.', updated: 'Oct 22' }
-];
+  const LAB_TOOLS = [
+    { title: 'CS2 Crosshair Generator', slug: '/tools/cs2-crosshair', desc: 'Live Counter-Strike 2 preview with console command export.', updated: 'Oct 28' },
+    { title: 'Valorant Crosshair Generator', slug: '/tools/valorant-crosshair', desc: 'Pixel-accurate Valorant preview with slider-driven tuning.', updated: 'Oct 28' },
+    { title: '🧩 Reaction Time Tester', slug: '/tools/reaction-tester', desc: 'Test your reflexes and compare your delay to esports pros.', updated: 'Nov 2' },
+  ];
 
 export default function ToolsPage() {
   return (
