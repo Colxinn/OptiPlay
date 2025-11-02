@@ -20,35 +20,35 @@ const cpuIndex = new Map(cpus.map((cpu) => [cpu.slug, cpu]));
 const cpuPerformanceTiers = [
   {
     slug: "intel-core-i9-14900k",
-    multiplierByRes: { "1080p": 1.08, "1440p": 1.03, "4k": 1.0 },
+    multiplierByRes: { "1080p": 1.08 },
   },
   {
     slug: "intel-core-i9-13900k",
-    multiplierByRes: { "1080p": 1.07, "1440p": 1.03, "4k": 1.0 },
+    multiplierByRes: { "1080p": 1.07 },
   },
   {
     slug: "amd-ryzen-9-7950x3d",
-    multiplierByRes: { "1080p": 1.07, "1440p": 1.03, "4k": 1.0 },
+    multiplierByRes: { "1080p": 1.07 },
   },
   {
     slug: "amd-ryzen-7-7800x3d",
-    multiplierByRes: { "1080p": 1.05, "1440p": 1.02, "4k": 1.0 },
+    multiplierByRes: { "1080p": 1.05 },
   },
   {
     slug: "intel-core-i7-13700k",
-    multiplierByRes: { "1080p": 1.04, "1440p": 1.01, "4k": 1.0 },
+    multiplierByRes: { "1080p": 1.04 },
   },
   {
     slug: "intel-core-i5-13600k",
-    multiplierByRes: { "1080p": 1.0, "1440p": 1.0, "4k": 1.0 },
+    multiplierByRes: { "1080p": 1.0 },
   },
   {
     slug: "amd-ryzen-5-7600",
-    multiplierByRes: { "1080p": 0.97, "1440p": 0.99, "4k": 1.0 },
+    multiplierByRes: { "1080p": 0.97 },
   },
   {
     slug: "intel-core-i5-12600k",
-    multiplierByRes: { "1080p": 0.96, "1440p": 0.99, "4k": 1.0 },
+    multiplierByRes: { "1080p": 0.96 },
   },
 ];
 
@@ -57,15 +57,13 @@ for (const cpu of cpus) {
   if (!cpuPerformanceTiers.some((tier) => tier.slug === cpu.slug)) {
     cpuPerformanceTiers.push({
       slug: cpu.slug,
-      multiplierByRes: { "1080p": 1.0, "1440p": 1.0, "4k": 1.0 },
+      multiplierByRes: { "1080p": 1.0 },
     });
   }
 }
 
 const resolutionProfiles = [
   { key: "1080p", multiplier: 1.0 },
-  { key: "1440p", multiplier: 0.74 },
-  { key: "4k", multiplier: 0.55 },
 ];
 
 const gameFactors = {
