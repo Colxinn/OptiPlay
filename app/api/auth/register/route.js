@@ -2,6 +2,8 @@ import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 import { assertCleanUsername } from "@/lib/contentModeration";
 import { getOGBadgeData } from "@/lib/ogBadge";
+import { strictRateLimit } from "@/lib/rateLimit";
+import { isSpamEmail, isValidUsername, sanitizeUsername } from "@/lib/spamProtection";
 
 function badRequest(message, status = 400) {
   return new Response(JSON.stringify({ ok: false, error: message }), {
@@ -18,6 +20,15 @@ const ownerEmailSet = new Set(
 );
 
 export async function POST(req) {
+  // Get client IP for rate limiting
+  const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+  
+  // Strict rate limiting: 3 registration attempts per 5 minutes per IP
+  const rateLimitResult = strictRateLimit(ip, 3, 300000);
+  if (!rateLimitResult.success) {
+    return badRequest("Too many registration attempts. Please try again later.", 429);
+  }
+
   let body;
   try {
     body = await req.json();
@@ -29,8 +40,25 @@ export async function POST(req) {
   const username = String(body.username || "").trim();
   const password = String(body.password || "");
 
+  // Email validation and spam checks
   if (!emailRaw || !emailRaw.includes("@")) {
     return badRequest("Please provide a valid email address");
+  }
+
+  // Block spam/disposable emails
+  if (isSpamEmail(emailRaw)) {
+    return badRequest("Please use a valid email address. Temporary/disposable emails are not allowed.");
+  }
+
+  // Enhanced username validation
+  if (!isValidUsername(username)) {
+    return badRequest("Username must be 3-20 characters and contain only letters, numbers, underscores, or hyphens");
+  }
+
+  // Sanitize username
+  const cleanUsername = sanitizeUsername(username);
+  if (!cleanUsername || cleanUsername !== username) {
+    return badRequest("Username contains invalid characters");
   }
 
   if (username.length < 3 || username.length > 16) {
