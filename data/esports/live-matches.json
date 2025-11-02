@@ -21,7 +21,11 @@
     "format": "BO3",
     "map": "Ancient",
     "mapNumber": 1,
-    "streamUrl": "https://www.twitch.tv/blast"
+    "streamUrl": "https://www.twitch.tv/blast",
+    "alternativeStreams": [
+      "https://www.youtube.com/@BLASTProSeries/live",
+      "https://www.twitch.tv/blastpremier"
+    ]
   },
   {
     "id": "valorant-vct-1",
@@ -45,7 +49,11 @@
     "format": "BO5",
     "map": "Bind",
     "mapNumber": 2,
-    "streamUrl": "https://www.twitch.tv/valorant"
+    "streamUrl": "https://www.twitch.tv/valorant",
+    "alternativeStreams": [
+      "https://www.youtube.com/@ValorantEsports/live",
+      "https://www.twitch.tv/valorantesports"
+    ]
   },
   {
     "id": "lol-worlds-1",
@@ -69,7 +77,12 @@
     "format": "BO5",
     "map": null,
     "mapNumber": 0,
-    "streamUrl": "https://www.twitch.tv/riotgames"
+    "streamUrl": "https://www.twitch.tv/riotgames",
+    "alternativeStreams": [
+      "https://www.youtube.com/@lolesports/live",
+      "https://www.twitch.tv/lck",
+      "https://www.twitch.tv/lec"
+    ]
   },
   {
     "id": "dota2-ti-1",

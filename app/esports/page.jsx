@@ -255,17 +255,89 @@ export default function EsportsPage() {
                         {match.format}
                       </div>
                       {match.streamUrl && (
-                        <a
-                          href={match.streamUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-500/20 text-purple-300 hover:bg-purple-500/30 border border-purple-500/30 rounded text-xs font-semibold transition"
-                        >
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
-                          </svg>
-                          Watch Live
-                        </a>
+                        <div className="space-y-1.5">
+                          <a
+                            href={match.streamUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 border rounded text-xs font-semibold transition ${
+                              match.streamLive 
+                                ? 'bg-purple-500/20 text-purple-300 hover:bg-purple-500/30 border-purple-500/30'
+                                : 'bg-gray-500/20 text-gray-400 hover:bg-gray-500/30 border-gray-500/30'
+                            }`}
+                          >
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+                            </svg>
+                            {match.streamLive ? (
+                              <>
+                                <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
+                                Live Stream
+                                {match.streamViewers && (
+                                  <span className="text-[10px] bg-black/30 px-1.5 py-0.5 rounded">
+                                    {match.streamViewers.toLocaleString()} viewers
+                                  </span>
+                                )}
+                              </>
+                            ) : (
+                              'Stream Offline'
+                            )}
+                          </a>
+                          
+                          {/* Data source indicators */}
+                          {match.dataSources && match.dataSources.length > 0 && (
+                            <div className="flex items-center gap-1.5 justify-center flex-wrap">
+                              <span className="text-[10px] text-gray-500">Verified:</span>
+                              {match.dataSources.map(source => (
+                                <span
+                                  key={source}
+                                  className="text-[10px] px-1.5 py-0.5 bg-green-500/20 text-green-400 border border-green-500/30 rounded font-medium"
+                                >
+                                  {source}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Status reason if match was marked as not live */}
+                          {match.statusReason && (
+                            <div className="text-[10px] text-yellow-400 bg-yellow-500/10 px-2 py-1 rounded border border-yellow-500/20">
+                              ⚠️ {match.statusReason}
+                            </div>
+                          )}
+
+                          {/* Alternative streams */}
+                          {match.alternativeStreams && match.alternativeStreams.length > 0 && (
+                            <div className="pt-2 border-t border-white/5">
+                              <div className="text-[10px] text-gray-500 mb-1">Alternative Streams:</div>
+                              <div className="flex flex-wrap gap-1.5 justify-center">
+                                {match.alternativeStreams.map((streamUrl, idx) => {
+                                  const isYoutube = streamUrl.includes('youtube.com');
+                                  return (
+                                    <a
+                                      key={idx}
+                                      href={streamUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 px-2 py-1 bg-black/30 hover:bg-black/50 border border-white/10 hover:border-purple-500/30 rounded text-[10px] text-gray-300 hover:text-purple-300 transition"
+                                    >
+                                      {isYoutube ? (
+                                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                        </svg>
+                                      ) : (
+                                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                                          <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+                                        </svg>
+                                      )}
+                                      {isYoutube ? 'YouTube' : 'Twitch'}
+                                    </a>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       )}
                     </div>
 

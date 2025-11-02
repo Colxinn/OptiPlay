@@ -91,3 +91,64 @@ To integrate with a live API (e.g., PandaScore, Abios, etc.), modify:
 - [ ] Betting trend indicators
 - [ ] Social media integration for live tweets
 - [ ] Push notifications for favorite teams
+
+## Live Data Sources Integration
+
+The esports system now pulls from multiple sources to verify match status:
+
+### 1. Twitch API (Stream Verification)
+Verifies if streams are actually live and shows viewer counts.
+
+**Setup:**
+1. Go to https://dev.twitch.tv/console/apps
+2. Create a new application
+3. Add to `.env.local`:
+```
+TWITCH_CLIENT_ID=your_client_id
+TWITCH_CLIENT_SECRET=your_client_secret
+```
+
+### 2. PandaScore (Match Data)
+Provides real-time scores and match status for CS:GO, Valorant, LoL, Dota 2, etc.
+
+**Setup:**
+1. Sign up at https://pandascore.co/
+2. Get free tier API key (5000 requests/month)
+3. Add to `.env.local`:
+```
+PANDASCORE_API_KEY=your_api_key
+```
+
+### 3. Automated Scraping (Fallback)
+- **HLTV.org** - CS2 matches
+- **VLR.gg** - Valorant matches
+- **Liquipedia** - All games (future)
+
+No setup required, works automatically as fallback.
+
+### How It Works
+
+1. Base match data from `live-matches.json`
+2. System queries Twitch API to verify streams are live
+3. Cross-references with PandaScore for score updates
+4. Checks HLTV/VLR for additional confirmation
+5. If stream is offline and no other sources confirm, match status changes to "upcoming"
+6. Shows "Verified: twitch, pandascore, hltv" badges for confirmed matches
+
+### Data Source Priority
+
+1. **Twitch Stream Status** - Primary indicator (if offline, match likely not live)
+2. **PandaScore API** - Authoritative for scores and status
+3. **HLTV/VLR Scraping** - Additional confirmation
+4. **Manual JSON** - Fallback when APIs unavailable
+
+### Without API Keys
+
+The system works fine without API keys but will:
+- Not verify stream status (assumes matches marked "live" are correct)
+- Not update scores automatically
+- Not show viewer counts
+- Not validate match status
+
+Recommended to add at least Twitch credentials for basic stream verification (it's free).
+

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { enrichMatchesWithLiveData } from '@/lib/esportsAggregator';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -15,6 +16,9 @@ export async function GET(request) {
     const filePath = join(process.cwd(), 'data', 'esports', 'live-matches.json');
     const fileContent = readFileSync(filePath, 'utf-8');
     let matches = JSON.parse(fileContent);
+
+    // Enrich matches with real-time data from multiple sources
+    matches = await enrichMatchesWithLiveData(matches);
 
     // Filter by game if specified
     if (game) {
