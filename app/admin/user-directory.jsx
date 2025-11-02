@@ -77,12 +77,22 @@ export default function AdminUserDirectory() {
     try {
       const query = buildQuery(params);
       const res = await fetch(`/api/admin/users${query ? `?${query}` : ''}`, { cache: 'no-store' });
-      const payload = await res.json();
+      
       if (!res.ok) {
+        const text = await res.text();
+        let payload;
+        try {
+          payload = JSON.parse(text);
+        } catch {
+          throw new Error(`HTTP ${res.status}: ${text || 'Unknown error'}`);
+        }
         throw new Error(payload.error || 'Failed to fetch users.');
       }
+      
+      const payload = await res.json();
       setUsers(payload.users || []);
     } catch (err) {
+      console.error('User directory error:', err);
       setError(err.message || 'Failed to fetch users.');
     } finally {
       setLoading(false);
