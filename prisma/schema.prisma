@@ -44,6 +44,20 @@ model User {
   createdAt DateTime @default(now())
 }
 
+model PendingUser {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  username        String
+  passwordHash    String
+  verificationCode String
+  expiresAt       DateTime
+  ipAddress       String?
+  createdAt       DateTime @default(now())
+
+  @@index([email])
+  @@index([verificationCode])
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String

@@ -7,6 +7,8 @@ export async function POST(req, { params }) {
     return new Response(JSON.stringify({ error: "Owner privileges required." }), { status: 403 });
   }
 
+  const { id } = await params;
+
   let body = {};
   try {
     body = await req.json();
@@ -14,7 +16,7 @@ export async function POST(req, { params }) {
   const desired = typeof body.pin === "boolean" ? body.pin : null;
 
   const post = await prisma.post.findUnique({
-    where: { id: params.id },
+    where: { id },
     select: { id: true, isPinned: true },
   });
   if (!post) {
@@ -23,7 +25,7 @@ export async function POST(req, { params }) {
 
   const nextPinned = desired ?? !post.isPinned;
   await prisma.post.update({
-    where: { id: params.id },
+    where: { id },
     data: { isPinned: nextPinned },
   });
 

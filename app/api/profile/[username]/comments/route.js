@@ -16,7 +16,8 @@ function normalizeUsername(raw) {
 }
 
 export async function GET(_req, { params }) {
-  const username = normalizeUsername(params.username);
+  const { username: usernameParam } = await params;
+  const username = normalizeUsername(usernameParam);
   if (!username) {
     return json({ ok: false, error: "Missing username" }, 400);
   }
@@ -53,7 +54,8 @@ export async function POST(req, { params }) {
     return json({ ok: false, error: "Unauthorized" }, 401);
   }
 
-  const username = normalizeUsername(params.username);
+  const { username: usernameParam } = await params;
+  const username = normalizeUsername(usernameParam);
   if (!username) {
     return json({ ok: false, error: "Missing username" }, 400);
   }

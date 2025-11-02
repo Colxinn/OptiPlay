@@ -9,7 +9,7 @@ export async function POST(req, { params }) {
   if (!session?.user?.email) {
     return new Response(JSON.stringify({ error: "Auth required" }), { status: 401 });
   }
-  const { id: postId } = params;
+  const { id: postId } = await params;
   const { content } = await req.json();
   const text = (content || "").trim();
   if (!text) return new Response(JSON.stringify({ error: "Content required" }), { status: 400 });

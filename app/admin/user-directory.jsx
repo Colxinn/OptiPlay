@@ -143,6 +143,35 @@ export default function AdminUserDirectory() {
     }
   }
 
+  async function deleteUser(userId, user) {
+    const confirmText = `DELETE ${user.name}`;
+    const input = window.prompt(
+      `⚠️ PERMANENT DELETE WARNING\n\nThis will permanently delete user "${user.name}" (${user.email}) and ALL their data:\n• Posts\n• Comments\n• Votes\n• Profile comments\n• Access logs\n\nType "${confirmText}" to confirm deletion:`,
+      ''
+    );
+
+    if (input !== confirmText) {
+      if (input) alert('Deletion cancelled. Text did not match.');
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/users/${userId}/delete`, {
+        method: 'DELETE',
+      });
+      const payload = await res.json();
+      if (!res.ok) {
+        throw new Error(payload.error || 'Failed to delete user.');
+      }
+      
+      // Remove from local state
+      setUsers((prev) => prev.filter((u) => u.id !== userId));
+      alert(`✅ ${payload.message}`);
+    } catch (err) {
+      alert(err.message || 'Failed to delete user.');
+    }
+  }
+
   async function exportCsv() {
     try {
       const query = buildQuery(filters);
@@ -339,6 +368,12 @@ export default function AdminUserDirectory() {
                         }`}
                       >
                         {user.isMuted ? 'Unmute' : 'Mute'}
+                      </button>
+                      <button
+                        onClick={() => deleteUser(user.id, user)}
+                        className="mt-2 w-full rounded-md border border-red-400/40 px-2 py-1 text-[11px] text-red-200 hover:bg-red-500/10"
+                      >
+                        🗑️ Delete
                       </button>
                       <button
                         onClick={() => setExpanded((prev) => (prev === user.id ? null : user.id))}

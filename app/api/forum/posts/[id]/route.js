@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 export async function GET(_req, { params }) {
-  const { id } = params;
+  const { id } = await params;
   const post = await prisma.post.findUnique({
     where: { id },
     include: {
@@ -45,8 +45,10 @@ export async function DELETE(_req, { params }) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
   }
 
+  const { id } = await params;
+
   const post = await prisma.post.findUnique({
-    where: { id: params.id },
+    where: { id },
     select: { id: true, authorId: true },
   });
   if (!post) {
@@ -60,7 +62,7 @@ export async function DELETE(_req, { params }) {
   }
 
   await prisma.post.update({
-    where: { id: params.id },
+    where: { id },
     data: { isRemoved: true, isPinned: false },
   });
 

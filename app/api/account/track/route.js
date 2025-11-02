@@ -59,7 +59,7 @@ export async function POST() {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
 
-  const hdrs = headers();
+  const hdrs = await headers();
   const forwarded = hdrs.get("x-forwarded-for") || "";
   const ip = forwarded.split(",")[0]?.trim() || hdrs.get("x-real-ip") || "";
 

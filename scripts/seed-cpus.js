@@ -3,7 +3,20 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const MODERN_CPUS = [
+  // Intel 15th Gen Arrow Lake (2024-2025)
+  { name: 'Intel Core Ultra 9 285K', slug: 'intel-ultra-9-285k', family: 'Intel Core Ultra (15th Gen)', architecture: 'Arrow Lake', releaseYear: 2024, cores: 24, threads: 24, benchmarkScore: 96, tdpWatts: 125, priceUsd: 589 },
+  { name: 'Intel Core Ultra 7 265K', slug: 'intel-ultra-7-265k', family: 'Intel Core Ultra (15th Gen)', architecture: 'Arrow Lake', releaseYear: 2024, cores: 20, threads: 20, benchmarkScore: 89, tdpWatts: 125, priceUsd: 394 },
+  { name: 'Intel Core Ultra 5 245K', slug: 'intel-ultra-5-245k', family: 'Intel Core Ultra (15th Gen)', architecture: 'Arrow Lake', releaseYear: 2024, cores: 14, threads: 14, benchmarkScore: 81, tdpWatts: 125, priceUsd: 309 },
+
+  // Intel 14th Gen (2023-2024)
+  { name: 'Intel Core i9-14900KS', slug: 'intel-i9-14900ks', family: 'Intel Core 14th Gen', architecture: 'Raptor Lake Refresh', releaseYear: 2024, cores: 24, threads: 32, benchmarkScore: 100, tdpWatts: 150, priceUsd: 689 },
+  { name: 'Intel Core i9-14900K', slug: 'intel-i9-14900k', family: 'Intel Core 14th Gen', architecture: 'Raptor Lake Refresh', releaseYear: 2023, cores: 24, threads: 32, benchmarkScore: 97, tdpWatts: 125, priceUsd: 589 },
+  { name: 'Intel Core i7-14700K', slug: 'intel-i7-14700k', family: 'Intel Core 14th Gen', architecture: 'Raptor Lake Refresh', releaseYear: 2023, cores: 20, threads: 28, benchmarkScore: 90, tdpWatts: 125, priceUsd: 409 },
+  { name: 'Intel Core i5-14600K', slug: 'intel-i5-14600k', family: 'Intel Core 14th Gen', architecture: 'Raptor Lake Refresh', releaseYear: 2023, cores: 14, threads: 20, benchmarkScore: 84, tdpWatts: 125, priceUsd: 319 },
+  { name: 'Intel Core i5-14400F', slug: 'intel-i5-14400f', family: 'Intel Core 14th Gen', architecture: 'Raptor Lake Refresh', releaseYear: 2024, cores: 10, threads: 16, benchmarkScore: 74, tdpWatts: 65, priceUsd: 196 },
+
   // Intel 13th Gen (2022-2023)
+  { name: 'Intel Core i9-13900KS', slug: 'intel-i9-13900ks', family: 'Intel Core 13th Gen', architecture: 'Raptor Lake', releaseYear: 2023, cores: 24, threads: 32, benchmarkScore: 98, tdpWatts: 150, priceUsd: 699 },
   { name: 'Intel Core i9-13900K', slug: 'intel-i9-13900k', family: 'Intel Core 13th Gen', architecture: 'Raptor Lake', releaseYear: 2022, cores: 24, threads: 32, benchmarkScore: 95, tdpWatts: 125, priceUsd: 589 },
   { name: 'Intel Core i7-13700K', slug: 'intel-i7-13700k', family: 'Intel Core 13th Gen', architecture: 'Raptor Lake', releaseYear: 2022, cores: 16, threads: 24, benchmarkScore: 88, tdpWatts: 125, priceUsd: 419 },
   { name: 'Intel Core i5-13600K', slug: 'intel-i5-13600k', family: 'Intel Core 13th Gen', architecture: 'Raptor Lake', releaseYear: 2022, cores: 14, threads: 20, benchmarkScore: 82, tdpWatts: 125, priceUsd: 319 },
@@ -27,12 +40,32 @@ const MODERN_CPUS = [
   { name: 'Intel Core i5-10600K', slug: 'intel-i5-10600k', family: 'Intel Core 10th Gen', architecture: 'Comet Lake', releaseYear: 2020, cores: 6, threads: 12, benchmarkScore: 60, tdpWatts: 125, priceUsd: 262 },
   { name: 'Intel Core i5-10400F', slug: 'intel-i5-10400f', family: 'Intel Core 10th Gen', architecture: 'Comet Lake', releaseYear: 2020, cores: 6, threads: 12, benchmarkScore: 58, tdpWatts: 65, priceUsd: 157 },
 
+  // AMD Ryzen 9000 Series X3D (2024-2025) - GAMING KINGS
+  { name: 'AMD Ryzen 7 9800X3D', slug: 'amd-ryzen-7-9800x3d', family: 'AMD Ryzen 9000', architecture: 'Zen 5', releaseYear: 2024, cores: 8, threads: 16, benchmarkScore: 102, tdpWatts: 120, priceUsd: 479 },
+  { name: 'AMD Ryzen 9 9950X3D', slug: 'amd-ryzen-9-9950x3d', family: 'AMD Ryzen 9000', architecture: 'Zen 5', releaseYear: 2025, cores: 16, threads: 32, benchmarkScore: 104, tdpWatts: 120, priceUsd: 699 },
+  { name: 'AMD Ryzen 9 9900X3D', slug: 'amd-ryzen-9-9900x3d', family: 'AMD Ryzen 9000', architecture: 'Zen 5', releaseYear: 2025, cores: 12, threads: 24, benchmarkScore: 103, tdpWatts: 120, priceUsd: 549 },
+
+  // AMD Ryzen 9000 Series (2024)
+  { name: 'AMD Ryzen 9 9950X', slug: 'amd-ryzen-9-9950x', family: 'AMD Ryzen 9000', architecture: 'Zen 5', releaseYear: 2024, cores: 16, threads: 32, benchmarkScore: 99, tdpWatts: 170, priceUsd: 649 },
+  { name: 'AMD Ryzen 9 9900X', slug: 'amd-ryzen-9-9900x', family: 'AMD Ryzen 9000', architecture: 'Zen 5', releaseYear: 2024, cores: 12, threads: 24, benchmarkScore: 94, tdpWatts: 120, priceUsd: 499 },
+  { name: 'AMD Ryzen 7 9700X', slug: 'amd-ryzen-7-9700x', family: 'AMD Ryzen 9000', architecture: 'Zen 5', releaseYear: 2024, cores: 8, threads: 16, benchmarkScore: 87, tdpWatts: 65, priceUsd: 359 },
+  { name: 'AMD Ryzen 5 9600X', slug: 'amd-ryzen-5-9600x', family: 'AMD Ryzen 9000', architecture: 'Zen 5', releaseYear: 2024, cores: 6, threads: 12, benchmarkScore: 80, tdpWatts: 65, priceUsd: 279 },
+
+  // AMD Ryzen 7000 Series X3D (2023-2024) - GAMING CHAMPIONS
+  { name: 'AMD Ryzen 7 7800X3D', slug: 'amd-ryzen-7-7800x3d', family: 'AMD Ryzen 7000', architecture: 'Zen 4', releaseYear: 2023, cores: 8, threads: 16, benchmarkScore: 98, tdpWatts: 120, priceUsd: 449 },
+  { name: 'AMD Ryzen 9 7950X3D', slug: 'amd-ryzen-9-7950x3d', family: 'AMD Ryzen 7000', architecture: 'Zen 4', releaseYear: 2023, cores: 16, threads: 32, benchmarkScore: 100, tdpWatts: 120, priceUsd: 699 },
+  { name: 'AMD Ryzen 9 7900X3D', slug: 'amd-ryzen-9-7900x3d', family: 'AMD Ryzen 7000', architecture: 'Zen 4', releaseYear: 2023, cores: 12, threads: 24, benchmarkScore: 95, tdpWatts: 120, priceUsd: 599 },
+
   // AMD Ryzen 7000 Series (2022-2023)
   { name: 'AMD Ryzen 9 7950X', slug: 'amd-ryzen-9-7950x', family: 'AMD Ryzen 7000', architecture: 'Zen 4', releaseYear: 2022, cores: 16, threads: 32, benchmarkScore: 98, tdpWatts: 170, priceUsd: 699 },
   { name: 'AMD Ryzen 9 7900X', slug: 'amd-ryzen-9-7900x', family: 'AMD Ryzen 7000', architecture: 'Zen 4', releaseYear: 2022, cores: 12, threads: 24, benchmarkScore: 92, tdpWatts: 170, priceUsd: 549 },
   { name: 'AMD Ryzen 7 7700X', slug: 'amd-ryzen-7-7700x', family: 'AMD Ryzen 7000', architecture: 'Zen 4', releaseYear: 2022, cores: 8, threads: 16, benchmarkScore: 85, tdpWatts: 105, priceUsd: 399 },
   { name: 'AMD Ryzen 5 7600X', slug: 'amd-ryzen-5-7600x', family: 'AMD Ryzen 7000', architecture: 'Zen 4', releaseYear: 2022, cores: 6, threads: 12, benchmarkScore: 78, tdpWatts: 105, priceUsd: 299 },
   
+  // AMD Ryzen 5000 Series X3D (2022) - THE LEGENDARY 5800X3D
+  { name: 'AMD Ryzen 7 5800X3D', slug: 'amd-ryzen-7-5800x3d', family: 'AMD Ryzen 5000', architecture: 'Zen 3', releaseYear: 2022, cores: 8, threads: 16, benchmarkScore: 92, tdpWatts: 105, priceUsd: 449 },
+  { name: 'AMD Ryzen 7 5700X3D', slug: 'amd-ryzen-7-5700x3d', family: 'AMD Ryzen 5000', architecture: 'Zen 3', releaseYear: 2024, cores: 8, threads: 16, benchmarkScore: 88, tdpWatts: 105, priceUsd: 249 },
+
   // AMD Ryzen 5000 Series (2020-2022)
   { name: 'AMD Ryzen 9 5950X', slug: 'amd-ryzen-9-5950x', family: 'AMD Ryzen 5000', architecture: 'Zen 3', releaseYear: 2020, cores: 16, threads: 32, benchmarkScore: 92, tdpWatts: 105, priceUsd: 799 },
   { name: 'AMD Ryzen 9 5900X', slug: 'amd-ryzen-9-5900x', family: 'AMD Ryzen 5000', architecture: 'Zen 3', releaseYear: 2020, cores: 12, threads: 24, benchmarkScore: 88, tdpWatts: 105, priceUsd: 549 },

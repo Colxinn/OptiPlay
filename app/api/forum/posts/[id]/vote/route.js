@@ -6,7 +6,7 @@ export async function POST(req, { params }) {
   if (!session?.user?.email) {
     return new Response(JSON.stringify({ error: "Auth required" }), { status: 401 });
   }
-  const { id: postId } = params;
+  const { id: postId } = await params;
   const { value } = await req.json();
   const v = Number(value);
   if (![1, -1, 0].includes(v)) {

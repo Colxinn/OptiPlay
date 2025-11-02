@@ -1,12 +1,12 @@
 import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 import { assertCleanUsername } from "@/lib/contentModeration";
-import { getOGBadgeData } from "@/lib/ogBadge";
 import { strictRateLimit } from "@/lib/rateLimit";
 import { isSpamEmail, isValidUsername, sanitizeUsername } from "@/lib/spamProtection";
 import { isDisposableEmail, containsSuspiciousPatterns } from "@/lib/emailValidation";
 import { isHoneypotFilled, isSubmissionTooFast, validateBrowserHeaders } from "@/lib/honeypot";
 import { isBlacklistedIP, trackIPActivity, isIPAbusive, blacklistIP } from "@/lib/ipBlacklist";
+import { createPendingUser } from "@/lib/emailVerification";
 
 function badRequest(message, status = 400) {
   return new Response(JSON.stringify({ ok: false, error: message }), {
@@ -152,41 +152,30 @@ export async function POST(req) {
     return badRequest("That username is already taken", 409);
   }
 
-  const passwordHash = await bcrypt.hash(password, 12);
-  const existing = await prisma.user.findUnique({ where: { email: emailRaw } });
-  const shouldBeOwner = ownerEmailSet.has(emailRaw);
-  const ogData = getOGBadgeData(); // Check if user qualifies for OG badge
-
-  if (!existing) {
-    await prisma.user.create({
-      data: {
-        email: emailRaw,
-        name: username,
-        passwordHash,
-        bio: "",
-        isOwner: shouldBeOwner,
-        ...ogData, // Grant OG status if within eligibility period
-      },
-    });
-    trackIPActivity(ip, 'register_success');
-  } else if (existing.emailVerified) {
+  // Check if email already has a verified account
+  const existingUser = await prisma.user.findUnique({ where: { email: emailRaw } });
+  if (existingUser && existingUser.emailVerified) {
     trackIPActivity(ip, 'register_fail');
     return badRequest("Account already exists. Use sign in instead.", 409);
-  } else {
-    await prisma.user.update({
-      where: { email: emailRaw },
-      data: {
-        name: username,
-        passwordHash,
-        ...(shouldBeOwner ? { isOwner: true } : {}),
-        ...ogData, // Grant OG status if within eligibility period
-      },
-    });
-    trackIPActivity(ip, 'register_success');
   }
 
-  return new Response(JSON.stringify({ ok: true }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+  // Hash password and create pending user (requires email verification)
+  const passwordHash = await bcrypt.hash(password, 12);
+  
+  try {
+    await createPendingUser(emailRaw, username, passwordHash, ip);
+    trackIPActivity(ip, 'register_pending');
+    
+    return new Response(JSON.stringify({ 
+      ok: true, 
+      message: "Verification code sent to your email. Please check your inbox.",
+      requiresVerification: true
+    }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    trackIPActivity(ip, 'register_fail');
+    return badRequest("Registration failed. Please try again.");
+  }
 }

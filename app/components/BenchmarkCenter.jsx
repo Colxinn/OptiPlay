@@ -59,14 +59,14 @@ function LoadingScreen({ logs }) {
         </div>
 
         {/* Stats Preview */}
-        <div className="grid grid-cols-3 gap-4 text-center">
+        <div className="grid grid-cols-3 gap-2 mb-3">
           <div className="rounded-lg border border-white/10 bg-neutral-950/60 p-3">
-            <div className="text-2xl font-bold text-purple-400">87</div>
-            <div className="text-xs text-gray-500">GPUs</div>
+            <div className="text-2xl font-bold text-blue-400">106</div>
+            <div className="text-xs text-gray-500">CPUs</div>
           </div>
           <div className="rounded-lg border border-white/10 bg-neutral-950/60 p-3">
-            <div className="text-2xl font-bold text-fuchsia-400">89</div>
-            <div className="text-xs text-gray-500">CPUs</div>
+            <div className="text-2xl font-bold text-green-400">96</div>
+            <div className="text-xs text-gray-500">GPUs</div>
           </div>
           <div className="rounded-lg border border-white/10 bg-neutral-950/60 p-3">
             <div className="text-2xl font-bold text-purple-400">21</div>
@@ -79,9 +79,9 @@ function LoadingScreen({ logs }) {
           <div className="rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-950/40 to-fuchsia-950/40 p-3">
             <div className="text-xs text-gray-400 mb-1">Total Benchmark Combinations</div>
             <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-400">
-              487,809
+              639,072
             </div>
-            <div className="text-[10px] text-gray-500 mt-1">87 GPUs × 89 CPUs × 21 Games × 3 Resolutions</div>
+            <div className="text-[10px] text-gray-500 mt-1">96 GPUs × 106 CPUs × 21 Games × 3 Resolutions</div>
           </div>
         </div>
       </div>
