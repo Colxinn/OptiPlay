@@ -146,7 +146,7 @@ export default function ReactionTester() {
 
   const getInstructions = () => {
     if (state === 'idle') return testMode === 'aim' ? 'Click to start aim test' : 'Click anywhere to start';
-    if (state === 'waiting') return testMode === 'aim' ? 'Wait for target to turn GREEN...' : 'Wait for GREEN...';
+    if (state === 'waiting') return testMode === 'aim' ? 'Get ready...' : 'Wait for GREEN...';
     if (state === 'click') return testMode === 'aim' ? 'CLICK THE TARGET!' : 'CLICK NOW!';
     return '';
   };
@@ -275,8 +275,8 @@ export default function ReactionTester() {
               className={`${getBackgroundColor()} rounded-xl border border-white/10 transition-all duration-200 cursor-pointer hover:border-white/20 flex items-center justify-center relative overflow-hidden`}
               style={{ minHeight: '500px' }}
             >
-              {/* Aim Mode Target */}
-              {testMode === 'aim' && (state === 'waiting' || state === 'click') && (
+              {/* Aim Mode Target - Only show when green (state === 'click') */}
+              {testMode === 'aim' && state === 'click' && (
                 <div
                   className="absolute transition-all duration-200"
                   style={{
@@ -285,9 +285,9 @@ export default function ReactionTester() {
                     transform: 'translate(-50%, -50%)',
                     width: `${targetSize}px`,
                     height: `${targetSize}px`,
-                    backgroundColor: state === 'click' ? targetColor : '#7f1d1d',
+                    backgroundColor: targetColor,
                     borderRadius: targetShape === 'circle' ? '50%' : '8px',
-                    border: `3px solid ${state === 'click' ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.1)'}`,
+                    border: `3px solid rgba(255,255,255,0.3)`,
                   }}
                 />
               )}
@@ -338,9 +338,9 @@ export default function ReactionTester() {
               ) : (
                 <ul className="text-sm text-gray-400 space-y-1">
                   <li>• Customize target size, shape, and color above</li>
-                  <li>• Click to start - target appears at random position</li>
-                  <li>• Wait for target to turn <span className="text-green-400">GREEN</span></li>
-                  <li>• Click the green target as fast as possible</li>
+                  <li>• Click to start - screen goes dark</li>
+                  <li>• Target will <span className="text-green-400">flash</span> at random position (flashbang simulation)</li>
+                  <li>• Click the target as fast as possible</li>
                   <li>• Missing the target doesn't count - precision matters!</li>
                   <li>• Smaller targets = harder, more realistic aim training</li>
                 </ul>
