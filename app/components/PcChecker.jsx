@@ -83,26 +83,51 @@ export default function PcChecker() {
 
   function compare(g, s) {
     let score = 0;
+    let recommendations = [];
     
     // RAM scoring (max 2 points)
-    if (s.ram >= (g.rec?.ram_gb || 16)) score += 2;
-    else if (s.ram >= (g.min?.ram_gb || 8)) score += 1;
-    else if (s.ram >= (g.min?.ram_gb || 4) * 0.75) score += 0.5;
+    const recRam = g.rec?.ram_gb || 16;
+    const minRam = g.min?.ram_gb || 8;
+    
+    if (s.ram >= recRam) score += 2;
+    else if (s.ram >= minRam) {
+      score += 1;
+      recommendations.push(`Upgrade to ${recRam}GB RAM for better performance`);
+    } else if (s.ram >= minRam * 0.75) {
+      score += 0.5;
+      recommendations.push(`Upgrade to ${minRam}GB RAM (minimum required)`);
+    } else {
+      recommendations.push(`Critical: Need ${minRam}GB RAM to run this game`);
+    }
     
     // GPU scoring (max 3 points for recommended, 1.5 for min)
     const recGpuScore = matchGpuScore(s.gpu, g.rec?.gpu);
     const minGpuScore = matchGpuScore(s.gpu, g.min?.gpu);
     
-    if (recGpuScore >= 2) score += 3; // Exceeds recommended
-    else if (recGpuScore >= 1) score += 2.5; // Meets recommended
-    else if (minGpuScore >= 2) score += 2; // Exceeds minimum
-    else if (minGpuScore >= 1) score += 1.5; // Meets minimum
-    else if (minGpuScore >= 0.5) score += 1; // Close to minimum
+    if (recGpuScore >= 2) {
+      score += 3; // Exceeds recommended
+    } else if (recGpuScore >= 1) {
+      score += 2.5; // Meets recommended
+    } else if (minGpuScore >= 2) {
+      score += 2; // Exceeds minimum
+      recommendations.push(`Consider ${g.rec?.gpu || 'a better GPU'} for recommended settings`);
+    } else if (minGpuScore >= 1) {
+      score += 1.5; // Meets minimum
+      recommendations.push(`Upgrade to ${g.rec?.gpu || 'a better GPU'} for smoother gameplay`);
+    } else if (minGpuScore >= 0.5) {
+      score += 1; // Close to minimum
+      recommendations.push(`GPU slightly below minimum - consider ${g.min?.gpu || 'upgrading'}`);
+    } else {
+      recommendations.push(`Critical: Need ${g.min?.gpu || 'a better GPU'} to run this game`);
+    }
     
-    return Math.min(score, 5); // Cap at 5
+    return { score: Math.min(score, 5), recommendations }; // Cap at 5
   }
 
-  const graded = useMemo(() => results.map((g) => ({ ...g, score: compare(g, spec) })), [results, spec]);
+  const graded = useMemo(() => results.map((g) => {
+    const result = compare(g, spec);
+    return { ...g, score: result.score, recommendations: result.recommendations };
+  }), [results, spec]);
 
   return (
     <div className="rounded-xl bg-neutral-900 border border-white/10 p-4">
@@ -192,6 +217,21 @@ export default function PcChecker() {
                        g.presets?.mid || '—'}
                     </div>
                   </div>
+                  
+                  {/* Hardware Recommendations */}
+                  {g.recommendations && g.recommendations.length > 0 && (
+                    <div className="mt-2 pt-2 border-t border-white/10">
+                      <div className="text-xs font-medium text-purple-300 mb-1.5">💡 Recommendations:</div>
+                      <ul className="space-y-1">
+                        {g.recommendations.map((rec, idx) => (
+                          <li key={idx} className="text-xs text-gray-300 flex items-start gap-1.5">
+                            <span className="text-purple-400 mt-0.5">•</span>
+                            <span>{rec}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
