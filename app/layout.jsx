@@ -16,7 +16,10 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Google AdSense - Always loaded for verification */}
+        {/* Google AdSense Verification Meta Tag */}
+        <meta name="google-adsense-account" content="ca-pub-2863890623382272" />
+        
+        {/* Google AdSense Script */}
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2863890623382272"
