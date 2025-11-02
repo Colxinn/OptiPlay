@@ -13,6 +13,7 @@ function serializeComment(comment) {
       name: comment.author?.name ?? "Anonymous",
       image: comment.author?.image ?? null,
       isOwner: comment.author?.isOwner ?? false,
+      isOG: comment.author?.isOG ?? false,
     },
   };
 }
@@ -40,10 +41,12 @@ export default async function PublicProfilePage({ params }) {
       bio: true,
       image: true,
       isOwner: true,
+      isOG: true,
+      ogGrantedAt: true,
       profileCommentsReceived: {
         orderBy: { createdAt: "desc" },
         include: {
-          author: { select: { id: true, name: true, image: true, isOwner: true } },
+          author: { select: { id: true, name: true, image: true, isOwner: true, isOG: true } },
         },
       },
     },
@@ -73,6 +76,8 @@ export default async function PublicProfilePage({ params }) {
         bio: user.bio || "",
         image: user.image,
         isOwner: user.isOwner,
+        isOG: user.isOG,
+        ogGrantedAt: user.ogGrantedAt ? user.ogGrantedAt.toISOString() : null,
       }}
       comments={comments}
       viewer={session?.user ? { id: session.user.id, name: session.user.name ?? "", isOwner: !!session.user.isOwner } : null}

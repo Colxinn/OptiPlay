@@ -17,6 +17,7 @@ export default async function PostPage({ params }) {
           isOwner: true,
           isMuted: true,
           muteExpiresAt: true,
+          isOG: true,
         },
       },
       comments: {
@@ -31,6 +32,7 @@ export default async function PostPage({ params }) {
               isOwner: true,
               isMuted: true,
               muteExpiresAt: true,
+              isOG: true,
             },
           },
         },
@@ -63,6 +65,7 @@ export default async function PostPage({ params }) {
           muteExpiresAt: post.author.muteExpiresAt
             ? post.author.muteExpiresAt.toISOString()
             : null,
+          isOG: post.author.isOG,
         }
       : null,
     comments: post.comments.map((comment) => ({
@@ -79,6 +82,7 @@ export default async function PostPage({ params }) {
             muteExpiresAt: comment.author.muteExpiresAt
               ? comment.author.muteExpiresAt.toISOString()
               : null,
+            isOG: comment.author.isOG,
           }
         : null,
     })),

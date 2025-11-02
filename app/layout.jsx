@@ -7,6 +7,7 @@ import AccountTracker from "./components/AccountTracker.jsx";
 import VisitorTracker from "./components/VisitorTracker.jsx";
 import SearchBox from "./components/SearchBox.jsx";
 import Script from "next/script";
+import OGWelcomeBanner from "./components/OGWelcomeBanner.jsx";
 
 export const metadata = { title: "OptiPlay", description: "Play smarter, run faster, stay updated." };
 
@@ -29,6 +30,7 @@ export default async function RootLayout({ children }) {
       </head>
       <body className="min-h-screen bg-[#0f0b18] text-gray-200">
         <SessionProvider session={session}>
+          <OGWelcomeBanner />
           <AccountTracker />
           <VisitorTracker />
           <header className="border-b border-white/10">

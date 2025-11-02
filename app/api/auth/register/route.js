@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 import { assertCleanUsername } from "@/lib/contentModeration";
+import { getOGBadgeData } from "@/lib/ogBadge";
 
 function badRequest(message, status = 400) {
   return new Response(JSON.stringify({ ok: false, error: message }), {
@@ -66,6 +67,7 @@ export async function POST(req) {
   const passwordHash = await bcrypt.hash(password, 12);
   const existing = await prisma.user.findUnique({ where: { email: emailRaw } });
   const shouldBeOwner = ownerEmailSet.has(emailRaw);
+  const ogData = getOGBadgeData(); // Check if user qualifies for OG badge
 
   if (!existing) {
     await prisma.user.create({
@@ -75,6 +77,7 @@ export async function POST(req) {
         passwordHash,
         bio: "",
         isOwner: shouldBeOwner,
+        ...ogData, // Grant OG status if within eligibility period
       },
     });
   } else if (existing.emailVerified) {
@@ -86,6 +89,7 @@ export async function POST(req) {
         name: username,
         passwordHash,
         ...(shouldBeOwner ? { isOwner: true } : {}),
+        ...ogData, // Grant OG status if within eligibility period
       },
     });
   }

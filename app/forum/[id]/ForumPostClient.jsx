@@ -5,6 +5,7 @@ import Link from "next/link";
 import VoteButtons from "@/app/components/VoteButtons.jsx";
 import CommentForm from "@/app/components/CommentForm.jsx";
 import { sanitizePublicImage } from "@/lib/imageValidation";
+import OGBadge from "@/app/components/OGBadge.jsx";
 
 function relativeTime(iso) {
   const date = new Date(iso);
@@ -168,14 +169,17 @@ export default function ForumPostClient({ post, viewer }) {
               <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-400">
                 <span>Posted {relativeTime(postState.createdAt)}</span>
                 {postState.author?.name ? (
-                  <Link
-                    href={`/profile/${encodeURIComponent(postState.author.name)}`}
-                    className={`font-semibold ${
-                      postState.author?.isOwner ? "owner-text" : "text-purple-200"
-                    } hover:underline`}
-                  >
-                    {postState.author.name}
-                  </Link>
+                  <>
+                    <Link
+                      href={`/profile/${encodeURIComponent(postState.author.name)}`}
+                      className={`font-semibold ${
+                        postState.author?.isOwner ? "owner-text" : "text-purple-200"
+                      } hover:underline`}
+                    >
+                      {postState.author.name}
+                    </Link>
+                    {postState.author?.isOG && <OGBadge />}
+                  </>
                 ) : (
                   <span className="font-semibold text-purple-200">Anon</span>
                 )}
@@ -240,14 +244,17 @@ export default function ForumPostClient({ post, viewer }) {
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400">
                       {comment.author?.name ? (
-                        <Link
-                          href={`/profile/${encodeURIComponent(comment.author.name)}`}
-                          className={`font-semibold ${
-                            comment.author?.isOwner ? "owner-text" : "text-purple-200"
-                          } hover:underline`}
-                        >
-                          {comment.author.name}
-                        </Link>
+                        <>
+                          <Link
+                            href={`/profile/${encodeURIComponent(comment.author.name)}`}
+                            className={`font-semibold ${
+                              comment.author?.isOwner ? "owner-text" : "text-purple-200"
+                            } hover:underline`}
+                          >
+                            {comment.author.name}
+                          </Link>
+                          {comment.author?.isOG && <OGBadge />}
+                        </>
                       ) : (
                         <span className="font-semibold text-purple-200">Anon</span>
                       )}

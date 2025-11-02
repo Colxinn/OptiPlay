@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import OGBadge from '@/app/components/OGBadge.jsx';
 
 const ET_FORMATTER = new Intl.DateTimeFormat('en-US', {
   month: 'short',
@@ -275,7 +276,10 @@ export default function AdminUserDirectory() {
                         )}
                         <div>
                           <div className="font-semibold text-purple-100">{user.name || '-'}</div>
-                          {user.isOwner ? <div className="text-[10px] uppercase text-purple-300">Owner</div> : null}
+                          <div className="flex items-center gap-1 flex-wrap">
+                            {user.isOwner ? <div className="text-[10px] uppercase text-purple-300">Owner</div> : null}
+                            {user.isOG ? <OGBadge className="text-[9px] px-1 py-0.5" /> : null}
+                          </div>
                         </div>
                       </div>
                     </td>

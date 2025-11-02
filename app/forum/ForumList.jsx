@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { sanitizePublicImage } from "@/lib/imageValidation";
+import OGBadge from "@/app/components/OGBadge.jsx";
 
 function relativeTime(iso) {
   const date = new Date(iso);
@@ -152,6 +153,7 @@ export default function ForumList({ posts: initialPosts, viewer }) {
                     >
                       {post.author?.name || "Anon"}
                     </Link>
+                    {post.author?.isOG && <OGBadge />}
                     <span>- {relativeTime(post.createdAt)}</span>
                     <span>- {post.commentCount} comments</span>
                     <span>- score {post.score}</span>

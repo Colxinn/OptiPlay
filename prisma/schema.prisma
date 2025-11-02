@@ -17,6 +17,8 @@ model User {
   image         String?
   bio           String    @default("")
   isOwner       Boolean   @default(false)
+  isOG          Boolean   @default(false)
+  ogGrantedAt   DateTime?
   isMuted       Boolean   @default(false)
   mutedAt       DateTime?
   mutedReason   String?

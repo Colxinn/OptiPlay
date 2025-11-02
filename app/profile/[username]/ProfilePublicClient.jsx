@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import OGBadge from "@/app/components/OGBadge.jsx";
 
 function relativeTime(dateString) {
   const date = new Date(dateString);
@@ -91,9 +92,12 @@ export default function ProfilePublicClient({ profile, comments: initialComments
             )}
           </div>
           <div>
-            <h1 className={`text-3xl font-bold ${profile.isOwner ? "owner-text" : "text-white"}`}>
-              {profile.name}
-            </h1>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className={`text-3xl font-bold ${profile.isOwner ? "owner-text" : "text-white"}`}>
+                {profile.name}
+              </h1>
+              {profile.isOG && <OGBadge className="text-xs px-2 py-1" />}
+            </div>
             <p className="mt-2 whitespace-pre-line text-sm text-gray-200">{profile.bio || "No bio yet."}</p>
           </div>
         </div>
@@ -145,7 +149,7 @@ export default function ProfilePublicClient({ profile, comments: initialComments
           ) : (
             comments.map((comment) => (
               <div key={comment.id} className="rounded-xl border border-white/5 bg-black/40 p-3">
-                <div className="flex items-center gap-2 text-xs text-gray-400">
+                <div className="flex items-center gap-2 text-xs text-gray-400 flex-wrap">
                   <Link
                     href={comment.author.name ? `/profile/${encodeURIComponent(comment.author.name)}` : "#"}
                     className={`font-semibold ${comment.author.isOwner ? "owner-text" : "text-purple-100"} ${
@@ -154,6 +158,7 @@ export default function ProfilePublicClient({ profile, comments: initialComments
                   >
                     {comment.author.name || "Anon"}
                   </Link>
+                  {comment.author.isOG && <OGBadge />}
                   <span>- {relativeTime(comment.createdAt)}</span>
                 </div>
                 <p className="mt-2 whitespace-pre-line text-sm text-gray-200">{comment.content}</p>

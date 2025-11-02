@@ -20,6 +20,7 @@ export default async function ForumPage() {
           isOwner: true,
           isMuted: true,
           muteExpiresAt: true,
+          isOG: true,
         },
       },
       _count: { select: { comments: true } },
@@ -44,6 +45,7 @@ export default async function ForumPage() {
       muteExpiresAt: post.author?.muteExpiresAt
         ? post.author.muteExpiresAt.toISOString()
         : null,
+      isOG: post.author?.isOG ?? false,
     },
     image: post.image || null,
   }));
