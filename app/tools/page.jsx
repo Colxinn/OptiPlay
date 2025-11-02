@@ -2,18 +2,18 @@
 import ToolCard from '../components/ToolCard.jsx';
 
 const ESSENTIAL_TOOLS = [
-  { slug: '/tools/fps-booster', title: 'FPS Booster', desc: 'One-click presets to squeeze more FPS.' },
-  { slug: '/tools/bottleneck-analyzer', title: '⚡ System Bottleneck Analyzer', desc: 'Upload your specs → instantly see which component is limiting your FPS.' },
-  { slug: '/tools/sense-converter', title: 'Sensitivity Converter', desc: 'Convert sens between CS2, Valorant, SiegeX, Fortnite, Roblox, Minecraft, Rust, Apex.' },
-  { slug: '/tools/windows-gamemode', title: 'Input/Display Optimizer', desc: 'Reduce input lag and auto-calibrate display.' },
-  { slug: '/tools/roblox-optimizer', title: 'Roblox Optimizer', desc: 'Optimized configs for Roblox.' },
-  { slug: '/tools/latency-tuner', title: 'Latency Tuner', desc: 'Simple network tweaks to reduce ping.' }
+  { slug: '/tools/fps-booster', title: 'FPS Booster', desc: 'One-click presets to squeeze more FPS.', updated: 'Oct 29' },
+  { slug: '/tools/bottleneck-analyzer', title: '⚡ System Bottleneck Analyzer', desc: 'Upload your specs → instantly see which component is limiting your FPS.', updated: 'Nov 2' },
+  { slug: '/tools/sense-converter', title: 'Sensitivity Converter', desc: 'Convert sens between CS2, Valorant, SiegeX, Fortnite, Roblox, Minecraft, Rust, Apex.', updated: 'Oct 15' },
+  { slug: '/tools/windows-gamemode', title: 'Input/Display Optimizer', desc: 'Reduce input lag and auto-calibrate display.', updated: 'Oct 20' },
+  { slug: '/tools/roblox-optimizer', title: 'Roblox Optimizer', desc: 'Optimized configs for Roblox.', updated: 'Oct 25' },
+  { slug: '/tools/latency-tuner', title: 'Latency Tuner', desc: 'Simple network tweaks to reduce ping.', updated: 'Oct 18' }
 ];
 
 const LAB_TOOLS = [
-  { slug: '/tools/cs2-crosshair', title: 'CS2 Crosshair Generator', desc: 'Live Counter-Strike 2 preview with console command export.' },
-  { slug: '/tools/valorant-crosshair', title: 'Valorant Crosshair Generator', desc: 'Pixel-accurate Valorant preview with slider-driven tuning.' },
-  { slug: '/tools/crosshair-lab', title: 'Crosshair Lab', desc: 'Render 512px previews and export OptiPlay crosshair payloads.' }
+  { slug: '/tools/cs2-crosshair', title: 'CS2 Crosshair Generator', desc: 'Live Counter-Strike 2 preview with console command export.', updated: 'Oct 28' },
+  { slug: '/tools/valorant-crosshair', title: 'Valorant Crosshair Generator', desc: 'Pixel-accurate Valorant preview with slider-driven tuning.', updated: 'Oct 28' },
+  { slug: '/tools/crosshair-lab', title: 'Crosshair Lab', desc: 'Render 512px previews and export OptiPlay crosshair payloads.', updated: 'Oct 22' }
 ];
 
 export default function ToolsPage() {

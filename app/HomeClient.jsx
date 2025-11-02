@@ -9,17 +9,17 @@ const PingHeatmap = dynamic(() => import('./components/PingHeatmap.jsx'), { ssr:
 
 export default function HomeClient() {
   const labTools = [
-    { title: 'CS2 Crosshair Generator', slug: '/tools/cs2-crosshair', desc: 'Live Counter-Strike 2 preview with console command export.' },
-    { title: 'Valorant Crosshair Generator', slug: '/tools/valorant-crosshair', desc: 'Pixel-accurate Valorant preview with slider-driven tuning.' },
-    { title: 'Crosshair Lab', slug: '/tools/crosshair-lab', desc: 'Render 512px previews and export OptiPlay crosshair payloads.' },
+    { title: 'CS2 Crosshair Generator', slug: '/tools/cs2-crosshair', desc: 'Live Counter-Strike 2 preview with console command export.', updated: 'Oct 28' },
+    { title: 'Valorant Crosshair Generator', slug: '/tools/valorant-crosshair', desc: 'Pixel-accurate Valorant preview with slider-driven tuning.', updated: 'Oct 28' },
+    { title: 'Crosshair Lab', slug: '/tools/crosshair-lab', desc: 'Render 512px previews and export OptiPlay crosshair payloads.', updated: 'Oct 22' },
   ];
   const tools = [
-    { title: 'FPS Booster', slug: '/tools/fps-booster', desc: 'One-click presets to squeeze more FPS.' },
-    { title: '⚡ Bottleneck Analyzer', slug: '/tools/bottleneck-analyzer', desc: 'See which component limits your FPS.' },
-    { title: 'Sensitivity Converter', slug: '/tools/sense-converter', desc: 'Convert sens between games.' },
-    { title: 'Input/Display Optimizer', slug: '/tools/windows-gamemode', desc: 'Reduce input lag and auto-calibrate display.' },
-    { title: 'Roblox Optimizer', slug: '/tools/roblox-optimizer', desc: 'Optimized settings for Roblox.' },
-    { title: 'Latency Tuner', slug: '/tools/latency-tuner', desc: 'Simple network tweaks to reduce ping.' },
+    { title: 'FPS Booster', slug: '/tools/fps-booster', desc: 'One-click presets to squeeze more FPS.', updated: 'Oct 29' },
+    { title: '⚡ Bottleneck Analyzer', slug: '/tools/bottleneck-analyzer', desc: 'See which component limits your FPS.', updated: 'Nov 2' },
+    { title: 'Sensitivity Converter', slug: '/tools/sense-converter', desc: 'Convert sens between games.', updated: 'Oct 15' },
+    { title: 'Input/Display Optimizer', slug: '/tools/windows-gamemode', desc: 'Reduce input lag and auto-calibrate display.', updated: 'Oct 20' },
+    { title: 'Roblox Optimizer', slug: '/tools/roblox-optimizer', desc: 'Optimized settings for Roblox.', updated: 'Oct 25' },
+    { title: 'Latency Tuner', slug: '/tools/latency-tuner', desc: 'Simple network tweaks to reduce ping.', updated: 'Oct 18' },
   ];
 
   return (
