@@ -73,6 +73,17 @@ function LoadingScreen({ logs }) {
             <div className="text-xs text-gray-500">Games</div>
           </div>
         </div>
+
+        {/* Total Combinations */}
+        <div className="text-center">
+          <div className="rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-950/40 to-fuchsia-950/40 p-3">
+            <div className="text-xs text-gray-400 mb-1">Total Benchmark Combinations</div>
+            <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-400">
+              321,300
+            </div>
+            <div className="text-[10px] text-gray-500 mt-1">85 GPUs × 60 CPUs × 21 Games × 3 Resolutions</div>
+          </div>
+        </div>
       </div>
 
       <style jsx>{`
