@@ -12,6 +12,9 @@ export default function HomeClient() {
     { title: 'CS2 Crosshair Generator', slug: '/tools/cs2-crosshair', desc: 'Live Counter-Strike 2 preview with console command export.', updated: 'Oct 28' },
     { title: 'Valorant Crosshair Generator', slug: '/tools/valorant-crosshair', desc: 'Pixel-accurate Valorant preview with slider-driven tuning.', updated: 'Oct 28' },
     { title: '🧩 Reaction Time Tester', slug: '/tools/reaction-tester', desc: 'Test your reflexes and compare your delay to esports pros.', updated: 'Nov 2' },
+    { title: '🌍 Network Path Visualizer', slug: '/tools/network-path', desc: 'Trace how your packets actually travel.', updated: 'Nov 2' },
+    { title: '👁️ Perception Test', slug: '/tools/perception-test', desc: 'Measure how precisely you notice frame changes.', updated: 'Nov 2' },
+    { title: '🏆 OptiScore Builder', slug: '/tools/optiscore', desc: 'Combine all test data into one score.', updated: 'Nov 2' },
   ];
   const tools = [
     { title: 'FPS Booster', slug: '/tools/fps-booster', desc: 'One-click presets to squeeze more FPS.', updated: 'Oct 29' },

@@ -71,13 +71,25 @@ export default function ReactionTester() {
         const clickX = ((e.clientX - rect.left) / rect.width) * 100;
         const clickY = ((e.clientY - rect.top) / rect.height) * 100;
         
-        const targetRadius = (targetSize / rect.width) * 100 / 2;
-        const distance = Math.sqrt(
-          Math.pow(clickX - targetPosition.x, 2) + 
-          Math.pow(clickY - targetPosition.y, 2)
-        );
+        let isHit = false;
         
-        if (distance > targetRadius) {
+        if (targetShape === 'circle') {
+          // Circle hit detection
+          const targetRadius = (targetSize / rect.width) * 100 / 2;
+          const distance = Math.sqrt(
+            Math.pow(clickX - targetPosition.x, 2) + 
+            Math.pow(clickY - targetPosition.y, 2)
+          );
+          isHit = distance <= targetRadius;
+        } else {
+          // Square hit detection
+          const targetHalfSize = (targetSize / rect.width) * 100 / 2;
+          const withinX = Math.abs(clickX - targetPosition.x) <= targetHalfSize;
+          const withinY = Math.abs(clickY - targetPosition.y) <= targetHalfSize * (rect.width / rect.height);
+          isHit = withinX && withinY;
+        }
+        
+        if (!isHit) {
           // Missed the target
           setState('idle');
           alert('Missed! Click on the green target.');
