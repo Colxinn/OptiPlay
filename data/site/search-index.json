@@ -1,0 +1,207 @@
+[
+  {
+    "category": "Tool",
+    "keywords": [
+      "performance",
+      "windows",
+      "optimize"
+    ],
+    "description": "One-click presets to squeeze more FPS on Windows.",
+    "href": "/tools/fps-booster",
+    "title": "FPS Booster"
+  },
+  {
+    "category": "Tool",
+    "keywords": [
+      "sens",
+      "mouse",
+      "dpi"
+    ],
+    "description": "Convert mouse sensitivity between popular games.",
+    "href": "/tools/sense-converter",
+    "title": "Sensitivity Converter"
+  },
+  {
+    "category": "Tool",
+    "keywords": [
+      "latency",
+      "input lag"
+    ],
+    "description": "Reduce latency and auto-calibrate your display.",
+    "href": "/tools/windows-gamemode",
+    "title": "Input & Display Optimizer"
+  },
+  {
+    "category": "Guide",
+    "keywords": [
+      "roblox",
+      "fps",
+      "settings"
+    ],
+    "description": "Optimize Roblox graphics and performance.",
+    "href": "/tools/roblox-optimizer",
+    "title": "Roblox Optimizer"
+  },
+  {
+    "category": "Tool",
+    "keywords": [
+      "dpi",
+      "mouse",
+      "sensor"
+    ],
+    "description": "Sensor-accurate DPI suggestions for your mouse.",
+    "href": "/tools/dpi-calculator",
+    "title": "DPI Calculator"
+  },
+  {
+    "category": "Tool",
+    "keywords": [
+      "ping",
+      "network",
+      "optimizer"
+    ],
+    "description": "Network tweaks to reduce ping and jitter.",
+    "href": "/tools/latency-tuner",
+    "title": "Latency Tuner"
+  },
+  {
+    "category": "Benchmark",
+    "keywords": [
+      "gpu",
+      "fps",
+      "benchmark"
+    ],
+    "description": "Compare average FPS across GPUs for supported games.",
+    "href": "/benchmarks",
+    "title": "Benchmark Center"
+  },
+  {
+    "category": "Game",
+    "keywords": ["counter-strike 2", "cs2", "competitive", "benchmark"],
+    "description": "CS2 performance presets, weighted GPU/CPU benchmarks, and compare tool.",
+    "href": "/benchmarks?game=cs2",
+    "title": "CS2 Benchmarks"
+  },
+  {
+    "category": "Game",
+    "keywords": ["valorant", "riot", "tactical fps"],
+    "description": "Valorant frame-time breakdowns and recommended builds.",
+    "href": "/benchmarks?game=valorant",
+    "title": "Valorant Benchmarks"
+  },
+  {
+    "category": "Game",
+    "keywords": ["fortnite", "uefn", "battle royale"],
+    "description": "Fortnite (UEFN) performance data across popular GPUs.",
+    "href": "/benchmarks?game=fortnite",
+    "title": "Fortnite Benchmarks"
+  },
+  {
+    "category": "Game",
+    "keywords": ["siege", "siegeX", "tactical shooter"],
+    "description": "SiegeX benchmark suite with competitive presets.",
+    "href": "/benchmarks?game=siegex",
+    "title": "SiegeX Benchmarks"
+  },
+  {
+    "category": "Game",
+    "keywords": ["roblox", "optimize", "fps"],
+    "description": "Roblox performance data, OptiPlay presets, and optimizer link.",
+    "href": "/benchmarks?game=roblox",
+    "title": "Roblox Benchmarks"
+  },
+  {
+    "category": "Game",
+    "keywords": ["minecraft", "java", "bedrock"],
+    "description": "Minecraft benchmark data (vanilla and shaders) for modern GPUs.",
+    "href": "/benchmarks?game=minecraft",
+    "title": "Minecraft Benchmarks"
+  },
+  {
+    "category": "Game",
+    "keywords": ["rust", "survival", "benchmark"],
+    "description": "Rust survival benchmark set with recommended hardware tiers.",
+    "href": "/benchmarks?game=rust",
+    "title": "Rust Benchmarks"
+  },
+  {
+    "category": "Game",
+    "keywords": ["apex legends", "battle royale", "ea"],
+    "description": "Apex Legends benchmarks with CPU/GPU weighted index.",
+    "href": "/benchmarks?game=apex-legends",
+    "title": "Apex Legends Benchmarks"
+  },
+  {
+    "category": "Community",
+    "keywords": [
+      "discussion",
+      "help",
+      "community"
+    ],
+    "description": "Discuss tweaks, share guides, and get help.",
+    "href": "/forum",
+    "title": "Community Forum"
+  },
+  {
+    "category": "Guide",
+    "keywords": [
+      "mods",
+      "utilities",
+      "catalog"
+    ],
+    "description": "Curated, ToS-friendly mods and utilities.",
+    "href": "/mods",
+    "title": "Mods Catalog"
+  },
+  {
+    "category": "News",
+    "keywords": [
+      "news",
+      "updates",
+      "esports"
+    ],
+    "description": "Daily esports and optimization headlines.",
+    "href": "/news",
+    "title": "News Hub"
+  },
+  {
+    "category": "Esports",
+    "keywords": [
+      "live",
+      "scores",
+      "esports",
+      "matches",
+      "odds",
+      "tournaments",
+      "cs2",
+      "valorant",
+      "league",
+      "dota"
+    ],
+    "description": "Live scores, match odds, and tournament updates across all major esports.",
+    "href": "/esports",
+    "title": "Live Esports Scores"
+  },
+  {
+    "category": "Program",
+    "keywords": [
+      "sponsor",
+      "partner",
+      "creator"
+    ],
+    "description": "Apply to become an OptiPlay sponsor and grow your brand.",
+    "href": "/sponsor/thanks",
+    "title": "Sponsor Program"
+  },
+  {
+    "category": "Admin",
+    "keywords": [
+      "admin",
+      "owner",
+      "control"
+    ],
+    "description": "Owner panel for moderation, polls, and analytics.",
+    "href": "/admin",
+    "title": "Admin Dashboard"
+  }
+]

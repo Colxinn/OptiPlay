@@ -1,31 +1,93 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://neondb_owner:npg_XVy3De2laJhn@ep-billowing-shadow-afxlj3vs-pooler.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+  url      = env("DATABASE_URL")
 }
 
-
+// ---------- NEXT-AUTH (v5) tables ---------- 
 model User {
-  id        String   @id @default(cuid())
-  name      String?
-  email     String?  @unique
-  image     String?
-  isOwner   Boolean  @default(false)
+  id            String    @id @default(cuid())
+  name          String?   @unique(map: "User_name_key")
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  bio           String    @default("")
+  isOwner       Boolean   @default(false)
+  isMuted       Boolean   @default(false)
+  mutedAt       DateTime?
+  mutedReason   String?
+  mutedByEmail  String?
+  muteExpiresAt DateTime?
+  passwordHash  String?
+
+  accounts Account[]
+  sessions Session[]
+
   posts     Post[]
   comments  Comment[]
   votes     Vote[]
+  pollVotes PollVote[]
+
+  profileCommentsAuthored ProfileComment[] @relation("ProfileCommentAuthor")
+  profileCommentsReceived ProfileComment[] @relation("ProfileCommentTarget")
+  accessLogs              UserAccessLog[]
+  muteAudits              UserMuteAudit[]
+  sponsorApplications     SponsorApplication[]
+  pollsCreated            Poll[]            @relation("PollCreator")
+
   createdAt DateTime @default(now())
 }
 
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ---------- Forum / Poll basics ---------- 
 model Post {
   id        String    @id @default(cuid())
   title     String
   content   String
-  author    User?     @relation(fields: [authorId], references: [id])
+  isRemoved Boolean   @default(false)
+  isPinned  Boolean   @default(false)
   authorId  String?
+  author    User?     @relation(fields: [authorId], references: [id])
+  image     String?
   comments  Comment[]
   votes     Vote[]
   createdAt DateTime  @default(now())
@@ -35,19 +97,254 @@ model Post {
 model Comment {
   id        String   @id @default(cuid())
   content   String
-  author    User?    @relation(fields: [authorId], references: [id])
+  isRemoved Boolean  @default(false)
   authorId  String?
-  post      Post?    @relation(fields: [postId], references: [id])
+  author    User?    @relation(fields: [authorId], references: [id])
   postId    String?
+  post      Post?    @relation(fields: [postId], references: [id])
   createdAt DateTime @default(now())
 }
 
 model Vote {
-  id     String @id @default(cuid())
-  value  Int
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-  post   Post   @relation(fields: [postId], references: [id])
-  postId String
+  id        String   @id @default(cuid())
+  value     Int
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id])
   createdAt DateTime @default(now())
+}
+
+model Poll {
+  id        String       @id @default(cuid())
+  slug      String       @unique
+  question  String
+  game      String?
+  startsAt  DateTime
+  endsAt    DateTime
+  options   PollOption[]
+  votes     PollVote[]
+  createdById String?
+  createdBy   User?        @relation("PollCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt DateTime     @default(now())
+}
+
+model PollOption {
+  id     String     @id @default(cuid())
+  text   String
+  pollId String
+  poll   Poll       @relation(fields: [pollId], references: [id])
+  votes  PollVote[]
+}
+
+model PollVote {
+  id        String     @id @default(cuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+  pollId    String
+  poll      Poll       @relation(fields: [pollId], references: [id])
+  optionId  String
+  option    PollOption @relation(fields: [optionId], references: [id])
+  createdAt DateTime   @default(now())
+
+  @@unique([userId, pollId]) // one vote per user per poll
+}
+
+// ---------- Profile & moderation ----------
+model ProfileComment {
+  id        String   @id @default(cuid())
+  authorId  String
+  targetId  String
+  content   String
+  createdAt DateTime @default(now())
+
+  author User @relation("ProfileCommentAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  target User @relation("ProfileCommentTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@index([targetId, createdAt], map: "ProfileComment_targetId_createdAt_idx")
+}
+
+model UserAccessLog {
+  id        String   @id @default(cuid())
+  userId    String
+  ipAddress String
+  city      String?
+  region    String?
+  country   String?
+  latitude  Float?
+  longitude Float?
+  createdAt DateTime @default(now())
+  lastSeen  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, ipAddress], map: "UserAccessLog_userId_ipAddress_key")
+  @@index([ipAddress], map: "UserAccessLog_ipAddress_idx")
+}
+
+model UserMuteAudit {
+  id             String   @id @default(cuid())
+  userId         String
+  action         String
+  reason         String?
+  moderatorEmail String?
+  expiresAt      DateTime?
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt], map: "UserMuteAudit_userId_createdAt_idx")
+}
+
+model SponsorApplication {
+  id               String   @id @default(cuid())
+  userId           String?
+  ipAddress        String?
+  platformStatus   String   @default("yes")
+  platformDetails  String?
+  postsLongVideos  Boolean
+  contentRelevant  Boolean
+  sponsorshipType  String
+  contactEmail     String
+  proof            String
+  termsAgreed      Boolean  @default(false)
+  status           String   @default("pending")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([ipAddress, createdAt], map: "SponsorApplication_ipAddress_createdAt_idx")
+}
+
+// ---------- Network telemetry ----------
+model PingSample {
+  id              String   @id @default(cuid())
+  game            String
+  serverRegion    String
+  latencyMs       Int
+  playerRegion    String?
+  playerCountry   String?
+  playerCity      String?
+  playerLatitude  Float?
+  playerLongitude Float?
+  playerTzOffset  Int?
+  playerLocalHour Int?
+  ipHash          String?
+  createdAt       DateTime @default(now())
+
+  @@index([game, serverRegion])
+  @@index([createdAt])
+}
+
+// ---------- Visitor tracking (last 100 unique IPs) ----------
+model UniqueVisitor {
+  id        String   @id @default(cuid())
+  ipHash    String   @unique
+  userAgent String?
+  country   String?
+  city      String?
+  firstSeen DateTime @default(now())
+  lastSeen  DateTime @default(now())
+  visitCount Int     @default(1)
+
+  @@index([lastSeen])
+  @@index([firstSeen])
+}
+
+
+// ---------- Mice and Sensors (for DPI calculator) ----------
+model Sensor {
+  id      String  @id @default(cuid())
+  key     String  @unique // e.g., "pixart-3395"
+  name    String
+  minDpi  Int
+  maxDpi  Int
+  step    Int      // DPI step granularity
+  native  Int[]    // common native steps
+
+  models  MouseModel[]
+}
+
+model MouseModel {
+  id       String  @id @default(cuid())
+  brand    String
+  model    String
+  sensorId String
+  sensor   Sensor  @relation(fields: [sensorId], references: [id])
+
+  @@index([brand, model])
+}
+
+// ---------- Benchmarks ----------
+enum BenchmarkResolution {
+  R1080P
+  R1440P
+  R4K
+}
+
+model GPU {
+  id            String           @id @default(cuid())
+  name          String
+  slug          String           @unique
+  family        String?
+  architecture  String?
+  releaseYear   Int?
+  avgScore      Float?
+  powerDraw     Int?
+  priceUsd      Float?
+  benchmarks    GameBenchmark[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model CPU {
+  id            String           @id @default(cuid())
+  name          String
+  slug          String           @unique
+  family        String?
+  architecture  String?
+  releaseYear   Int?
+  benchmarkScore Float
+  cores         Int?
+  threads       Int?
+  tdpWatts      Int?
+  priceUsd      Float?
+  benchmarks    GameBenchmark[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model Game {
+  id          String           @id @default(cuid())
+  name        String
+  slug        String           @unique
+  genre       String?
+  releaseYear Int?
+  benchmarks  GameBenchmark[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model GameBenchmark {
+  id                 String               @id @default(cuid())
+  gameId             String
+  gpuId              String
+  cpuId              String
+  resolution         BenchmarkResolution
+  avgFps             Float
+  source             String?
+  notes              String?
+  estimatedPowerDraw Int?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  gpu  GPU  @relation(fields: [gpuId], references: [id], onDelete: Cascade)
+  cpu  CPU  @relation(fields: [cpuId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, gpuId, cpuId, resolution])
+  @@index([gameId, resolution])
+  @@index([gpuId])
+  @@index([cpuId])
 }

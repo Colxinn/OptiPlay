@@ -1,0 +1,70 @@
+{
+  "Roblox": {
+    "NA-East": { "avg_ping": 32, "best_hour_local": 21, "samples": 120 },
+    "NA-West": { "avg_ping": 38, "best_hour_local": 22, "samples": 96 },
+    "EU-West": { "avg_ping": 28, "best_hour_local": 20, "samples": 140 },
+    "EU-East": { "avg_ping": 31, "best_hour_local": 20, "samples": 110 },
+    "SA": { "avg_ping": 55, "best_hour_local": 23, "samples": 40 },
+    "Asia-NE": { "avg_ping": 42, "best_hour_local": 21, "samples": 80 },
+    "Asia-SE": { "avg_ping": 48, "best_hour_local": 22, "samples": 70 },
+    "Oceania": { "avg_ping": 52, "best_hour_local": 21, "samples": 36 }
+  },
+  "CS2": {
+    "NA-East": { "avg_ping": 28, "best_hour_local": 21, "samples": 220 },
+    "NA-West": { "avg_ping": 33, "best_hour_local": 22, "samples": 180 },
+    "EU-West": { "avg_ping": 24, "best_hour_local": 20, "samples": 250 }
+  },
+  "Valorant": {
+    "NA-East": { "avg_ping": 26, "best_hour_local": 21, "samples": 200 },
+    "EU-West": { "avg_ping": 22, "best_hour_local": 20, "samples": 210 }
+  },
+  "Fortnite": {
+    "NA-East": { "avg_ping": 35, "best_hour_local": 21, "samples": 150 }
+  },
+  "Apex": {
+    "NA-West": { "avg_ping": 40, "best_hour_local": 22, "samples": 160 }
+  },
+  "Minecraft": {
+    "NA-East": { "avg_ping": 40, "best_hour_local": 20, "samples": 60 },
+    "EU-West": { "avg_ping": 35, "best_hour_local": 20, "samples": 44 },
+    "Oceania": { "avg_ping": 60, "best_hour_local": 21, "samples": 22 }
+  },
+  "Rust": {
+    "NA-East": { "avg_ping": 42, "best_hour_local": 22, "samples": 100 },
+    "EU-West": { "avg_ping": 36, "best_hour_local": 21, "samples": 80 },
+    "Asia-NE": { "avg_ping": 50, "best_hour_local": 22, "samples": 60 }
+  },
+  "SiegeX": {
+    "NA-East": { "avg_ping": 30, "best_hour_local": 21, "samples": 90 },
+    "EU-West": { "avg_ping": 26, "best_hour_local": 20, "samples": 120 },
+    "Asia-SE": { "avg_ping": 48, "best_hour_local": 22, "samples": 60 }
+  },
+  "GTA V": {
+    "NA-West": { "avg_ping": 40, "best_hour_local": 23, "samples": 70 },
+    "EU-West": { "avg_ping": 38, "best_hour_local": 21, "samples": 65 }
+  },
+  "Cyberpunk 2077": {
+    "EU-East": { "avg_ping": 32, "best_hour_local": 20, "samples": 40 },
+    "Asia-NE": { "avg_ping": 44, "best_hour_local": 22, "samples": 30 }
+  },
+  "League of Legends": {
+    "NA-East": { "avg_ping": 28, "best_hour_local": 20, "samples": 300 },
+    "EU-West": { "avg_ping": 23, "best_hour_local": 20, "samples": 320 },
+    "Asia-NE": { "avg_ping": 25, "best_hour_local": 21, "samples": 400 }
+  },
+  "Dota 2": {
+    "NA-West": { "avg_ping": 34, "best_hour_local": 22, "samples": 260 },
+    "EU-East": { "avg_ping": 29, "best_hour_local": 20, "samples": 280 },
+    "Asia-SE": { "avg_ping": 35, "best_hour_local": 22, "samples": 310 }
+  },
+  "Overwatch 2": {
+    "NA-West": { "avg_ping": 33, "best_hour_local": 22, "samples": 210 },
+    "EU-West": { "avg_ping": 28, "best_hour_local": 21, "samples": 190 },
+    "Oceania": { "avg_ping": 55, "best_hour_local": 22, "samples": 70 }
+  },
+  "Rocket League": {
+    "NA-East": { "avg_ping": 30, "best_hour_local": 21, "samples": 180 },
+    "EU-West": { "avg_ping": 25, "best_hour_local": 20, "samples": 200 },
+    "SA": { "avg_ping": 60, "best_hour_local": 22, "samples": 90 }
+  }
+}

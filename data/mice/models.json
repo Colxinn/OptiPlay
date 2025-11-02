@@ -1,0 +1,13 @@
+[
+  {"brand":"Logitech","model":"G Pro X Superlight 2","sensorId":"logitech-hero-25k"},
+  {"brand":"Logitech","model":"G Pro X Superlight","sensorId":"logitech-hero-25k"},
+  {"brand":"Logitech","model":"G703 (HERO)","sensorId":"logitech-hero-25k"},
+  {"brand":"Razer","model":"Viper V3 Pro","sensorId":"razer-focus-pro-30k"},
+  {"brand":"Razer","model":"DeathAdder V3 Pro","sensorId":"razer-focus-pro-30k"},
+  {"brand":"Razer","model":"Viper Ultimate","sensorId":"pixart-3395"},
+  {"brand":"Zowie","model":"EC2-CW","sensorId":"pixart-3360"},
+  {"brand":"Zowie","model":"EC2-C","sensorId":"pixart-3360"},
+  {"brand":"Glorious","model":"Model O 2 Wireless","sensorId":"pixart-3395"},
+  {"brand":"Lamzu","model":"Atlantis Mini","sensorId":"pixart-3395"},
+  {"brand":"SteelSeries","model":"Prime Wireless","sensorId":"pixart-3389"}
+]

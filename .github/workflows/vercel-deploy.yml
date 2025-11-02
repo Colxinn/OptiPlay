@@ -1,0 +1,57 @@
+name: Vercel Deploy (gamma-gamma)
+
+on:
+  push:
+    branches: [ gamma-gamma ]
+  workflow_dispatch:
+
+concurrency:
+  group: vercel-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy to Vercel (prod)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    env:
+      # Map GitHub Secrets to the env names the Vercel CLI expects
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      # Optional: increase memory for Next.js builds
+      NODE_OPTIONS: --max_old_space_size=4096
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Vercel CLI
+        run: npm i -g vercel@latest
+
+      - name: Pull Vercel env (production)
+        run: vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
+
+      - name: Build (prebuilt)
+        run: vercel build --prod --token "$VERCEL_TOKEN"
+
+      - name: Deploy to Vercel (prod)
+        run: vercel deploy --prebuilt --prod --token "$VERCEL_TOKEN"
+
+      # Notes:
+      # - Set GitHub Secrets at: Settings → Secrets and variables → Actions
+      #   - VERCEL_TOKEN: Personal token from Vercel (Account Settings → Tokens)
+      #   - ORG_ID: Vercel organization ID
+      #   - PROJECT_ID: Vercel project ID
+      # - Ensure your Vercel project is linked to this repo and the
+      #   production branch is set to `gamma-gamma` in Vercel Project Settings.

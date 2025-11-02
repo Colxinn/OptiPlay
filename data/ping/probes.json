@@ -1,0 +1,34 @@
+[
+  {
+    "region": "NA-East",
+    "url": "https://optiplay-na-east.vercel.app/api/ping/probe"
+  },
+  {
+    "region": "NA-West",
+    "url": "https://optiplay-na-west.vercel.app/api/ping/probe"
+  },
+  {
+    "region": "EU-West",
+    "url": "https://optiplay-eu-west.vercel.app/api/ping/probe"
+  },
+  {
+    "region": "EU-East",
+    "url": "https://optiplay-eu-east.vercel.app/api/ping/probe"
+  },
+  {
+    "region": "SA",
+    "url": "https://optiplay-sa.vercel.app/api/ping/probe"
+  },
+  {
+    "region": "Asia-NE",
+    "url": "https://optiplay-asia-ne.vercel.app/api/ping/probe"
+  },
+  {
+    "region": "Asia-SE",
+    "url": "https://optiplay-asia-se.vercel.app/api/ping/probe"
+  },
+  {
+    "region": "Oceania",
+    "url": "https://optiplay-oceania.vercel.app/api/ping/probe"
+  }
+]

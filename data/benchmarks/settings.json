@@ -1,0 +1,116 @@
+[
+  {
+    "game": "Apex Legends",
+    "preset": "High (DX12)",
+    "resolution": "1920x1080",
+    "notes": "V-Sync off, Adaptive Resolution disabled, TSAA enabled, texture streaming budget Very High."
+  },
+  {
+    "game": "CS2",
+    "preset": "Competitive Low",
+    "resolution": "1920x1080",
+    "notes": "Global Shadow Quality Low, Model & Texture Detail High, AA MSAA 2x, V-Sync off, multicore rendering on."
+  },
+  {
+    "game": "Call of Duty: Warzone",
+    "preset": "Balanced",
+    "resolution": "1920x1080 (100% render scale)",
+    "notes": "Texture resolution High, Particle quality High, DLSS Quality, V-Sync off, field of view 110."
+  },
+  {
+    "game": "Fortnite",
+    "preset": "Performance Mode (DX12)",
+    "resolution": "1920x1080",
+    "notes": "3D Resolution 100%, View Distance Epic, Shadows Off, Anti-Aliasing Medium, V-Sync off."
+  },
+  {
+    "game": "Valorant",
+    "preset": "High",
+    "resolution": "1920x1080",
+    "notes": "Material quality High, Texture quality High, Anisotropic 8x, V-Sync off, anti-aliasing MSAA 4x."
+  },
+  {
+    "game": "Overwatch 2",
+    "preset": "Ultra Competitive",
+    "resolution": "1920x1080 (Render Scale 100%)",
+    "notes": "V-Sync off, NVIDIA Reflex enabled, Dynamic Render Scale disabled, texture quality High, shadows Low."
+  },
+  {
+    "game": "Rainbow Six Siege",
+    "preset": "Esports Low",
+    "resolution": "1920x1080",
+    "notes": "Overall quality Low, texture filtering 16x, T-AA enabled, V-Sync off, render scaling 100%."
+  },
+  {
+    "game": "Rocket League",
+    "preset": "Performance",
+    "resolution": "1920x1080",
+    "notes": "Render detail Quality, world detail Quality, particle detail Performance, weather effects disabled, V-Sync off."
+  },
+  {
+    "game": "League of Legends",
+    "preset": "High",
+    "resolution": "1920x1080",
+    "notes": "Character and environment detail High, effects High, shadows Medium, frame cap uncapped, V-Sync off."
+  },
+  {
+    "game": "Dota 2",
+    "preset": "Best Looking",
+    "resolution": "1920x1080",
+    "notes": "All quality sliders High, textures High, ambient occlusion on, V-Sync off, game rendering API Vulkan."
+  },
+  {
+    "game": "Destiny 2",
+    "preset": "High",
+    "resolution": "2560x1440",
+    "notes": "Field of view 100, texture quality High, shadows Medium, anti-aliasing SMAA, V-Sync off."
+  },
+  {
+    "game": "PUBG: Battlegrounds",
+    "preset": "Competitive",
+    "resolution": "1920x1080",
+    "notes": "Textures Ultra, effects Medium, foliage Very Low, V-Sync off, motion blur off, NVIDIA Reflex on."
+  },
+  {
+    "game": "Halo Infinite",
+    "preset": "High",
+    "resolution": "1920x1080",
+    "notes": "Quality preset High, dynamic resolution disabled, minimum frame rate cap 120, VSYNC off."
+  },
+  {
+    "game": "Street Fighter 6",
+    "preset": "High",
+    "resolution": "1920x1080",
+    "notes": "Texture filtering 16x, mesh quality High, crowd density Mid, motion blur off."
+  },
+  {
+    "game": "Forza Horizon 5",
+    "preset": "High",
+    "resolution": "2560x1440",
+    "notes": "Graphics preset High, motion blur off, DLSS Quality, dynamic optimizations disabled."
+  },
+  {
+    "game": "Cyberpunk 2077 (2.0)",
+    "preset": "Ray Tracing: Overdrive (DLSS)",
+    "resolution": "2560x1440 (DLSS Quality)",
+    "notes": "Path Tracing on, DLSS 3 frame generation enabled on RTX 40 GPUs, motion blur off, crowd density High."
+  },
+  {
+    "game": "Starfield",
+    "preset": "High",
+    "resolution": "2560x1440",
+    "notes": "Upscaling FSR2 Quality, motion blur off, depth of field Low, shadow quality High."
+  },
+  {
+    "game": "Elden Ring",
+    "preset": "Maximum",
+    "resolution": "2560x1440",
+    "notes": "All quality options Maximum, motion blur off, depth of field Low, frame rate unlocked via patch."
+  },
+  {
+    "game": "Minecraft (Shaders)",
+    "preset": "Sonic Ether SEUS PTGI",
+    "resolution": "2560x1440",
+    "notes": "Sonic Ether PTGI shaders enabled, render distance 16 chunks, shadow resolution High, V-Sync off."
+  }
+]

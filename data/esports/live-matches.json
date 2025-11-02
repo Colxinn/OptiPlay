@@ -1,0 +1,159 @@
+[
+  {
+    "id": "cs2-blast-1",
+    "game": "Counter-Strike 2",
+    "gameSlug": "cs2",
+    "tournament": "BLAST Premier Fall Finals 2024",
+    "status": "live",
+    "startTime": "2024-11-01T14:00:00Z",
+    "team1": {
+      "name": "FaZe Clan",
+      "logo": "https://img-cdn.hltv.org/teamlogo/8cJbKKZSL5c7J8jVpXjJNL.svg?ixlib=java-2.1.0&s=d6bd31c4ae4e7a65f5acc0be3fc45cac",
+      "score": 13,
+      "odds": -250
+    },
+    "team2": {
+      "name": "Natus Vincere",
+      "logo": "https://img-cdn.hltv.org/teamlogo/9Frgpv3qiVLkHjT0kcHjuA.svg?ixlib=java-2.1.0&s=66fbb1e0cf63c75c8dadb41699b5d6ae",
+      "score": 11,
+      "odds": 200
+    },
+    "format": "BO3",
+    "map": "Ancient",
+    "mapNumber": 1,
+    "streamUrl": "https://www.twitch.tv/blast",
+    "alternativeStreams": [
+      "https://www.youtube.com/@BLASTProSeries/live",
+      "https://www.twitch.tv/blastpremier"
+    ]
+  },
+  {
+    "id": "valorant-vct-1",
+    "game": "Valorant",
+    "gameSlug": "valorant",
+    "tournament": "VCT Champions 2024",
+    "status": "live",
+    "startTime": "2024-11-01T16:30:00Z",
+    "team1": {
+      "name": "Sentinels",
+      "logo": "https://owcdn.net/img/63e2c1dce7781.png",
+      "score": 8,
+      "odds": -180
+    },
+    "team2": {
+      "name": "Fnatic",
+      "logo": "https://owcdn.net/img/5f75e76194f9b.png",
+      "score": 9,
+      "odds": 150
+    },
+    "format": "BO5",
+    "map": "Bind",
+    "mapNumber": 2,
+    "streamUrl": "https://www.twitch.tv/valorant",
+    "alternativeStreams": [
+      "https://www.youtube.com/@ValorantEsports/live",
+      "https://www.twitch.tv/valorantesports"
+    ]
+  },
+  {
+    "id": "lol-worlds-1",
+    "game": "League of Legends",
+    "gameSlug": "league-of-legends",
+    "tournament": "Worlds 2024 Finals",
+    "status": "upcoming",
+    "startTime": "2024-11-01T18:00:00Z",
+    "team1": {
+      "name": "T1",
+      "logo": "https://am-a.akamaihd.net/image?resize=72:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1631819614211_T1-01-FullonDark.png",
+      "score": 0,
+      "odds": -1000
+    },
+    "team2": {
+      "name": "Gen.G",
+      "logo": "https://am-a.akamaihd.net/image?resize=72:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2FGenG-FullColor.png",
+      "score": 0,
+      "odds": 650
+    },
+    "format": "BO5",
+    "map": null,
+    "mapNumber": 0,
+    "streamUrl": "https://www.twitch.tv/riotgames",
+    "alternativeStreams": [
+      "https://www.youtube.com/@lolesports/live",
+      "https://www.twitch.tv/lck",
+      "https://www.twitch.tv/lec"
+    ]
+  },
+  {
+    "id": "dota2-ti-1",
+    "game": "Dota 2",
+    "gameSlug": "dota-2",
+    "tournament": "The International 2024",
+    "status": "live",
+    "startTime": "2024-11-01T15:00:00Z",
+    "team1": {
+      "name": "Team Liquid",
+      "logo": "https://liquipedia.net/commons/images/6/67/Team_Liquid_2017_Dota_2_Logo.png",
+      "score": 1,
+      "odds": -400
+    },
+    "team2": {
+      "name": "OG",
+      "logo": "https://liquipedia.net/commons/images/0/0e/OG_2019_logo.png",
+      "score": 0,
+      "odds": 300
+    },
+    "format": "BO3",
+    "map": "Game 2",
+    "mapNumber": 2,
+    "streamUrl": "https://www.twitch.tv/dota2ti"
+  },
+  {
+    "id": "rl-rlcs-1",
+    "game": "Rocket League",
+    "gameSlug": "rocket-league",
+    "tournament": "RLCS World Championship 2024",
+    "status": "upcoming",
+    "startTime": "2024-11-01T19:00:00Z",
+    "team1": {
+      "name": "G2 Esports",
+      "logo": "https://liquipedia.net/commons/images/c/ca/G2_Esports_2019_logo.png",
+      "score": 0,
+      "odds": -150
+    },
+    "team2": {
+      "name": "Vitality",
+      "logo": "https://liquipedia.net/commons/images/e/e2/Team_Vitality_2020_logo.png",
+      "score": 0,
+      "odds": 120
+    },
+    "format": "BO7",
+    "map": null,
+    "mapNumber": 0,
+    "streamUrl": "https://www.twitch.tv/rocketleague"
+  },
+  {
+    "id": "r6-siege-1",
+    "game": "Rainbow Six Siege",
+    "gameSlug": "rainbow-six",
+    "tournament": "Six Invitational 2024",
+    "status": "finished",
+    "startTime": "2024-11-01T12:00:00Z",
+    "team1": {
+      "name": "Spacestation Gaming",
+      "logo": "https://liquipedia.net/commons/images/9/95/Spacestation_Gaming_2020_lightmode.png",
+      "score": 7,
+      "odds": -120
+    },
+    "team2": {
+      "name": "Team BDS",
+      "logo": "https://liquipedia.net/commons/images/1/1a/Team_BDS_2021_logo.png",
+      "score": 5,
+      "odds": 100
+    },
+    "format": "BO3",
+    "map": "Clubhouse",
+    "mapNumber": 3,
+    "streamUrl": "https://www.twitch.tv/rainbow6"
+  }
+]

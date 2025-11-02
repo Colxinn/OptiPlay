@@ -1,72 +1,88 @@
-'use client'
-import { useState, useEffect } from 'react';
+import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import ForumPostClient from "./ForumPostClient.jsx";
 
-export default function PostPage({ params }){
-  const id = params.id;
-  const [post, setPost] = useState(null);
-  const [comments, setComments] = useState([]);
-  const [text, setText] = useState('');
+export const dynamic = "force-dynamic";
 
-  useEffect(()=>{ fetchPost(); }, []);
+export default async function PostPage({ params }) {
+  const session = await auth();
+  const post = await prisma.post.findUnique({
+    where: { id: params.id },
+    include: {
+      author: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+          isOwner: true,
+          isMuted: true,
+          muteExpiresAt: true,
+        },
+      },
+      comments: {
+        orderBy: { createdAt: "asc" },
+        where: { isRemoved: false },
+        include: {
+          author: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+              isOwner: true,
+              isMuted: true,
+              muteExpiresAt: true,
+            },
+          },
+        },
+      },
+      votes: { select: { value: true } },
+    },
+  });
 
-  async function fetchPost(){
-    const res = await fetch(`/api/posts/${id}`);
-    const data = await res.json();
-    setPost(data.post);
-    setComments(data.comments);
+  if (!post) {
+    return <div>Not found</div>;
   }
 
-  async function submitComment(e){
-    e.preventDefault();
-    if (process.env.NEXT_PUBLIC_USE_DEV_AUTH === 'true') {
-      const dev = localStorage.getItem('dev_user');
-      if (!dev) return alert('Dev auth required.');
-    }
-    const dev = localStorage.getItem('dev_user');
-    const headers = dev ? { 'x-dev-user': dev } : {};
-    const res = await fetch('/api/comments', { method:'POST', headers:{'Content-Type':'application/json', ...headers}, body: JSON.stringify({ postId:id, content:text })});
-    if (res.ok) {
-      setText('');
-      fetchPost();
-    } else alert('Failed');
-  }
+  const score = post.votes.reduce((sum, vote) => sum + (vote.value || 0), 0);
 
-  async function vote(v){
-    const dev = localStorage.getItem('dev_user');
-    const headers = dev ? { 'x-dev-user': dev } : {};
-    await fetch('/api/posts/vote', { method:'POST', headers:{'Content-Type':'application/json', ...headers}, body: JSON.stringify({ postId:id, value:v })});
-    fetchPost();
-  }
+  const normalized = {
+    id: post.id,
+    title: post.title,
+    content: post.content,
+    image: post.image || null,
+    createdAt: post.createdAt.toISOString(),
+    isRemoved: post.isRemoved,
+    score,
+    author: post.author
+      ? {
+          id: post.author.id,
+          name: post.author.name || "Anon",
+          image: post.author.image,
+          isOwner: post.author.isOwner,
+          isMuted: post.author.isMuted,
+          muteExpiresAt: post.author.muteExpiresAt
+            ? post.author.muteExpiresAt.toISOString()
+            : null,
+        }
+      : null,
+    comments: post.comments.map((comment) => ({
+      id: comment.id,
+      content: comment.content,
+      createdAt: comment.createdAt.toISOString(),
+      author: comment.author
+        ? {
+            id: comment.author.id,
+            name: comment.author.name || "Anon",
+            image: comment.author.image,
+            isOwner: comment.author.isOwner,
+            isMuted: comment.author.isMuted,
+            muteExpiresAt: comment.author.muteExpiresAt
+              ? comment.author.muteExpiresAt.toISOString()
+              : null,
+          }
+        : null,
+    })),
+  };
 
-  if (!post) return <div className="p-4">Loading...</div>;
-  return (
-    <div className="max-w-3xl mx-auto px-4 py-6">
-      <article className="bg-[#05050a] p-6 rounded border border-white/5">
-        <h1 className="text-2xl font-bold">{post.title}</h1>
-        <p className="mt-2 text-slate-300">{post.content}</p>
-        <div className="mt-4 text-sm text-slate-400">By {post.author?.name || 'anon'}</div>
-        <div className="mt-4 flex gap-2">
-          <button onClick={()=>vote(1)} className="px-3 py-1 bg-optiPurple-500 rounded">Upvote</button>
-          <button onClick={()=>vote(-1)} className="px-3 py-1 border rounded">Downvote</button>
-          <div className="text-sm text-slate-400 ml-2">Votes: {post._count?.votes || 0}</div>
-        </div>
-      </article>
-
-      <section className="mt-6">
-        <h2 className="text-xl">Comments</h2>
-        <form onSubmit={submitComment} className="mt-3">
-          <textarea value={text} onChange={e=>setText(e.target.value)} className="w-full p-3 bg-[#0b0b10] rounded" rows={4} required></textarea>
-          <button className="mt-2 bg-optiPurple-500 px-3 py-2 rounded">Comment</button>
-        </form>
-        <div className="mt-4 space-y-3">
-          {comments.map(c=> (
-            <div key={c.id} className="p-3 bg-[#06060a] rounded"> 
-              <div className="text-sm text-slate-300">{c.content}</div>
-              <div className="text-xs text-slate-400 mt-2">By {c.author?.name || 'anon'}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-    </div>
-  );
+  return <ForumPostClient post={normalized} viewer={session?.user || null} />;
 }

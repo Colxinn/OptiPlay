@@ -1,0 +1,42 @@
+[
+  {
+    "id": "pixart-3395",
+    "name": "PixArt PAW3395",
+    "minDpi": 50,
+    "maxDpi": 26000,
+    "step": 50,
+    "native": [400, 800, 1600, 3200]
+  },
+  {
+    "id": "logitech-hero-25k",
+    "name": "Logitech HERO 25K",
+    "minDpi": 100,
+    "maxDpi": 25600,
+    "step": 50,
+    "native": [400, 800, 1600, 3200]
+  },
+  {
+    "id": "pixart-3360",
+    "name": "PixArt PMW3360",
+    "minDpi": 100,
+    "maxDpi": 12000,
+    "step": 100,
+    "native": [400, 800, 1600, 3200]
+  },
+  {
+    "id": "pixart-3389",
+    "name": "PixArt PMW3389",
+    "minDpi": 50,
+    "maxDpi": 16000,
+    "step": 50,
+    "native": [400, 800, 1600, 3200]
+  },
+  {
+    "id": "razer-focus-pro-30k",
+    "name": "Razer Focus Pro 30K",
+    "minDpi": 50,
+    "maxDpi": 30000,
+    "step": 1,
+    "native": [400, 800, 1600, 3200]
+  }
+]
