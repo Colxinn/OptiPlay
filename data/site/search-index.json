@@ -165,6 +165,24 @@
     "title": "News Hub"
   },
   {
+    "category": "Esports",
+    "keywords": [
+      "live",
+      "scores",
+      "esports",
+      "matches",
+      "odds",
+      "tournaments",
+      "cs2",
+      "valorant",
+      "league",
+      "dota"
+    ],
+    "description": "Live scores, match odds, and tournament updates across all major esports.",
+    "href": "/esports",
+    "title": "Live Esports Scores"
+  },
+  {
     "category": "Program",
     "keywords": [
       "sponsor",
