@@ -3,10 +3,10 @@ import ToolCard from '../components/ToolCard.jsx';
 
 const ESSENTIAL_TOOLS = [
   { slug: '/tools/fps-booster', title: 'FPS Booster', desc: 'One-click presets to squeeze more FPS.' },
+  { slug: '/tools/bottleneck-analyzer', title: '⚡ System Bottleneck Analyzer', desc: 'Upload your specs → instantly see which component is limiting your FPS.' },
   { slug: '/tools/sense-converter', title: 'Sensitivity Converter', desc: 'Convert sens between CS2, Valorant, SiegeX, Fortnite, Roblox, Minecraft, Rust, Apex.' },
   { slug: '/tools/windows-gamemode', title: 'Input/Display Optimizer', desc: 'Reduce input lag and auto-calibrate display.' },
   { slug: '/tools/roblox-optimizer', title: 'Roblox Optimizer', desc: 'Optimized configs for Roblox.' },
-  { slug: '/tools/dpi-calculator', title: 'DPI Calculator', desc: 'Find the perfect DPI.' },
   { slug: '/tools/latency-tuner', title: 'Latency Tuner', desc: 'Simple network tweaks to reduce ping.' }
 ];
 
