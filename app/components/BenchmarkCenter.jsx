@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import CompareHardware from "./CompareHardware.jsx";
 import CpsTester from "./CpsTester.jsx";
 
@@ -12,7 +12,82 @@ const INITIAL_META = {
 };
 
 const SUGGESTION_LIMIT = 6;
-const SUGGESTION_DEBOUNCE = 120;
+const SUGGESTION_DEBOUNCE = 200;
+
+function LoadingScreen({ logs }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#08060f]">
+      <div className="w-full max-w-xl space-y-6 px-6">
+        {/* Logo/Title */}
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-600 mb-2">
+            OptiPlay Benchmarks
+          </h1>
+          <p className="text-gray-400 text-sm">Loading benchmark database...</p>
+        </div>
+
+        {/* Animated Progress Bar */}
+        <div className="relative h-2 overflow-hidden rounded-full bg-neutral-900/80">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-600 animate-[shimmer_2s_ease-in-out_infinite]" 
+               style={{ 
+                 backgroundSize: '200% 100%',
+                 animation: 'shimmer 2s ease-in-out infinite'
+               }}>
+          </div>
+        </div>
+
+        {/* Loading Logs */}
+        <div className="rounded-xl border border-white/10 bg-neutral-950/80 p-4 backdrop-blur-sm">
+          <div className="space-y-2 font-mono text-xs">
+            {logs.map((log, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 text-gray-400 animate-[fadeIn_0.3s_ease-in]"
+                style={{ animationDelay: `${i * 0.1}s` }}
+              >
+                <span className="text-purple-400">▸</span>
+                <span>{log.message}</span>
+                {log.done && <span className="ml-auto text-green-400">✓</span>}
+                {log.loading && (
+                  <span className="ml-auto">
+                    <div className="h-3 w-3 animate-spin rounded-full border-2 border-purple-400 border-t-transparent"></div>
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Stats Preview */}
+        <div className="grid grid-cols-3 gap-4 text-center">
+          <div className="rounded-lg border border-white/10 bg-neutral-950/60 p-3">
+            <div className="text-2xl font-bold text-purple-400">85</div>
+            <div className="text-xs text-gray-500">GPUs</div>
+          </div>
+          <div className="rounded-lg border border-white/10 bg-neutral-950/60 p-3">
+            <div className="text-2xl font-bold text-fuchsia-400">60</div>
+            <div className="text-xs text-gray-500">CPUs</div>
+          </div>
+          <div className="rounded-lg border border-white/10 bg-neutral-950/60 p-3">
+            <div className="text-2xl font-bold text-purple-400">21</div>
+            <div className="text-xs text-gray-500">Games</div>
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 function AnimatedBar({ label, value, max }) {
   const pct = max > 0 ? Math.min(100, Math.round((value / max) * 100)) : 0;
@@ -81,7 +156,7 @@ function filterSuggestions(pool, term, type) {
     .slice(0, SUGGESTION_LIMIT);
 }
 
-function SuggestInput({ label, placeholder, value, onChange, suggestions, onSelect, id }) {
+function SuggestInput({ label, placeholder, value, onChange, suggestions, onSelect, id, loading }) {
   const [open, setOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const [internalValue, setInternalValue] = useState(value);
@@ -102,7 +177,7 @@ function SuggestInput({ label, placeholder, value, onChange, suggestions, onSele
   };
 
   const handleBlur = () => {
-    window.setTimeout(() => setOpen(false), 100);
+    window.setTimeout(() => setOpen(false), 150);
   };
 
   const handleKeyDown = (event) => {
@@ -119,41 +194,53 @@ function SuggestInput({ label, placeholder, value, onChange, suggestions, onSele
         onSelect(suggestions[focusedIndex]);
         setOpen(false);
       }
+    } else if (event.key === "Escape") {
+      setOpen(false);
     }
   };
 
   return (
     <div className="relative space-y-1">
       <label className="text-xs font-semibold uppercase tracking-wide text-purple-200">{label}</label>
-      <input
-        id={id}
-        value={internalValue}
-        onChange={handleChange}
-        onFocus={() => setOpen(true)}
-        onBlur={handleBlur}
-        onKeyDown={handleKeyDown}
-        placeholder={placeholder}
-        className="w-full rounded-lg border border-white/10 bg-[#0c0b14] px-3 py-2 text-sm text-gray-200"
-        autoComplete="off"
-        spellCheck="false"
-      />
-      {open && suggestions.length ? (
-        <div className="absolute z-30 mt-1 w-full overflow-hidden rounded-lg border border-white/10 bg-neutral-950/95 shadow-lg shadow-black/30">
-          <ul className="divide-y divide-white/5 text-sm text-gray-200">
+      <div className="relative">
+        <input
+          id={id}
+          value={internalValue}
+          onChange={handleChange}
+          onFocus={() => setOpen(true)}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          className="w-full rounded-lg border border-white/10 bg-[#0c0b14] px-3 py-2 pr-8 text-sm text-gray-200 transition focus:border-purple-400/50 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+          autoComplete="off"
+          spellCheck="false"
+        />
+        {loading && (
+          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+            <div className="h-4 w-4 animate-spin rounded-full border-2 border-purple-400 border-t-transparent"></div>
+          </div>
+        )}
+      </div>
+      {open && suggestions.length > 0 && (
+        <div className="absolute z-30 mt-1 w-full overflow-hidden rounded-lg border border-white/10 bg-neutral-950/98 shadow-2xl shadow-black/40 backdrop-blur-sm">
+          <ul className="max-h-64 overflow-y-auto divide-y divide-white/5 text-sm text-gray-200">
             {suggestions.map((item, index) => (
               <li key={item.slug}>
                 <button
                   type="button"
-                  className={`flex w-full flex-col items-start px-3 py-2 text-left transition ${
-                    index === focusedIndex ? "bg-purple-600/20" : "hover:bg-purple-600/10"
+                  className={`flex w-full flex-col items-start px-3 py-2.5 text-left transition ${
+                    index === focusedIndex 
+                      ? "bg-purple-600/30 border-l-2 border-purple-400" 
+                      : "hover:bg-purple-600/10"
                   }`}
                   onMouseDown={(evt) => evt.preventDefault()}
                   onClick={() => {
                     onSelect(item);
                     setOpen(false);
                   }}
+                  onMouseEnter={() => setFocusedIndex(index)}
                 >
-                  <span className="text-white">{item.label}</span>
+                  <span className="font-medium text-white">{item.label}</span>
                   <span className="text-[11px] text-gray-400">
                     {item.sub ? `${item.sub} • ${item.slug}` : item.slug}
                   </span>
@@ -162,12 +249,14 @@ function SuggestInput({ label, placeholder, value, onChange, suggestions, onSele
             ))}
           </ul>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }
 
 export default function BenchmarkCenter() {
+  const [initializing, setInitializing] = useState(true);
+  const [loadingLogs, setLoadingLogs] = useState([]);
   const [meta, setMeta] = useState(INITIAL_META);
   const [filters, setFilters] = useState({
     game: "",
@@ -183,20 +272,71 @@ export default function BenchmarkCenter() {
     gpu: "",
     cpu: "",
   });
+  const [suggestionLoading, setSuggestionLoading] = useState({
+    game: false,
+    gpu: false,
+    cpu: false,
+  });
 
+  const addLog = (message, loading = false, done = false) => {
+    setLoadingLogs(prev => [...prev, { message, loading, done }]);
+  };
+
+  // Initial load with loading screen
   useEffect(() => {
     const controller = new AbortController();
-    fetch("/api/benchmarks/meta", { signal: controller.signal })
-      .then((res) => res.json())
-      .then((payload) => {
+    
+    const loadInitialData = async () => {
+      try {
+        addLog("Initializing benchmark database...", true);
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        addLog("Loading hardware metadata...", true);
+        const res = await fetch("/api/benchmarks/meta", { signal: controller.signal });
+        
+        if (!res.ok) throw new Error("Failed to load metadata");
+        
+        const payload = await res.json();
+        
+        addLog("Loading hardware metadata...", false, true);
+        await new Promise(resolve => setTimeout(resolve, 200));
+        
+        addLog(`Indexed ${payload.gpus?.length || 0} GPUs`, false, true);
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        addLog(`Indexed ${payload.cpus?.length || 0} CPUs`, false, true);
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        addLog(`Loaded ${payload.games?.length || 0} games`, false, true);
+        await new Promise(resolve => setTimeout(resolve, 200));
+        
+        addLog("Building search index...", true);
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
         setMeta({
           games: payload.games ?? [],
           gpus: payload.gpus ?? [],
           cpus: payload.cpus ?? [],
           resolutions: payload.resolutions ?? ["1080p", "1440p", "4K"],
         });
-      })
-      .catch(() => {});
+        
+        addLog("Building search index...", false, true);
+        await new Promise(resolve => setTimeout(resolve, 200));
+        
+        addLog("Ready! 🚀", false, true);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        setInitializing(false);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          addLog(`Error: ${err.message}`, false, false);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          setInitializing(false);
+        }
+      }
+    };
+    
+    loadInitialData();
     return () => controller.abort();
   }, []);
 
@@ -229,10 +369,13 @@ export default function BenchmarkCenter() {
         setLoading(false);
       }
     };
-    load();
+    
+    if (!initializing) {
+      load();
+    }
 
     return () => controller.abort();
-  }, [filters.game, filters.gpu, filters.cpu, filters.resolution]);
+  }, [filters.game, filters.gpu, filters.cpu, filters.resolution, initializing]);
 
   const suggestionPool = useMemo(() => buildSuggestionPool(meta), [meta]);
   const [suggestions, setSuggestions] = useState({
@@ -241,16 +384,30 @@ export default function BenchmarkCenter() {
     cpu: [],
   });
 
+  // Optimized suggestion filtering with debounce
   useEffect(() => {
     const timers = [];
     for (const type of ["game", "gpu", "cpu"]) {
       const value = typingState[type];
+      
       const timer = window.setTimeout(() => {
-        setSuggestions((prev) => ({
-          ...prev,
-          [type]: filterSuggestions(suggestionPool, value, type),
-        }));
+        if (value && value.length >= 1) {
+          setSuggestionLoading(prev => ({ ...prev, [type]: true }));
+          
+          // Use requestAnimationFrame for smooth UI
+          requestAnimationFrame(() => {
+            const filtered = filterSuggestions(suggestionPool, value, type);
+            setSuggestions((prev) => ({ ...prev, [type]: filtered }));
+            setSuggestionLoading(prev => ({ ...prev, [type]: false }));
+          });
+        } else {
+          // Show popular items when empty
+          const popular = filterSuggestions(suggestionPool, "", type);
+          setSuggestions((prev) => ({ ...prev, [type]: popular }));
+          setSuggestionLoading(prev => ({ ...prev, [type]: false }));
+        }
       }, SUGGESTION_DEBOUNCE);
+      
       timers.push(timer);
     }
     return () => timers.forEach((timer) => window.clearTimeout(timer));
@@ -291,6 +448,10 @@ export default function BenchmarkCenter() {
     setFilters((prev) => ({ ...prev, [type]: raw }));
   };
 
+  if (initializing) {
+    return <LoadingScreen logs={loadingLogs} />;
+  }
+
   return (
     <div className="space-y-6">
       <section className="rounded-2xl border border-white/10 bg-neutral-950/60 p-5 shadow-lg shadow-black/20">
@@ -303,6 +464,7 @@ export default function BenchmarkCenter() {
             onChange={(value) => handleInputChange("game", value)}
             onSelect={(suggestion) => handleSuggestionSelect("game", suggestion)}
             suggestions={suggestions.game}
+            loading={suggestionLoading.game}
           />
           <SuggestInput
             id="benchmark-gpu"
@@ -312,6 +474,7 @@ export default function BenchmarkCenter() {
             onChange={(value) => handleInputChange("gpu", value)}
             onSelect={(suggestion) => handleSuggestionSelect("gpu", suggestion)}
             suggestions={suggestions.gpu}
+            loading={suggestionLoading.gpu}
           />
           <SuggestInput
             id="benchmark-cpu"
@@ -321,13 +484,14 @@ export default function BenchmarkCenter() {
             onChange={(value) => handleInputChange("cpu", value)}
             onSelect={(suggestion) => handleSuggestionSelect("cpu", suggestion)}
             suggestions={suggestions.cpu}
+            loading={suggestionLoading.cpu}
           />
           <div className="space-y-1">
             <label className="text-xs font-semibold uppercase tracking-wide text-purple-200">
               Resolution
             </label>
             <select
-              className="w-full rounded-lg border border-white/10 bg-[#0c0b14] px-3 py-2 text-sm text-gray-200"
+              className="w-full rounded-lg border border-white/10 bg-[#0c0b14] px-3 py-2 text-sm text-gray-200 transition focus:border-purple-400/50 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
               value={filters.resolution}
               onChange={(event) =>
                 setFilters((prev) => ({ ...prev, resolution: event.target.value }))
@@ -342,9 +506,17 @@ export default function BenchmarkCenter() {
             </select>
           </div>
         </div>
-        <p className="mt-3 text-[11px] text-gray-500">
-          Suggestions appear as you type. You can also paste custom slugs or family names (e.g., “rtx 40” or “ryzen 7000”).
-        </p>
+        <div className="mt-3 flex items-center justify-between">
+          <p className="text-[11px] text-gray-500">
+            Suggestions appear instantly as you type. Press ESC to close, Enter to select.
+          </p>
+          {loading && (
+            <div className="flex items-center gap-2 text-xs text-purple-400">
+              <div className="h-3 w-3 animate-spin rounded-full border-2 border-purple-400 border-t-transparent"></div>
+              <span>Searching...</span>
+            </div>
+          )}
+        </div>
       </section>
 
       <section className="space-y-4">
