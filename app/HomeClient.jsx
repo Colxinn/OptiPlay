@@ -15,10 +15,10 @@ export default function HomeClient() {
   ];
   const tools = [
     { title: 'FPS Booster', slug: '/tools/fps-booster', desc: 'One-click presets to squeeze more FPS.' },
+    { title: '⚡ Bottleneck Analyzer', slug: '/tools/bottleneck-analyzer', desc: 'See which component limits your FPS.' },
     { title: 'Sensitivity Converter', slug: '/tools/sense-converter', desc: 'Convert sens between games.' },
     { title: 'Input/Display Optimizer', slug: '/tools/windows-gamemode', desc: 'Reduce input lag and auto-calibrate display.' },
     { title: 'Roblox Optimizer', slug: '/tools/roblox-optimizer', desc: 'Optimized settings for Roblox.' },
-    { title: 'DPI Calculator', slug: '/tools/dpi-calculator', desc: 'Find the perfect DPI for your mouse.' },
     { title: 'Latency Tuner', slug: '/tools/latency-tuner', desc: 'Simple network tweaks to reduce ping.' },
   ];
 
