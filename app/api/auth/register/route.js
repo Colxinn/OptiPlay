@@ -175,7 +175,14 @@ export async function POST(req) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
+    console.error('Registration error:', error);
     trackIPActivity(ip, 'register_fail');
+    
+    // Check for specific error types
+    if (error.message && error.message.includes('email')) {
+      return badRequest("Failed to send verification email. Please check your email address and try again.");
+    }
+    
     return badRequest("Registration failed. Please try again.");
   }
 }
