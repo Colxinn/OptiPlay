@@ -1,0 +1,5 @@
+# Google AdSense Publisher ID for OptiPlay
+# This file verifies your ownership of ad inventory
+# Available at: https://optiplay.space/ads.txt
+
+google.com, pub-2863890623382272, DIRECT, f08c47fec0942fa0

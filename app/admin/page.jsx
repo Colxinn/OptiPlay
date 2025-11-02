@@ -6,6 +6,7 @@ import AdminNewsRefresh from "./news-refresh.jsx";
 import AdminUserDirectory from "./user-directory.jsx";
 import AdminSponsorApplications from "./sponsors.jsx";
 import AdminPollLog from "./poll-log.jsx";
+import VisitorStats from "../components/VisitorStats.jsx";
 
 export default async function AdminPage() {
   const session = await auth();
@@ -42,6 +43,11 @@ export default async function AdminPage() {
       </div>
 
       <AdminUserDirectory />
+
+      <section className="rounded-xl bg-[#0b0b10] border border-white/10 p-4">
+        <h2 className="font-semibold mb-3">Unique Visitor Tracking (Last 100 IPs)</h2>
+        <VisitorStats />
+      </section>
 
       <section className="grid md:grid-cols-2 gap-6">
         <div className="rounded-xl bg-[#0b0b10] border border-white/10 p-4">

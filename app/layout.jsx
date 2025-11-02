@@ -4,17 +4,33 @@ import AuthButtons from "./components/AuthButtons.jsx";
 import Link from "next/link";
 import SessionProvider from "./components/SessionProvider.jsx";
 import AccountTracker from "./components/AccountTracker.jsx";
+import VisitorTracker from "./components/VisitorTracker.jsx";
 import SearchBox from "./components/SearchBox.jsx";
+import Script from "next/script";
 
 export const metadata = { title: "OptiPlay", description: "Play smarter, run faster, stay updated." };
 
 export default async function RootLayout({ children }) {
   const session = await auth();
+  const adsEnabled = process.env.NEXT_PUBLIC_GOOGLE_ADS_ENABLED === 'true';
+
   return (
     <html lang="en">
+      <head>
+        {/* Google AdSense */}
+        {adsEnabled && (
+          <Script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2863890623382272"
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
+      </head>
       <body className="min-h-screen bg-[#0f0b18] text-gray-200">
         <SessionProvider session={session}>
           <AccountTracker />
+          <VisitorTracker />
           <header className="border-b border-white/10">
             <div className="max-w-7xl mx-auto flex items-center gap-6 px-4 py-3">
               <Link href="/" className="font-bold text-xl text-purple-300 px-2 py-1 rounded-lg bg-white/5 whitespace-nowrap">OptiPlay</Link>

@@ -237,6 +237,22 @@ model PingSample {
   @@index([createdAt])
 }
 
+// ---------- Visitor tracking (last 100 unique IPs) ----------
+model UniqueVisitor {
+  id        String   @id @default(cuid())
+  ipHash    String   @unique
+  userAgent String?
+  country   String?
+  city      String?
+  firstSeen DateTime @default(now())
+  lastSeen  DateTime @default(now())
+  visitCount Int     @default(1)
+
+  @@index([lastSeen])
+  @@index([firstSeen])
+}
+
+
 // ---------- Mice and Sensors (for DPI calculator) ----------
 model Sensor {
   id      String  @id @default(cuid())
