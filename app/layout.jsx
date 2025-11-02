@@ -12,20 +12,17 @@ export const metadata = { title: "OptiPlay", description: "Play smarter, run fas
 
 export default async function RootLayout({ children }) {
   const session = await auth();
-  const adsEnabled = process.env.NEXT_PUBLIC_GOOGLE_ADS_ENABLED === 'true';
 
   return (
     <html lang="en">
       <head>
-        {/* Google AdSense */}
-        {adsEnabled && (
-          <Script
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2863890623382272"
-            crossOrigin="anonymous"
-            strategy="afterInteractive"
-          />
-        )}
+        {/* Google AdSense - Always loaded for verification */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2863890623382272"
+          crossOrigin="anonymous"
+          strategy="beforeInteractive"
+        />
       </head>
       <body className="min-h-screen bg-[#0f0b18] text-gray-200">
         <SessionProvider session={session}>
