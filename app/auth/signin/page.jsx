@@ -73,6 +73,9 @@ export default function SignInPage() {
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [pendingPassword, setPendingPassword] = useState(''); // Store password for auto-login after verification
 
   useEffect(() => {
     if (session?.user) {
@@ -84,6 +87,8 @@ export default function SignInPage() {
     setStatus('');
     setError('');
     setLoginPassword('');
+    setShowVerification(false);
+    setVerificationCode('');
   }, [mode]);
 
   useEffect(() => {
@@ -116,20 +121,55 @@ export default function SignInPage() {
       if (!res.ok) {
         throw new Error(body.error || 'Unable to start verification');
       }
-      const signInResult = await signIn('email', {
-        email,
-        redirect: false,
-        callbackUrl: '/',
-      });
-      if (signInResult?.error) {
-        throw new Error(signInResult.error);
-      }
-      setStatus('Check your inbox for a magic link to verify your account.');
+      setStatus('Verification code sent! Check your email and enter the code below.');
+      setShowVerification(true);
+      setPendingPassword(registerPassword); // Save password for auto-login
       setRegisterPassword('');
     } catch (err) {
       setError(err.message || String(err));
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleVerifyCode(e) {
+    e.preventDefault();
+    if (!verificationCode || verificationCode.length !== 6) return;
+    setLoading(true);
+    setError('');
+    setStatus('');
+    try {
+      const res = await fetch('/api/auth/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, code: verificationCode }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(body.error || 'Invalid verification code');
+      }
+      setStatus('Email verified! Signing you in...');
+      // Now sign in with credentials
+      const signInResult = await signIn('credentials', {
+        redirect: false,
+        email,
+        password: pendingPassword,
+        callbackUrl: '/profile',
+      });
+      if (signInResult?.error) {
+        setStatus('Email verified! Please sign in with your password.');
+        setShowVerification(false);
+        setMode('login');
+        setLoginMethod('password');
+      } else {
+        router.replace('/profile');
+        router.refresh();
+      }
+    } catch (err) {
+      setError(err.message || String(err));
+    } finally {
+      setLoading(false);
+      setPendingPassword(''); // Clear password from memory
     }
   }
 
@@ -247,60 +287,110 @@ export default function SignInPage() {
         </div>
 
         {mode === 'register' ? (
-          <form onSubmit={handleRegister} className="mt-6 space-y-4">
-            <div className="space-y-2">
-              <label className="block text-sm text-purple-100">Email</label>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="w-full rounded-lg border border-white/10 bg-black/60 px-3 py-2 text-sm text-white placeholder-purple-100/40 shadow-inner focus:border-purple-400 focus:outline-none"
-              />
-            </div>
+          <>
+            {!showVerification ? (
+              <form onSubmit={handleRegister} className="mt-6 space-y-4">
+                <div className="space-y-2">
+                  <label className="block text-sm text-purple-100">Email</label>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="w-full rounded-lg border border-white/10 bg-black/60 px-3 py-2 text-sm text-white placeholder-purple-100/40 shadow-inner focus:border-purple-400 focus:outline-none"
+                  />
+                </div>
 
-            <div className="space-y-2">
-              <label className="block text-sm text-purple-100">
-                Username <span className="text-xs text-purple-200/70">(3-16 characters)</span>
-              </label>
-              <input
-                type="text"
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="OptiChampion"
-                className="w-full rounded-lg border border-white/10 bg-black/60 px-3 py-2 text-sm text-white placeholder-purple-100/40 shadow-inner focus:border-purple-400 focus:outline-none"
-              />
-            </div>
+                <div className="space-y-2">
+                  <label className="block text-sm text-purple-100">
+                    Username <span className="text-xs text-purple-200/70">(3-16 characters)</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="OptiChampion"
+                    className="w-full rounded-lg border border-white/10 bg-black/60 px-3 py-2 text-sm text-white placeholder-purple-100/40 shadow-inner focus:border-purple-400 focus:outline-none"
+                  />
+                </div>
 
-            <div className="space-y-2">
-              <label className="block text-sm text-purple-100">Password</label>
-              <input
-                type="password"
-                required
-                value={registerPassword}
-                onChange={(e) => setRegisterPassword(e.target.value)}
-                placeholder="Choose something strong"
-                className="w-full rounded-lg border border-white/10 bg-black/60 px-3 py-2 text-sm text-white placeholder-purple-100/40 shadow-inner focus:border-purple-400 focus:outline-none"
-              />
-              {registerPassword ? (
-                <p className={`text-xs ${passwordInfo.className}`}>{passwordInfo.message}</p>
-              ) : (
-                <p className="text-xs text-gray-400">
-                  Include numbers and symbols to boost your strength meter.
-                </p>
-              )}
-            </div>
+                <div className="space-y-2">
+                  <label className="block text-sm text-purple-100">Password</label>
+                  <input
+                    type="password"
+                    required
+                    value={registerPassword}
+                    onChange={(e) => setRegisterPassword(e.target.value)}
+                    placeholder="Choose something strong"
+                    className="w-full rounded-lg border border-white/10 bg-black/60 px-3 py-2 text-sm text-white placeholder-purple-100/40 shadow-inner focus:border-purple-400 focus:outline-none"
+                  />
+                  {registerPassword ? (
+                    <p className={`text-xs ${passwordInfo.className}`}>{passwordInfo.message}</p>
+                  ) : (
+                    <p className="text-xs text-gray-400">
+                      Include numbers and symbols to boost your strength meter.
+                    </p>
+                  )}
+                </div>
 
-            <button
-              type="submit"
-              disabled={!canRegister || loading}
-              className="w-full rounded-lg bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-lg transition hover:bg-purple-500 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-purple-400/60"
-            >
-              {loading ? 'Sending magic link...' : 'Verify my email'}
-            </button>
-          </form>
+                <button
+                  type="submit"
+                  disabled={!canRegister || loading}
+                  className="w-full rounded-lg bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-lg transition hover:bg-purple-500 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-purple-400/60"
+                >
+                  {loading ? 'Creating account...' : 'Create account'}
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleVerifyCode} className="mt-6 space-y-4">
+                <div className="rounded-lg border border-purple-400/30 bg-purple-600/10 p-4">
+                  <p className="text-sm text-purple-100">
+                    We sent a <strong>6-digit code</strong> to:
+                  </p>
+                  <p className="mt-1 font-semibold text-purple-200">{email}</p>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm text-purple-100">Verification Code</label>
+                  <input
+                    type="text"
+                    required
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="123456"
+                    maxLength={6}
+                    className="w-full rounded-lg border border-white/10 bg-black/60 px-3 py-2 text-center text-2xl font-bold tracking-widest text-white placeholder-purple-100/40 shadow-inner focus:border-purple-400 focus:outline-none"
+                  />
+                  <p className="text-xs text-gray-400">
+                    Enter the 6-digit code from your email
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={verificationCode.length !== 6 || loading}
+                  className="w-full rounded-lg bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-lg transition hover:bg-purple-500 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-purple-400/60"
+                >
+                  {loading ? 'Verifying...' : 'Verify email'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowVerification(false);
+                    setVerificationCode('');
+                    setError('');
+                    setStatus('');
+                  }}
+                  className="w-full text-sm text-purple-300 underline hover:text-purple-200"
+                >
+                  ← Back to registration
+                </button>
+              </form>
+            )}
+          </>
         ) : (
           <div className="mt-6 space-y-4">
             <div className="flex items-center justify-center gap-3 text-xs text-purple-200/80">
