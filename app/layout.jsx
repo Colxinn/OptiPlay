@@ -38,6 +38,7 @@ export default async function RootLayout({ children }) {
               <Link href="/" className="font-bold text-xl text-purple-300 px-2 py-1 rounded-lg bg-white/5 whitespace-nowrap">OptiPlay</Link>
               <nav className="hidden md:flex items-center gap-5 text-sm text-purple-200 whitespace-nowrap">
                 <Link className="transition hover:text-purple-100" href="/tools">Tools</Link>
+                <Link className="transition hover:text-purple-100" href="/pro-configs">Pro Configs</Link>
                 <Link className="transition hover:text-purple-100" href="/mods">Mods</Link>
                 <Link className="transition hover:text-purple-100" href="/heatmap">Heatmap</Link>
                 <Link className="transition hover:text-purple-100" href="/benchmarks">Benchmarks</Link>

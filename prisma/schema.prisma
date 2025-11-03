@@ -364,3 +364,25 @@ model GameBenchmark {
   @@index([gpuId])
   @@index([cpuId])
 }
+
+// ---------- Pro Player Configs ----------
+model ProConfig {
+  id           String   @id @default(cuid())
+  name         String
+  game         String   // 'cs2' | 'valorant'
+  team         String?
+  sourceUrl    String
+  sourceName   String
+  fetchedAt    DateTime
+  normalized   Json
+  verified     Boolean  @default(false)
+  votes        Int      @default(0)
+  popularity   Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([name, game])
+  @@index([game])
+  @@index([popularity])
+  @@index([votes])
+}
