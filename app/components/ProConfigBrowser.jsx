@@ -7,6 +7,7 @@ export default function ProConfigBrowser({ game = 'cs2' }) {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState(game);
   const [search, setSearch] = useState('');
+  const [votingStates, setVotingStates] = useState({}); // Track voting/error states
 
   useEffect(() => {
     fetchConfigs();
@@ -19,6 +20,7 @@ export default function ProConfigBrowser({ game = 'cs2' }) {
         game: filter,
         limit: '50',
         sort: 'popularity',
+        checkVotes: 'true', // Request user vote status
       });
       
       if (search) {
@@ -41,19 +43,68 @@ export default function ProConfigBrowser({ game = 'cs2' }) {
   };
 
   const handleVote = async (id, vote) => {
+    // Prevent multiple simultaneous votes
+    if (votingStates[id]?.voting) return;
+    
+    setVotingStates(prev => ({
+      ...prev,
+      [id]: { voting: true, error: null }
+    }));
+    
     try {
-      await fetch('/api/pro-configs', {
+      const res = await fetch('/api/pro-configs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, vote }),
       });
       
-      // Update local state
-      setConfigs(configs.map(c => 
-        c.id === id ? { ...c, votes: c.votes + vote } : c
-      ));
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.error || 'Vote failed');
+      }
+      
+      if (data.success) {
+        // Update config with new vote count and user's vote
+        setConfigs(configs.map(c => 
+          c.id === id 
+            ? { ...c, votes: data.votes, userVote: data.newVote || vote } 
+            : c
+        ));
+        
+        setVotingStates(prev => ({
+          ...prev,
+          [id]: { voting: false, error: null }
+        }));
+      } else if (data.alreadyVoted) {
+        // User already voted
+        setVotingStates(prev => ({
+          ...prev,
+          [id]: { voting: false, error: 'Already voted' }
+        }));
+        
+        // Clear error after 2 seconds
+        setTimeout(() => {
+          setVotingStates(prev => ({
+            ...prev,
+            [id]: { voting: false, error: null }
+          }));
+        }, 2000);
+      }
     } catch (err) {
       console.error('Vote failed:', err);
+      setVotingStates(prev => ({
+        ...prev,
+        [id]: { voting: false, error: err.message }
+      }));
+      
+      // Clear error after 3 seconds
+      setTimeout(() => {
+        setVotingStates(prev => ({
+          ...prev,
+          [id]: { voting: false, error: null }
+        }));
+      }, 3000);
     }
   };
 
@@ -128,6 +179,7 @@ export default function ProConfigBrowser({ game = 'cs2' }) {
               key={config.id} 
               config={config} 
               onVote={handleVote}
+              votingState={votingStates[config.id]}
             />
           ))}
         </div>
@@ -136,8 +188,9 @@ export default function ProConfigBrowser({ game = 'cs2' }) {
   );
 }
 
-function ProConfigCard({ config, onVote }) {
+function ProConfigCard({ config, onVote, votingState = {} }) {
   const [copied, setCopied] = useState(false);
+  const { voting, error } = votingState;
 
   const copySettings = () => {
     const text = formatConfigForCopy(config.normalized);
@@ -196,17 +249,36 @@ function ProConfigCard({ config, onVote }) {
           <div className="flex flex-col items-center gap-1 ml-2">
             <button
               onClick={() => onVote(config.id, 1)}
-              className="text-gray-400 hover:text-green-400 transition text-sm"
+              disabled={voting}
+              className={`transition text-sm ${
+                config.userVote === 1 
+                  ? 'text-green-400' 
+                  : 'text-gray-400 hover:text-green-400'
+              } disabled:opacity-50 disabled:cursor-not-allowed`}
+              title={config.userVote === 1 ? 'You upvoted this' : 'Upvote'}
             >
               ▲
             </button>
-            <span className="text-sm font-medium text-purple-300">{config.votes}</span>
+            <span className="text-sm font-medium text-purple-300">
+              {config.votes}
+            </span>
             <button
               onClick={() => onVote(config.id, -1)}
-              className="text-gray-400 hover:text-red-400 transition text-sm"
+              disabled={voting}
+              className={`transition text-sm ${
+                config.userVote === -1 
+                  ? 'text-red-400' 
+                  : 'text-gray-400 hover:text-red-400'
+              } disabled:opacity-50 disabled:cursor-not-allowed`}
+              title={config.userVote === -1 ? 'You downvoted this' : 'Downvote'}
             >
               ▼
             </button>
+            {error && (
+              <div className="text-xs text-red-400 mt-1 text-center">
+                {error}
+              </div>
+            )}
           </div>
         </div>
 

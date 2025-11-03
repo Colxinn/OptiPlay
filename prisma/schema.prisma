@@ -367,22 +367,37 @@ model GameBenchmark {
 
 // ---------- Pro Player Configs ----------
 model ProConfig {
-  id           String   @id @default(cuid())
+  id           String          @id @default(cuid())
   name         String
-  game         String   // 'cs2' | 'valorant'
+  game         String          // 'cs2' | 'valorant'
   team         String?
   sourceUrl    String
   sourceName   String
   fetchedAt    DateTime
   normalized   Json
-  verified     Boolean  @default(false)
-  votes        Int      @default(0)
-  popularity   Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  verified     Boolean         @default(false)
+  votes        Int             @default(0)
+  popularity   Int             @default(0)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  userVotes    ProConfigVote[]
 
   @@unique([name, game])
   @@index([game])
   @@index([popularity])
   @@index([votes])
+}
+
+model ProConfigVote {
+  id            String     @id @default(cuid())
+  configId      String
+  config        ProConfig  @relation(fields: [configId], references: [id], onDelete: Cascade)
+  userId        String?    // Optional: for logged-in users
+  ipAddress     String     // For anonymous users
+  vote          Int        // 1 or -1
+  createdAt     DateTime   @default(now())
+
+  @@unique([configId, userId, ipAddress])
+  @@index([configId])
+  @@index([ipAddress])
 }
