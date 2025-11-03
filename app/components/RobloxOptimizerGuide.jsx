@@ -342,6 +342,51 @@ export default function RobloxOptimizerGuide() {
         ))}
       </div>
 
+      {/* Advanced: Delete Textures Guide */}
+      <div className="mt-10 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
+        <div className="flex items-center gap-2 mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-amber-400">
+            <path fillRule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
+          </svg>
+          <h3 className="text-lg font-bold text-amber-300">Advanced: Delete Textures for Maximum FPS</h3>
+        </div>
+        <p className="text-sm text-gray-300 mb-4">
+          <strong className="text-amber-200">⚠️ Warning:</strong> This will remove Roblox textures and make the game look worse. Only do this if you need absolute maximum FPS on a low-end PC. You can restore textures by reinstalling Roblox.
+        </p>
+        <div className="bg-neutral-900/50 rounded-lg p-4 border border-white/10">
+          <div className="font-semibold text-white mb-3">Step-by-Step Guide:</div>
+          <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-300">
+            <li>
+              <strong>Search for Roblox</strong> in Windows Start menu
+            </li>
+            <li>
+              <strong>Right-click on Roblox</strong> → Select <span className="text-purple-300">"Open file location"</span>
+            </li>
+            <li>
+              <strong>Right-click on the shortcut again</strong> → Select <span className="text-purple-300">"Open file location"</span> one more time
+            </li>
+            <li>
+              Navigate to: <code className="px-2 py-0.5 bg-black/40 rounded text-purple-300">PlatformContent → pc → textures</code>
+            </li>
+            <li>
+              <strong className="text-amber-300">Select all texture files</strong> in this folder
+            </li>
+            <li>
+              <strong className="text-amber-300">Move them to a backup folder</strong> on your desktop (DON'T delete permanently!)
+            </li>
+            <li>
+              Launch Roblox and enjoy the FPS boost (game will look plain/low-quality)
+            </li>
+          </ol>
+          <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+            <div className="text-sm text-blue-300 font-semibold mb-1">💡 To Restore Textures:</div>
+            <p className="text-xs text-gray-300">
+              Simply move the texture files back to the original folder, or reinstall Roblox from the Microsoft Store or Roblox website.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Mods / Scripts Browser */}
       <div className="mt-10">
         <div className="flex items-center gap-2">
