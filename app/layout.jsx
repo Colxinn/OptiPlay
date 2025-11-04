@@ -39,9 +39,15 @@ export default async function RootLayout({ children }) {
               <Link href="/" className="font-bold text-xl text-purple-300 px-2 py-1 rounded-lg bg-white/5 whitespace-nowrap">OptiPlay</Link>
               <TopNavClient session={session} />
               <div className="flex-1" />
-              <SearchBox className="hidden md:block w-80" />
-              <Link href="/contribute" className="ml-2 hidden sm:inline-block rounded-lg bg-purple-600 px-3 py-1 text-sm font-semibold text-white transition hover:bg-purple-500">Contribute</Link>
-              <div className="ml-2 whitespace-nowrap"><AuthButtons session={session} /></div>
+              {session?.user && (
+                <SearchBox className="hidden md:block w-[32rem]" />
+              )}
+              <div className="flex items-center gap-3">
+                <Link href="/contribute" className="hidden sm:inline-block rounded-lg bg-purple-600 px-3 py-1 text-sm font-semibold text-white transition hover:bg-purple-500">Contribute</Link>
+                {!session?.user && (
+                  <Link href="/api/auth/signin" className="rounded-lg bg-purple-600 px-3 py-1 text-sm font-semibold text-white transition hover:bg-purple-500">Sign in</Link>
+                )}
+              </div>
             </div>
           </header>
           <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
