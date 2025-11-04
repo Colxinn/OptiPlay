@@ -1,10 +1,10 @@
 'use client';
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { useEffect, useRef, useState } from 'react';
 
 export default function AuthButtons({ session }) {
   if (session?.user) {
-    // show avatar + name and a small dropdown menu containing Profile + Sign out
     return <ProfileMenu user={session.user} />;
   }
 
@@ -22,7 +22,7 @@ export default function AuthButtons({ session }) {
 
 function ProfileMenu({ user }) {
   const [open, setOpen] = useState(false);
-  const ref = useRef();
+  const ref = useRef(null);
 
   useEffect(() => {
     function onDoc(e) {
