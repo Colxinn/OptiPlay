@@ -44,9 +44,7 @@ export default async function RootLayout({ children }) {
               )}
               <div className="flex items-center gap-3">
                 <Link href="/contribute" className="hidden sm:inline-block rounded-lg bg-purple-600 px-3 py-1 text-sm font-semibold text-white transition hover:bg-purple-500">Contribute</Link>
-                {!session?.user && (
-                  <Link href="/api/auth/signin" className="rounded-lg bg-purple-600 px-3 py-1 text-sm font-semibold text-white transition hover:bg-purple-500">Sign in</Link>
-                )}
+                <AuthButtons session={session} />
               </div>
             </div>
           </header>
