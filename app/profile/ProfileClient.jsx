@@ -157,14 +157,7 @@ export default function ProfileClient({ user }) {
               </p>
             ) : null}
           </div>
-          <div className="ml-4">
-            <button
-              onClick={() => signOut({ callbackUrl: '/' })}
-              className="rounded-md border border-white/10 bg-neutral-800 px-3 py-1 text-sm text-gray-200 hover:bg-neutral-700"
-            >
-              Sign out
-            </button>
-          </div>
+          {/* sign out removed from profile header - centralized to password card */}
         </div>
         <form onSubmit={saveProfile} className="space-y-4">
           <div className="space-y-2">
@@ -239,7 +232,18 @@ export default function ProfileClient({ user }) {
       </section>
 
       <section className="flex-1 space-y-6 rounded-2xl border border-white/10 bg-neutral-900/60 p-6 shadow-lg">
-        <h2 className="text-xl font-semibold text-white">Update password</h2>
+        <div className="flex items-start justify-between">
+          <h2 className="text-xl font-semibold text-white">Update password</h2>
+          <div className="ml-4">
+            <button
+              type="button"
+              onClick={() => signOut({ callbackUrl: '/' })}
+              className="rounded-md border border-white/10 bg-neutral-800 px-3 py-1 text-sm text-gray-200 hover:bg-neutral-700"
+            >
+              Sign out
+            </button>
+          </div>
+        </div>
         <form onSubmit={savePassword} className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm text-purple-100">New password</label>
