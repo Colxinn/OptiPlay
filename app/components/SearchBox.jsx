@@ -43,9 +43,9 @@ export default function SearchBox({ className = '' }) {
 
   return (
     <div className={`relative ${className}`}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex gap-2">
         <input
-          className="w-full rounded-lg border border-white/10 bg-[#0b0b10] px-3 py-1.5 text-sm text-gray-200"
+          className="flex-1 rounded-lg border border-white/10 bg-[#0b0b10] px-3 py-1.5 text-sm text-gray-200 placeholder-gray-400"
           placeholder="Search tools, guides..."
           name="q"
           value={query}
@@ -53,6 +53,12 @@ export default function SearchBox({ className = '' }) {
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
         />
+        <button
+          type="submit"
+          className="rounded-lg bg-purple-600 px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-purple-500"
+        >
+          Search
+        </button>
       </form>
       {open && suggestions.length ? (
         <div className="absolute z-30 mt-2 w-full rounded-lg border border-white/10 bg-neutral-950/95 shadow-lg shadow-black/30">
