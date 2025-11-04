@@ -6,6 +6,7 @@ import SessionProvider from "./components/SessionProvider.jsx";
 import AccountTracker from "./components/AccountTracker.jsx";
 import VisitorTracker from "./components/VisitorTracker.jsx";
 import SearchBox from "./components/SearchBox.jsx";
+import TopNavClient from "./components/TopNavClient.jsx";
 import Script from "next/script";
 import OGWelcomeBanner from "./components/OGWelcomeBanner.jsx";
 
@@ -36,19 +37,7 @@ export default async function RootLayout({ children }) {
           <header className="border-b border-white/10">
             <div className="max-w-7xl mx-auto flex items-center gap-6 px-4 py-3">
               <Link href="/" className="font-bold text-xl text-purple-300 px-2 py-1 rounded-lg bg-white/5 whitespace-nowrap">OptiPlay</Link>
-              <nav className="hidden md:flex items-center gap-5 text-sm text-purple-200 whitespace-nowrap">
-                <Link className="transition hover:text-purple-100" href="/tools">Tools</Link>
-                <Link className="transition hover:text-purple-100" href="/pro-configs">Pro Configs</Link>
-                <Link className="transition hover:text-purple-100" href="/mods">Mods</Link>
-                <Link className="transition hover:text-purple-100" href="/heatmap">Heatmap</Link>
-                <Link className="transition hover:text-purple-100" href="/benchmarks">Benchmarks</Link>
-                <Link className="transition hover:text-purple-100" href="/esports">Esports</Link>
-                <Link className="transition hover:text-purple-100" href="/forum">Forum</Link>
-                <Link className="transition hover:text-purple-100" href="/news">News</Link>
-                {session?.user?.isOwner ? (
-                  <Link href="/admin" className="text-purple-300 hover:text-purple-100">Admin</Link>
-                ) : null}
-              </nav>
+              <TopNavClient session={session} />
               <div className="flex-1" />
               <SearchBox className="hidden md:block w-80" />
               <Link href="/contribute" className="ml-2 hidden sm:inline-block rounded-lg bg-purple-600 px-3 py-1 text-sm font-semibold text-white transition hover:bg-purple-500">Contribute</Link>
