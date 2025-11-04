@@ -1,6 +1,5 @@
 'use client';
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useRef, useState } from 'react';
 
 export default function AuthButtons({ session }) {
@@ -22,7 +21,6 @@ export default function AuthButtons({ session }) {
 
 function ProfileMenu({ user }) {
   const [open, setOpen] = useState(false);
-  const [imageError, setImageError] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -41,15 +39,13 @@ function ProfileMenu({ user }) {
         className="flex items-center gap-3 rounded-lg px-2 py-1 hover:bg-white/3 transition"
         aria-expanded={open}
       >
-        {user.image && !imageError ? (
-          <div className="relative h-8 w-8 rounded-full overflow-hidden bg-neutral-800">
-            <Image
+        {user.image ? (
+          <div className="h-8 w-8 rounded-full overflow-hidden bg-neutral-800">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={user.image}
               alt={user.name || 'Profile'}
-              fill
-              className="object-cover"
-              onError={() => setImageError(true)}
-              unoptimized
+              className="h-full w-full object-cover"
             />
           </div>
         ) : (
