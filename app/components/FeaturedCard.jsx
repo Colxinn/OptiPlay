@@ -3,20 +3,20 @@
 import { useEffect } from 'react';
 
 export default function FeaturedCard() {
+  const adsEnabled = process.env.NEXT_PUBLIC_GOOGLE_ADS_ENABLED === 'true';
+  const adSlotId = process.env.NEXT_PUBLIC_GOOGLE_ADS_SLOT_ID;
+
   useEffect(() => {
-    // Load Google AdSense script when component mounts
-    if (typeof window !== 'undefined' && window.adsbygoogle === undefined) {
+    // Initialize AdSense ad after component mounts (only if ads enabled)
+    if (adsEnabled && adSlotId && typeof window !== 'undefined') {
       try {
+        // Push ad to adsbygoogle array to initialize it
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (e) {
         console.error('AdSense error:', e);
       }
     }
-  }, []);
-
-  // Check if Google Ads should be enabled
-  const adsEnabled = process.env.NEXT_PUBLIC_GOOGLE_ADS_ENABLED === 'true';
-  const adSlotId = process.env.NEXT_PUBLIC_GOOGLE_ADS_SLOT_ID;
+  }, [adsEnabled, adSlotId]);
 
   return (
     <div className="rounded-xl bg-[#0b0b10] border border-white/10 p-4">
