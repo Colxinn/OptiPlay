@@ -1,4 +1,3 @@
-import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import {
   computePerformancePerDollar,
@@ -52,26 +51,22 @@ function buildFilters({ game, gpu, cpu, resolution }) {
   return and.length ? { AND: and } : {};
 }
 
-const fetchBenchmarks = unstable_cache(
-  async (filters) => {
-    const where = buildFilters(filters);
-    return prisma.gameBenchmark.findMany({
-      where,
-      include: {
-        game: true,
-        gpu: true,
-        cpu: true,
-      },
-      orderBy: [
-        { avgFps: "desc" },
-        { createdAt: "desc" },
-      ],
-      take: 200,
-    });
-  },
-  ["advanced-benchmarks-v2"],
-  { revalidate: 60 * 60 * 24 }
-);
+async function fetchBenchmarks(filters) {
+  const where = buildFilters(filters);
+  return prisma.gameBenchmark.findMany({
+    where,
+    include: {
+      game: true,
+      gpu: true,
+      cpu: true,
+    },
+    orderBy: [
+      { avgFps: "desc" },
+      { createdAt: "desc" },
+    ],
+    take: 200,
+  });
+}
 
 export async function GET(req) {
   try {
