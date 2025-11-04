@@ -46,7 +46,7 @@ export default function Header(){
     setUser(owner);
     alert('Simulated owner login set (dev). Refresh if needed.');
   }
-  function devLogout(){ localStorage.removeItem('dev_user'); setUser(null); alert('Logged out (dev)'); }
+  // Note: devLogout removed per request — sign out UI has been centralized on /profile
 
   function handleSubmit(e){
     e.preventDefault();
@@ -107,7 +107,7 @@ export default function Header(){
             ) : null}
           </div>
           {process.env.NEXT_PUBLIC_USE_DEV_AUTH === 'true' ? (
-            user ? <button onClick={devLogout} className="px-3 py-2 bg-optiPurple-600 rounded">Logout</button> :
+            // show dev login helper only
             <button onClick={devLogin} className="px-3 py-2 bg-optiPurple-600 rounded">Dev Login (owner)</button>
           ) : (
             <div>

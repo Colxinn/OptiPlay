@@ -1,5 +1,4 @@
 'use client';
-import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from 'react';
 
@@ -54,7 +53,6 @@ function ProfileMenu({ user }) {
       {open ? (
         <div className="absolute right-0 mt-2 w-44 rounded bg-neutral-900 border border-white/10 shadow-lg py-1 z-40">
           <Link href="/profile" className="block px-3 py-2 text-sm text-gray-200 hover:bg-white/5">Profile</Link>
-          <button onClick={() => signOut()} className="w-full text-left px-3 py-2 text-sm text-gray-200 hover:bg-white/5">Sign out</button>
         </div>
       ) : null}
     </div>

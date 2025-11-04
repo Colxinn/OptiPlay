@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { signOut } from "next-auth/react";
 
 function passwordStatus(password) {
   if (password.length < 8) {
@@ -144,16 +145,26 @@ export default function ProfileClient({ user }) {
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-8 lg:flex-row">
       <section className="flex-1 space-y-6 rounded-2xl border border-white/10 bg-neutral-900/60 p-6 shadow-lg">
-        <div>
-          <h1 className="text-2xl font-bold text-white">Profile</h1>
-          <p className="text-sm text-gray-300">
-            Signed in as <span className="font-mono text-purple-200">{user?.email}</span>
-          </p>
-          {username ? (
-            <p className="text-xs text-purple-200/70">
-              Public page: optiplay.space/profile/{username}
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-white">Profile</h1>
+            <p className="text-sm text-gray-300">
+              Signed in as <span className="font-mono text-purple-200">{user?.email}</span>
             </p>
-          ) : null}
+            {username ? (
+              <p className="text-xs text-purple-200/70">
+                Public page: optiplay.space/profile/{username}
+              </p>
+            ) : null}
+          </div>
+          <div className="ml-4">
+            <button
+              onClick={() => signOut({ callbackUrl: '/' })}
+              className="rounded-md border border-white/10 bg-neutral-800 px-3 py-1 text-sm text-gray-200 hover:bg-neutral-700"
+            >
+              Sign out
+            </button>
+          </div>
         </div>
         <form onSubmit={saveProfile} className="space-y-4">
           <div className="space-y-2">
