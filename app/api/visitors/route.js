@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 const SALT = process.env.PING_HASH_SALT || 'default-salt-change-me';
-const MAX_VISITORS = 100;
+const MAX_VISITORS = 1000;
 
 /**
  * Hash IP address for privacy
@@ -33,7 +33,7 @@ function getClientIP(request) {
 }
 
 /**
- * Track a visitor and maintain the last 100 unique IPs
+ * Track a visitor and maintain the last 1000 unique IPs
  */
 export async function POST(request) {
   try {
