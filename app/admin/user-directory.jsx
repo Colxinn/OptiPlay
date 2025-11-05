@@ -153,6 +153,32 @@ export default function AdminUserDirectory() {
     }
   }
 
+  async function deleteUserImage(userId, user) {
+    if (!window.confirm(`Delete profile picture for ${user.name || user.email}?`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/users/${userId}/delete-image`, {
+        method: 'DELETE',
+      });
+      const payload = await res.json();
+      if (!res.ok) {
+        throw new Error(payload.error || 'Failed to delete profile picture.');
+      }
+      
+      // Update local state to remove image
+      setUsers((prev) =>
+        prev.map((record) =>
+          record.id === userId ? { ...record, image: null } : record
+        )
+      );
+      alert(`✅ ${payload.message}`);
+    } catch (err) {
+      alert(err.message || 'Failed to delete profile picture.');
+    }
+  }
+
   async function deleteUser(userId, user) {
     const confirmText = `DELETE ${user.name}`;
     const input = window.prompt(
@@ -379,6 +405,14 @@ export default function AdminUserDirectory() {
                       >
                         {user.isMuted ? 'Unmute' : 'Mute'}
                       </button>
+                      {user.image && (
+                        <button
+                          onClick={() => deleteUserImage(user.id, user)}
+                          className="mt-2 w-full rounded-md border border-orange-400/40 px-2 py-1 text-[11px] text-orange-200 hover:bg-orange-500/10"
+                        >
+                          🖼️ Delete PFP
+                        </button>
+                      )}
                       <button
                         onClick={() => deleteUser(user.id, user)}
                         className="mt-2 w-full rounded-md border border-red-400/40 px-2 py-1 text-[11px] text-red-200 hover:bg-red-500/10"
