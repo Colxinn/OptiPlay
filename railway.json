@@ -6,6 +6,15 @@
   "deploy": {
     "startCommand": "cd /app && node .next/standalone/server.js",
     "restartPolicyType": "on_failure",
-    "restartPolicyMaxRetries": 3
+    "restartPolicyMaxRetries": 3,
+    "healthchecks": {
+      "enabled": true,
+      "path": "/api/health",
+      "port": 3000,
+      "initialDelaySeconds": 10,
+      "timeoutSeconds": 5,
+      "periodSeconds": 10,
+      "failureThreshold": 3
+    }
   }
 }
