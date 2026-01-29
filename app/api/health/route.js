@@ -1,5 +1,11 @@
 export const runtime = 'nodejs';
 
+// Simple health check - responds immediately without DB calls
+export async function GET() {
+  return Response.json({ status: 'healthy' }, { status: 200 });
+}
+
+// Legacy code below - keep for backwards compatibility
 import prisma from '@/lib/prisma';
 
 function presence(v) {
