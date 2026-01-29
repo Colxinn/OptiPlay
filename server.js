@@ -1,25 +1,18 @@
-const { createServer } = require('http');
-const { parse } = require('url');
-const next = require('next');
+#!/usr/bin/env node
+const http = require('http');
 
-const dev = false;
-const hostname = '0.0.0.0'; // Listen on all interfaces
+// Set PORT to listen on all interfaces
 const port = parseInt(process.env.PORT || '3000', 10);
 
-const app = next({ dev });
-const handle = app.getRequestHandler();
+// Load the standalone server from the built .next directory
+const { default: handler } = require('./.next/standalone/server');
 
-app.prepare().then(() => {
-  createServer(async (req, res) => {
-    try {
-      const parsedUrl = parse(req.url, true);
-      await handle(req, res, parsedUrl);
-    } catch (err) {
-      console.error('Error occurred handling', req.url, err);
-      res.statusCode = 500;
-      res.end('internal server error');
-    }
-  }).listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}`);
-  });
+// Create HTTP server that wraps the handler
+const server = http.createServer((req, res) => {
+  return handler(req, res);
+});
+
+// Explicitly bind to 0.0.0.0 (all interfaces)
+server.listen(port, '0.0.0.0', () => {
+  console.log(`✓ Ready on http://0.0.0.0:${port}`);
 });
