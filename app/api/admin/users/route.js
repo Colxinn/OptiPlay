@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 export const runtime = "nodejs";
+export const dynamic = 'force-dynamic';
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {

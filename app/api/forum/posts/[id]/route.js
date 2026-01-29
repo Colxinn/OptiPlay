@@ -1,8 +1,8 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
-export async function GET(_req, { params }) {
-  const { id } = await params;
+export const GET = async (request, { params }) => {
+  const { id } = params;
   const post = await prisma.post.findUnique({
     where: { id },
     include: {
@@ -37,15 +37,15 @@ export async function GET(_req, { params }) {
   if (!post) return new Response(JSON.stringify({ error: "Not found" }), { status: 404 });
   const score = post.votes.reduce((sum, v) => sum + (v.value || 0), 0);
   return new Response(JSON.stringify({ post: { ...post, score } }), { status: 200 });
-}
+};
 
-export async function DELETE(_req, { params }) {
+export const DELETE = async (request, { params }) => {
   const session = await auth();
   if (!session?.user?.id) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
   }
 
-  const { id } = await params;
+  const { id } = params;
 
   const post = await prisma.post.findUnique({
     where: { id },
@@ -67,4 +67,4 @@ export async function DELETE(_req, { params }) {
   });
 
   return new Response(JSON.stringify({ ok: true }), { status: 200 });
-}
+};

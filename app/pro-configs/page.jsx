@@ -1,5 +1,7 @@
 import ProConfigBrowser from '../components/ProConfigBrowser';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Pro Configs - CS2 & Valorant | OptiPlay',
   description: 'Browse professional player configurations for CS2 and Valorant. Copy crosshair settings, sensitivity, and more from top esports players.',

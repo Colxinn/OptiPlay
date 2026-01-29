@@ -17,7 +17,7 @@ export async function POST(req, { params }) {
     return json({ error: "Forbidden" }, 403);
   }
 
-  const { id } = await params;
+  const { id } = params;
   if (!id) {
     return json({ error: "Missing user id" }, 400);
   }

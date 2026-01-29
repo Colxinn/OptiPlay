@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import AdminPollCreator from "./poll-creator.jsx";
 import AdminModeration from "./moderation.jsx";
 import AdminNewsRefresh from "./news-refresh.jsx";
+
+export const dynamic = 'force-dynamic';
 import AdminUserDirectory from "./user-directory.jsx";
 import AdminSponsorApplications from "./sponsors.jsx";
 import AdminPollLog from "./poll-log.jsx";

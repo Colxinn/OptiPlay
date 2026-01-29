@@ -1,5 +1,6 @@
 import CopyBlock from '@/app/components/CopyBlock.jsx';
 
+export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Contribute — OptiPlay' };
 
 export default function ContributePage(){
