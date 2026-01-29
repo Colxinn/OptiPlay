@@ -101,6 +101,7 @@ setInterval(() => {
 export async function middleware(req) {
   // Skip health checks - they should never be rate limited or blocked
   if (req.nextUrl.pathname === '/api/health') {
+    console.log('[middleware] bypassing /api/health');
     return NextResponse.next();
   }
 
