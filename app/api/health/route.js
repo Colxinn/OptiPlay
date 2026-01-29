@@ -4,6 +4,4 @@ export const runtime = 'nodejs';
 export async function GET() {
   return Response.json({ status: 'healthy' }, { status: 200 });
 }
-  return Response.json(body, { status });
-}
 
