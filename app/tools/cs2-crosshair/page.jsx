@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import CS2CrosshairClient from './CrosshairClient.jsx';
 
 export const metadata = {

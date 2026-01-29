@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import ValorantCrosshairClient from './CrosshairClient.jsx';
 
 export const metadata = {

@@ -9,6 +9,7 @@ import {
 import { seedHardwareIfEmpty } from "@/lib/seedHardware";
 
 export const runtime = "nodejs";
+export const dynamic = 'force-dynamic';
 
 function buildFilters({ game, gpu, cpu, resolution }) {
   const and = [];

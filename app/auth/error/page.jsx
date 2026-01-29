@@ -1,9 +1,12 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
-export default function AuthErrorPage() {
+function AuthErrorContent() {
   const params = useSearchParams();
   const error = params.get('error') || 'Unknown';
   const friendly = {
@@ -19,5 +22,13 @@ export default function AuthErrorPage() {
         <li>Return to the <Link href="/auth/signin" className="underline">sign-in page</Link> or go <Link href="/" className="underline">home</Link>.</li>
       </ul>
     </div>
+  );
+}
+
+export default function AuthErrorPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AuthErrorContent />
+    </Suspense>
   );
 }

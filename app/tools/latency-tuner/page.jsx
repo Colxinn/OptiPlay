@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import CopyBlock from '@/app/components/CopyBlock.jsx';
 
 export default function Page(){

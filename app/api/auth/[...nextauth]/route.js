@@ -1,2 +1,6 @@
 export const runtime = 'nodejs';
-export { GET, POST } from "@/lib/auth";
+
+import { nextAuthHandler } from "@/lib/auth";
+
+export const GET = nextAuthHandler;
+export const POST = nextAuthHandler;

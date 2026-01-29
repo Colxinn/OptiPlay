@@ -9,6 +9,8 @@ module.exports = {
   },
   // Disable static export for now due to auth/database requirements
   output: 'standalone',
+  skipTrailingSlashRedirect: true,
+  skipMiddlewareSourceMapRemoval: true,
   images: {
     remotePatterns: [
       {
@@ -18,3 +20,4 @@ module.exports = {
     ],
   },
 };
+

@@ -1,5 +1,6 @@
 
 'use client'
+export const dynamic = 'force-dynamic';
 import { useMemo, useState } from 'react';
 const GAMES = ["CS2","Valorant","SiegeX","Fortnite","Roblox","Minecraft","Rust","Apex"];
 const MULT = {"CS2":1.0,"Valorant":0.314,"SiegeX":0.5,"Fortnite":0.571428,"Roblox":1.2,"Minecraft":0.5,"Rust":0.8,"Apex":1.0};
