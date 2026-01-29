@@ -99,6 +99,11 @@ setInterval(() => {
 }, 60000);
 
 export async function middleware(req) {
+  // Skip health checks - they should never be rate limited or blocked
+  if (req.nextUrl.pathname === '/api/health') {
+    return NextResponse.next();
+  }
+
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 
              req.headers.get('x-real-ip') || 
              'unknown';
