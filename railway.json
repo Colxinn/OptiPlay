@@ -4,8 +4,8 @@
     "buildCommand": "npm install && npm run build"
   },
   "deploy": {
-    "startCommand": "node server.js",
+    "startCommand": "cd /app && node .next/standalone/server.js",
     "restartPolicyType": "on_failure",
-    "restartPolicyMaxRetries": 5
+    "restartPolicyMaxRetries": 3
   }
 }
