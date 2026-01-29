@@ -9,13 +9,22 @@ try {
   // Always generate Prisma client
   run('npx prisma generate');
   
-  // Try to deploy migrations, but don't fail if there are none or if they fail
-  try {
-    run('npx prisma migrate deploy');
-    console.log('✓ Migrations deployed successfully');
-  } catch (e) {
-    console.warn('⚠ Migrate deploy skipped (database likely already up to date)');
-    // Don't use db push as fallback - if migrations fail, the database is probably already correct
+  // Only try migrations if DATABASE_URL is valid
+  const rawDbUrl = process.env.DATABASE_URL || "";
+  const sanitizedDbUrl = rawDbUrl.trim().replace(/^['\"](.*)['\"]$/, "$1");
+  if (sanitizedDbUrl !== rawDbUrl) {
+    process.env.DATABASE_URL = sanitizedDbUrl;
+  }
+
+  if (sanitizedDbUrl && (sanitizedDbUrl.startsWith('postgresql://') || sanitizedDbUrl.startsWith('postgres://'))) {
+    try {
+      run('npx prisma migrate deploy');
+      console.log('✓ Migrations deployed successfully');
+    } catch (e) {
+      console.warn('⚠ Migrate deploy skipped (database likely already up to date)');
+    }
+  } else {
+    console.warn('⚠ DATABASE_URL not set or invalid - skipping migrations during build');
   }
   
   console.log('✓ Prisma preparation complete');

@@ -13,9 +13,7 @@ import OGWelcomeBanner from "./components/OGWelcomeBanner.jsx";
 export const metadata = { title: "OptiPlay", description: "Play smarter, run faster, stay updated." };
 
 export default async function RootLayout({ children }) {
-  // Temporarily disable auth during startup to debug deployment issues
-  // const session = await auth();
-  const session = null;
+  const session = await auth();
 
   return (
     <html lang="en">
