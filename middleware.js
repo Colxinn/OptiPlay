@@ -7,7 +7,7 @@ export const config = {
     "/api/auth/register",
     "/api/posts",
     "/api/comments",
-    "/api/(?!health).*", // Match all API routes EXCEPT /api/health
+    "/api/:path*", // Protect all API routes (we'll bypass health inside middleware)
   ] 
 };
 
