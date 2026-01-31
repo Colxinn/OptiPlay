@@ -41,10 +41,12 @@ export async function POST(request) {
     const ipHash = hashIP(ip);
     const userAgent = request.headers.get('user-agent') || 'Unknown';
 
-    // Get geo data if available from Vercel/Cloudflare headers
-    const country = request.headers.get('x-vercel-ip-country') || 
-                    request.headers.get('cf-ipcountry') || null;
-    const city = request.headers.get('x-vercel-ip-city') || null;
+    // Get geo data if available from Railway/Cloudflare/Vercel headers
+    const country = request.headers.get('x-railway-ip-country') ||
+                    request.headers.get('cf-ipcountry') || 
+                    request.headers.get('x-vercel-ip-country') || null;
+    const city = request.headers.get('x-railway-ip-city') ||
+                 request.headers.get('x-vercel-ip-city') || null;
 
     // Check if this IP already exists
     const existingVisitor = await prisma.uniqueVisitor.findUnique({

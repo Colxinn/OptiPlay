@@ -6,11 +6,12 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-export const runtime = "edge";
-export const preferredRegion = "auto";
+export const runtime = "nodejs";
 
 export async function GET() {
   const region =
+    process.env.RAILWAY_REGION ||
+    process.env.RAILWAY_DEPLOYMENT_ID?.split('-')[0] ||
     process.env.VERCEL_REGION ||
     process.env.AWS_REGION ||
     process.env.FLY_REGION ||

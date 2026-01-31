@@ -84,13 +84,19 @@ export async function POST(req) {
     null;
   const ipHash = hashIp(ip);
 
-  const country = payload.country || headers.get("x-vercel-ip-country") || null;
-  const city = payload.city || headers.get("x-vercel-ip-city") || null;
+  const country = payload.country || 
+    headers.get("x-railway-ip-country") || 
+    headers.get("x-vercel-ip-country") || null;
+  const city = payload.city || 
+    headers.get("x-railway-ip-city") || 
+    headers.get("x-vercel-ip-city") || null;
   const latitude =
     parseFloatOrNull(payload.latitude) ||
+    parseFloatOrNull(headers.get("x-railway-ip-latitude")) ||
     parseFloatOrNull(headers.get("x-vercel-ip-latitude"));
   const longitude =
     parseFloatOrNull(payload.longitude) ||
+    parseFloatOrNull(headers.get("x-railway-ip-longitude")) ||
     parseFloatOrNull(headers.get("x-vercel-ip-longitude"));
 
   let derivedRegion =
