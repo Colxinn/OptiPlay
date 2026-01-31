@@ -1,17 +1,21 @@
+export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-function makeHealthyResponse() {
-  return Response.json({ status: 'healthy' }, { status: 200, headers: { 'Cache-Control': 'no-store' } });
-}
-
-// Simple health check - responds immediately without DB calls
+// Absolute minimal health check - no dependencies, no helpers
 export async function GET() {
-  console.log('[health] probe received (GET)');
-  return makeHealthyResponse();
+  return new Response(JSON.stringify({ status: 'ok' }), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-store, no-cache, must-revalidate'
+    }
+  });
 }
 
 export async function HEAD() {
-  console.log('[health] probe received (HEAD)');
-  return new Response(null, { status: 200, headers: { 'Cache-Control': 'no-store' } });
+  return new Response(null, {
+    status: 200,
+    headers: { 'Cache-Control': 'no-store' }
+  });
 }
 
