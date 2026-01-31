@@ -7,8 +7,21 @@ export const config = {
     "/api/auth/register",
     "/api/posts",
     "/api/comments",
-    // Exclude /api/health from middleware entirely
-    "/api/((?!health).)*"
+    // Don't match /api/health - handle other API routes in middleware function
+    "/api/account/:path*",
+    "/api/admin/:path*",
+    "/api/benchmarks/:path*",
+    "/api/esports/:path*",
+    "/api/forum/:path*",
+    "/api/mice/:path*",
+    "/api/news/:path*",
+    "/api/ping/:path*",
+    "/api/polls/:path*",
+    "/api/pro-configs/:path*",
+    "/api/profile/:path*",
+    "/api/search/:path*",
+    "/api/sponsors/:path*",
+    "/api/visitors/:path*"
   ] 
 };
 
