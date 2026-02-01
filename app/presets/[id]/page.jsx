@@ -36,7 +36,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const preset = await getPreset(params.id);
+  const { id } = await params; // Await params in Next.js 15+
+  const preset = await getPreset(id);
   if (!preset) return { title: 'Preset Not Found' };
   
   return {
@@ -46,7 +47,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function PresetDetailPage({ params }) {
-  const preset = await getPreset(params.id);
+  const { id } = await params; // Await params in Next.js 15+
+  const preset = await getPreset(id);
 
   if (!preset) {
     notFound();
