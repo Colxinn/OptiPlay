@@ -7,7 +7,7 @@ export async function POST(req, { params }) {
     return new Response(JSON.stringify({ error: "Owner privileges required." }), { status: 403 });
   }
 
-  const { id } = params;
+  const { id } = await params;
 
   let body = {};
   try {
