@@ -44,9 +44,8 @@
       "Set game process priority to High (not Realtime)"
     ],
     "optiplay_tools": [
-      "Latency Tuner - Network path optimization",
-      "Reaction Time Tester - Baseline measurement",
-      "Input/Display Optimizer - Windows timer resolution"
+      "Latency Tuner - TCP/UDP optimization",
+      "Reaction Time Tester - Baseline measurement"
     ]
   },
   "does_not_modify": [

@@ -41,8 +41,7 @@
     ],
     "optiplay_tools": [
       "FPS Booster - Low-End Profile",
-      "Bottleneck Analyzer - Identify weakest component",
-      "Latency Tuner - Network optimization"
+      "Bottleneck Analyzer - Identify weakest component"
     ]
   },
   "does_not_modify": [
