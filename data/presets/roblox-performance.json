@@ -1,0 +1,68 @@
+{
+  "id": "roblox-performance",
+  "name": "Roblox Performance Pack",
+  "target": ["Roblox"],
+  "hardware_tier": ["Low", "Mid"],
+  "os": ["Windows 10", "Windows 11"],
+  "risk_level": "Low",
+  "estimated_gain": {
+    "fps": "20-50%",
+    "latency": "Reduced stuttering"
+  },
+  "applies": {
+    "game_settings": [
+      "Roblox Graphics Mode: Manual",
+      "Graphics Quality: 1-5 (depending on hardware)",
+      "Render Distance: Reduced via in-game slider",
+      "Particle effects: Reduced quality",
+      "Post-processing: Disabled if possible"
+    ],
+    "os_settings": [
+      "Windows Power Plan: High Performance",
+      "Set Roblox process priority: Above Normal (not High)",
+      "GPU preference: High Performance for RobloxPlayerBeta.exe",
+      "Background app restrictions: Enable for Roblox",
+      "Game Mode: Enabled"
+    ],
+    "driver_settings": [
+      "GPU Power Management: Maximum Performance (Roblox only)",
+      "Threaded optimization: ON (NVIDIA)",
+      "Texture filtering: Performance mode"
+    ],
+    "background_processes": [
+      "Close browser tabs (Chrome/Edge can consume significant RAM)",
+      "Disable Discord hardware acceleration or use compact mode",
+      "Close other Roblox instances",
+      "Pause Windows Update during gameplay",
+      "Close RGB control software after setup"
+    ],
+    "optiplay_tools": [
+      "Roblox Optimizer - Graphics override tool",
+      "FPS Unlocker integration guide (external tool - user responsibility)",
+      "Bottleneck Analyzer - Identify RAM/CPU bottlenecks"
+    ]
+  },
+  "does_not_modify": [
+    "Roblox client files (no DLL injection)",
+    "Roblox ToS-violating modifications",
+    "Windows Defender",
+    "Core system services",
+    "Network adapter settings (beyond standard TCP optimization)"
+  ],
+  "revert_supported": true,
+  "revert_steps": [
+    "Roblox Graphics: Set to Automatic",
+    "Windows Power Plan: Back to Balanced",
+    "GPU preference: Reset to System Default for Roblox",
+    "Process priority: Back to Normal via Task Manager",
+    "Re-enable background apps if needed"
+  ],
+  "tos_compliant": true,
+  "warnings": [
+    "FPS Unlocker is a third-party tool - use at own discretion (not provided by OptiPlay)",
+    "Some Roblox games override graphics settings server-side",
+    "Low graphics settings may affect gameplay visibility in certain games",
+    "Performance varies greatly by specific Roblox game (complex games will always lag on low-end systems)"
+  ],
+  "notes": "Roblox is CPU-bound in many scenarios. Upgrading from HDD to SSD provides significant load time improvements. This preset focuses on reducing background interference and optimizing Windows for Roblox's specific engine requirements."
+}

@@ -13,6 +13,7 @@ export default function TopNavClient({ session }) {
   return (
     <nav className="hidden md:flex items-center gap-5 text-sm text-purple-200 whitespace-nowrap">
       <Link href="/tools" className={`px-3 py-1 rounded transition ${isActive("/tools") ? "bg-white/5 ring-1 ring-white/10" : "hover:text-purple-100"}`}>Tools</Link>
+      <Link href="/presets" className={`px-3 py-1 rounded transition ${isActive("/presets") ? "bg-white/5 ring-1 ring-white/10" : "hover:text-purple-100"}`}>Presets</Link>
       <Link href="/pro-configs" className={`px-3 py-1 rounded transition ${isActive("/pro-configs") ? "bg-white/5 ring-1 ring-white/10" : "hover:text-purple-100"}`}>Pro Configs</Link>
       <Link href="/mods" className={`px-3 py-1 rounded transition ${isActive("/mods") ? "bg-white/5 ring-1 ring-white/10" : "hover:text-purple-100"}`}>Mods</Link>
       <Link href="/heatmap" className={`px-3 py-1 rounded transition ${isActive("/heatmap") ? "bg-white/5 ring-1 ring-white/10" : "hover:text-purple-100"}`}>Heatmap</Link>

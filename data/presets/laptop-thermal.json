@@ -1,0 +1,74 @@
+{
+  "id": "laptop-thermal",
+  "name": "Laptop Thermal Stability Pack",
+  "target": ["Universal"],
+  "hardware_tier": ["Low", "Mid", "High"],
+  "os": ["Windows 10", "Windows 11"],
+  "risk_level": "Low",
+  "estimated_gain": {
+    "fps": "Sustained performance (prevent throttling)",
+    "latency": "Stable frametimes"
+  },
+  "applies": {
+    "game_settings": [
+      "Frame rate cap: 60 FPS or monitor refresh rate (prevent unnecessary heat)",
+      "VSync: Consider ON to cap framerate naturally",
+      "Resolution: Native or slight reduction if thermals critical",
+      "Demanding effects: Reduce shadows, reflections, ambient occlusion"
+    ],
+    "os_settings": [
+      "Windows Power Plan: Balanced (NOT High Performance for laptops)",
+      "Processor power management: Maximum processor state = 90-95% (prevents turbo boost heat)",
+      "Minimum processor state: 5% (allows downclocking when idle)",
+      "Cooling policy: Active",
+      "Laptop lid: Keep open for better airflow"
+    ],
+    "driver_settings": [
+      "GPU Power Management: Optimal Power (not Maximum)",
+      "Whisper Mode (NVIDIA): Enable if available",
+      "AMD Chill: Enable to cap FPS dynamically",
+      "Battery Boost: Disable if plugged in, enable on battery"
+    ],
+    "background_processes": [
+      "Close unnecessary background apps to reduce CPU load",
+      "Disable RGB lighting (significant power/heat reduction)",
+      "Close browser tabs",
+      "Pause Windows Update",
+      "Monitor temperatures with HWInfo64 or MSI Afterburner (optional)"
+    ],
+    "optiplay_tools": [
+      "FPS Booster - Laptop Profile with frame cap",
+      "Bottleneck Analyzer - Identify thermal throttling",
+      "Custom FPS cap guide per game"
+    ]
+  },
+  "does_not_modify": [
+    "BIOS settings",
+    "CPU voltage (no undervolting without user consent)",
+    "Fan curves (requires BIOS or OEM software)",
+    "Thermal paste or hardware",
+    "GPU core clocks"
+  ],
+  "revert_supported": true,
+  "revert_steps": [
+    "Remove frame rate caps in-game",
+    "Windows Power Plan: Back to Balanced (default laptop setting)",
+    "Processor power management: Reset maximum state to 100%",
+    "GPU driver settings: Reset to defaults",
+    "Re-enable RGB lighting if desired"
+  ],
+  "hardware_recommendations": [
+    "Use laptop on hard, flat surface (not bed/couch)",
+    "Elevate laptop with stand or books for better airflow",
+    "Consider laptop cooling pad for sustained sessions",
+    "Clean dust from vents every 3-6 months",
+    "Repaste thermal compound every 1-2 years (advanced users)"
+  ],
+  "warnings": [
+    "Reducing max CPU state will lower absolute performance but increase sustained performance",
+    "Some thin-and-light laptops will always throttle under heavy load (by design)",
+    "This preset trades peak FPS for consistency",
+    "If temps exceed 95°C, stop gaming and check cooling system"
+  ],
+  "notes": "Laptops are thermally constrained by design. This preset prevents thermal throttling by reducing sustained heat generation rather than chasing maximum FPS. Ideal for gaming laptops, ultrabooks, and thin-and-light devices."
+}

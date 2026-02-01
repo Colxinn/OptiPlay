@@ -1,0 +1,78 @@
+{
+  "id": "competitive-fps",
+  "name": "Competitive FPS Pack",
+  "target": ["CS2", "Valorant"],
+  "hardware_tier": ["Mid", "High"],
+  "os": ["Windows 10", "Windows 11"],
+  "risk_level": "Low",
+  "estimated_gain": {
+    "fps": "5-15%",
+    "latency": "3-8ms input lag reduction"
+  },
+  "applies": {
+    "game_settings": [
+      "Display mode: Exclusive Fullscreen",
+      "VSync: OFF",
+      "Frame rate limit: Unlimited or 2x monitor refresh",
+      "Motion blur: OFF",
+      "Raw mouse input: Enabled",
+      "NVIDIA Reflex Low Latency: ON + Boost (CS2/Valorant)",
+      "AMD Anti-Lag+: Enabled (if supported)"
+    ],
+    "os_settings": [
+      "Windows Power Plan: Ultimate Performance (if available) or High Performance",
+      "Game Mode: Enabled",
+      "Game Bar: Disabled (or configure to not interfere)",
+      "Full-screen optimizations: Disabled for game .exe",
+      "Hardware-accelerated GPU scheduling: ON",
+      "CPU Core Parking: Disabled (via registry - safe method)"
+    ],
+    "driver_settings": [
+      "NVIDIA Control Panel: Low Latency Mode = Ultra",
+      "NVIDIA: Power Management = Prefer Maximum Performance",
+      "NVIDIA: Texture Filtering Quality = Performance",
+      "AMD Radeon: Anti-Lag enabled",
+      "AMD: Radeon Boost enabled (if available)",
+      "Mouse: 1000Hz polling rate confirmed",
+      "Monitor: Native refresh rate + G-Sync/FreeSync OFF in competitive"
+    ],
+    "background_processes": [
+      "Close Discord hardware acceleration (or use performance mode)",
+      "Close RGB software (Corsair iCUE, Razer Synapse - after setting profiles)",
+      "Disable Xbox Game DVR",
+      "Close Spotify, browsers, streaming apps",
+      "Set game process priority to High (not Realtime)"
+    ],
+    "optiplay_tools": [
+      "Latency Tuner - Network path optimization",
+      "Reaction Time Tester - Baseline measurement",
+      "Input/Display Optimizer - Windows timer resolution"
+    ]
+  },
+  "does_not_modify": [
+    "Windows Defender (anti-cheat requirement)",
+    "Windows Update",
+    "Kernel timer resolution (requires user consent)",
+    "BIOS settings",
+    "CPU voltage or frequencies",
+    "Network adapter drivers"
+  ],
+  "revert_supported": true,
+  "revert_steps": [
+    "Game settings: Restore to defaults in-game",
+    "VSync: Re-enable if desired",
+    "Windows Power Plan: Back to Balanced",
+    "Re-enable Game Bar: Settings > Gaming > Xbox Game Bar",
+    "Re-enable full-screen optimizations: Right-click .exe > Properties > Compatibility",
+    "CPU Core Parking: Re-enable via registry or let Windows manage",
+    "GPU driver settings: Reset to default in control panel"
+  ],
+  "anti_cheat_safe": true,
+  "warnings": [
+    "Disabling VSync may cause screen tearing on non-adaptive sync monitors",
+    "Unlimited FPS may increase GPU heat and power draw",
+    "Some changes require game restart to take effect",
+    "Core parking changes affect all applications system-wide"
+  ],
+  "notes": "Optimized for competitive integrity. All changes are Vanguard/VAC-safe. Focus on reducing system latency and maximizing consistent frame delivery. Not recommended for casual play where visual quality matters."
+}

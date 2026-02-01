@@ -1,0 +1,82 @@
+{
+  "id": "streaming-recording",
+  "name": "Streaming & Recording Pack",
+  "target": ["Universal"],
+  "hardware_tier": ["Mid", "High"],
+  "os": ["Windows 10", "Windows 11"],
+  "risk_level": "Low",
+  "estimated_gain": {
+    "fps": "Minimal loss while streaming/recording",
+    "latency": "Smooth encoding without dropped frames"
+  },
+  "applies": {
+    "game_settings": [
+      "Frame rate cap: Slightly above stream FPS (e.g., 90 FPS for 60 FPS stream)",
+      "VSync: OFF (let OBS/encoder handle pacing)",
+      "Borderless Windowed: Recommended for easier alt-tabbing",
+      "In-game overlays: Disable to reduce CPU load"
+    ],
+    "os_settings": [
+      "Windows Power Plan: High Performance",
+      "Game Mode: Enabled (helps prioritize game)",
+      "Hardware-accelerated GPU scheduling: ON",
+      "Disable Windows Game DVR (conflicts with OBS)"
+    ],
+    "driver_settings": [
+      "GPU Power Management: Maximum Performance",
+      "Multi-display/mixed GPU mode: Disable if using single GPU"
+    ],
+    "obs_settings": [
+      "Encoder: NVENC (NVIDIA) or AMD VCE (AMD) - GPU encoding preferred",
+      "Preset: Quality or Max Quality (not Lossless)",
+      "Rate Control: CBR for streaming, CQP/CRF for recording",
+      "Bitrate: 6000-8000 Kbps for 1080p60 (Twitch/YouTube)",
+      "Output resolution: 1080p60 or 1440p60 (if hardware allows)",
+      "Base canvas: Match game resolution",
+      "Downscale filter: Lanczos (best quality)"
+    ],
+    "background_processes": [
+      "Close Discord hardware acceleration (or use voice-only mode)",
+      "Close browser tabs (especially Chrome)",
+      "Set OBS process priority: Above Normal",
+      "Set game process priority: High",
+      "Close RGB software, monitoring tools (unless needed for stream overlay)",
+      "Use single monitor if possible (reduces GPU load)"
+    ],
+    "optiplay_tools": [
+      "Bottleneck Analyzer - Check CPU/GPU balance",
+      "FPS Booster - Streaming Profile with encoder optimization",
+      "Network monitoring guide for stream health"
+    ]
+  },
+  "does_not_modify": [
+    "OBS installation or settings (user configures)",
+    "Stream overlays or alerts",
+    "Audio interfaces or capture devices",
+    "Network adapter settings (beyond standard optimization)",
+    "BIOS settings"
+  ],
+  "revert_supported": true,
+  "revert_steps": [
+    "Remove frame rate caps in-game",
+    "Switch back to fullscreen if preferred",
+    "Windows Power Plan: Back to Balanced",
+    "Re-enable Windows Game DVR if used",
+    "Reset process priorities to Normal"
+  ],
+  "encoder_priority": [
+    "Best: Dedicated capture card + separate streaming PC",
+    "Great: NVIDIA NVENC (RTX 3000/4000 series)",
+    "Good: AMD VCE (RX 6000/7000 series)",
+    "Okay: Intel QuickSync (12th gen+)",
+    "Avoid: CPU encoding on gaming PC (unless 12+ cores)"
+  ],
+  "warnings": [
+    "Single-PC streaming is demanding - even with GPU encoding",
+    "CPU encoding (x264) will severely impact FPS unless 16+ threads available",
+    "2-PC setup is ideal for serious streaming",
+    "Upload bandwidth matters: 10 Mbps+ recommended for 1080p60",
+    "Borderless windowed may cause slight FPS loss vs fullscreen"
+  ],
+  "notes": "Designed for single-PC streaming setups. Prioritizes GPU encoding to free up CPU for gaming. Frame cap prevents GPU bottleneck (100% GPU usage causes encoder lag). Best results with RTX 3060+ or RX 6700 XT+."
+}

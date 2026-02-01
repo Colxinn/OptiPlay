@@ -1,0 +1,72 @@
+{
+  "id": "low-end-survival",
+  "name": "Low-End PC Survival Pack",
+  "target": ["CS2", "Valorant", "Roblox", "Universal"],
+  "hardware_tier": ["Low"],
+  "os": ["Windows 10", "Windows 11"],
+  "risk_level": "Low",
+  "estimated_gain": {
+    "fps": "15-30%",
+    "latency": "5-15ms"
+  },
+  "applies": {
+    "game_settings": [
+      "Resolution scaling to 75-80%",
+      "Texture quality: Low",
+      "Shadow quality: Off/Very Low",
+      "Anti-aliasing: Off or FXAA",
+      "Post-processing effects: Disabled",
+      "View distance: Reduced",
+      "Particle effects: Minimal"
+    ],
+    "os_settings": [
+      "Windows Power Plan: High Performance",
+      "Visual effects: Adjust for best performance",
+      "Background app restrictions enabled",
+      "Game Mode enabled",
+      "Hardware-accelerated GPU scheduling: ON",
+      "Disable Windows transparency effects"
+    ],
+    "driver_settings": [
+      "NVIDIA: Low Latency Mode = Ultra (if supported)",
+      "AMD: Anti-Lag enabled",
+      "GPU Power Management: Maximum Performance",
+      "Texture filtering: Performance mode"
+    ],
+    "background_processes": [
+      "Disable startup bloatware (non-system apps)",
+      "Close browser tabs while gaming",
+      "Disable Windows Search indexing during gameplay",
+      "Pause Windows Update during sessions"
+    ],
+    "optiplay_tools": [
+      "FPS Booster - Low-End Profile",
+      "Bottleneck Analyzer - Identify weakest component",
+      "Latency Tuner - Network optimization"
+    ]
+  },
+  "does_not_modify": [
+    "Windows Update service (only paused)",
+    "Windows Defender",
+    "Core system services",
+    "BIOS settings",
+    "Driver versions",
+    "Registry (system-critical keys)"
+  ],
+  "revert_supported": true,
+  "revert_steps": [
+    "Restore game graphics to default",
+    "Set Windows Power Plan back to Balanced",
+    "Re-enable visual effects: System Properties > Advanced > Performance Settings",
+    "Re-enable background apps: Settings > Privacy > Background apps",
+    "Resume Windows Update: Settings > Update & Security",
+    "Reset GPU driver settings to default in control panel"
+  ],
+  "warnings": [
+    "Visual quality will be significantly reduced",
+    "Some games may look blurry with resolution scaling",
+    "Performance varies greatly by specific hardware",
+    "Integrated graphics (Intel UHD/Vega) will still struggle with AAA titles"
+  ],
+  "notes": "Designed for systems barely meeting minimum requirements. Prioritizes stability and playability over visual quality. Best suited for competitive games where framerate matters more than graphics."
+}
