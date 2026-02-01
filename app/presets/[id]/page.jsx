@@ -4,6 +4,9 @@ import fs from 'fs';
 import path from 'path';
 import PresetApplier from '../PresetApplier';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 async function getPreset(id) {
   try {
     const filePath = path.join(process.cwd(), 'data', 'presets', `${id}.json`);
