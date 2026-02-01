@@ -18,6 +18,20 @@ async function getPreset(id) {
   }
 }
 
+export async function generateStaticParams() {
+  const presetsDir = path.join(process.cwd(), 'data', 'presets');
+  
+  if (!fs.existsSync(presetsDir)) {
+    return [];
+  }
+
+  const files = fs.readdirSync(presetsDir).filter(f => f.endsWith('.json'));
+  
+  return files.map(file => ({
+    id: file.replace('.json', '')
+  }));
+}
+
 export async function generateMetadata({ params }) {
   const preset = await getPreset(params.id);
   if (!preset) return { title: 'Preset Not Found' };
