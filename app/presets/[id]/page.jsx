@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import fs from 'fs';
 import path from 'path';
+import PresetApplier from '../PresetApplier';
 
 async function getPreset(id) {
   try {
@@ -65,28 +66,41 @@ export default async function PresetDetailPage({ params }) {
         <p className="text-gray-300 text-lg mb-6">{preset.notes}</p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="p-4 rounded-lg bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/30 hover:scale-105 transition-transform">
             <div className="text-xs text-gray-400 mb-1">FPS Gain</div>
-            <div className="text-xl font-bold text-green-400">{preset.estimated_gain.fps}</div>
+            <div className="text-xl font-bold text-green-400 flex items-center gap-2">
+              📈 {preset.estimated_gain.fps}
+            </div>
           </div>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="p-4 rounded-lg bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/30 hover:scale-105 transition-transform">
             <div className="text-xs text-gray-400 mb-1">Latency</div>
-            <div className="text-xl font-bold text-blue-400">{preset.estimated_gain.latency}</div>
+            <div className="text-xl font-bold text-blue-400 flex items-center gap-2">
+              ⚡ {preset.estimated_gain.latency}
+            </div>
           </div>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="p-4 rounded-lg bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/30 hover:scale-105 transition-transform">
             <div className="text-xs text-gray-400 mb-1">Target</div>
-            <div className="text-sm font-semibold text-white">{preset.target.join(', ')}</div>
+            <div className="text-sm font-semibold text-white">🎮 {preset.target.join(', ')}</div>
           </div>
-          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="p-4 rounded-lg bg-gradient-to-br from-orange-500/10 to-orange-500/5 border border-orange-500/30 hover:scale-105 transition-transform">
             <div className="text-xs text-gray-400 mb-1">Hardware</div>
-            <div className="text-sm font-semibold text-white">{preset.hardware_tier.join(', ')}</div>
+            <div className="text-sm font-semibold text-white">💻 {preset.hardware_tier.join(', ')}</div>
           </div>
         </div>
       </div>
 
-      {/* What It Changes */}
+      {/* Interactive Step-by-Step Applier */}
+      <section className="mb-8">
+        <h2 className="text-3xl font-bold mb-6 text-white flex items-center gap-3">
+          <span className="text-3xl animate-pulse">🎯</span>
+          Step-by-Step Application Guide
+        </h2>
+        <PresetApplier preset={preset} />
+      </section>
+
+      {/* What It Changes (Summary) */}
       <section className="mb-8 p-6 rounded-xl bg-white/5 border border-white/10">
-        <h2 className="text-2xl font-bold mb-4 text-white">⚙️ What This Preset Changes</h2>
+        <h2 className="text-2xl font-bold mb-4 text-white">⚙️ What This Preset Changes (Summary)</h2>
         
         {preset.applies.game_settings?.length > 0 && (
           <div className="mb-6">

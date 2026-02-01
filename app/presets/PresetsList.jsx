@@ -95,15 +95,16 @@ export default function PresetsList() {
 
       {/* Presets Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredPresets.map(preset => (
+        {filteredPresets.map((preset, index) => (
           <Link
             key={preset.id}
             href={`/presets/${preset.id}`}
-            className="block p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-purple-500/50 transition"
+            className="group block p-6 rounded-xl bg-gradient-to-br from-white/5 to-white/3 border border-white/10 hover:from-white/10 hover:to-white/5 hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 transition-all duration-300"
+            style={{ animationDelay: `${index * 100}ms` }}
           >
             <div className="flex items-start justify-between mb-4">
-              <h3 className="text-2xl font-bold text-white">{preset.name}</h3>
-              <span className={`px-3 py-1 rounded-lg text-xs font-semibold border ${getRiskColor(preset.risk_level)}`}>
+              <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">{preset.name}</h3>
+              <span className={`px-3 py-1 rounded-lg text-xs font-semibold border ${getRiskColor(preset.risk_level)} group-hover:scale-110 transition-transform`}>
                 {preset.risk_level} Risk
               </span>
             </div>
@@ -145,9 +146,9 @@ export default function PresetsList() {
 
             <p className="text-sm text-gray-400 line-clamp-2">{preset.notes}</p>
 
-            <div className="mt-4 flex items-center text-purple-400 text-sm font-semibold">
+            <div className="mt-4 flex items-center text-purple-400 group-hover:text-purple-300 text-sm font-semibold">
               View Details
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </div>
